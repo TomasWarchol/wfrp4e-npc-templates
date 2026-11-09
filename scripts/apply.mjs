@@ -4,7 +4,11 @@
 import { MODULE_ID, I18N, log } from "./constants.mjs";
 import { buildNameMap, resolveName } from "./names.mjs";
 
-const ITEM_TYPES = ["skill", "talent", "weapon", "armour", "trapping", "ammunition", "container"];
+const ITEM_TYPES = ["skill", "talent", "trait", "weapon", "armour", "trapping", "ammunition", "container"];
+
+/** Cechy, których wartości się sumują; pozostałe przyjmują wyższą wartość. */
+const ADDITIVE_TRAITS = ["Armour"];
+const CORRUPTION_STRENGTH = { minor: "CORRUPTION.Minor", moderate: "CORRUPTION.Moderate", major: "CORRUPTION.Major" };
 let nameMap = { names: new Map(), bases: new Map() };
 
 const isManaged = (item) => item?.type === "template" && item.flags?.[MODULE_ID]?.managed === true;
@@ -30,11 +34,17 @@ export async function loadNames() {
 }
 
 /** Dane szablonu z nazwami w aktywnym tłumaczeniu. */
-export function localizedSystem(system, translateName, loreLabel) {
+export function localizedSystem(system, translateName, loreLabel, specification = (value) => value) {
   const named = (entry) => ({ ...entry, name: translateName(entry.name) });
+  const trait = (entry) => {
+    const value = entry.diff?.system?.specification?.value;
+    if (value === undefined) return named(entry);
+    return named({ ...entry, diff: foundry.utils.mergeObject(entry.diff, { system: { specification: { value: specification(value) } } }, { inplace: false }) });
+  };
   return {
     "system.skills.list": system.skills.list.map(named),
     "system.talents.list": system.talents.list.map(named),
+    "system.traits.list": (system.traits?.list ?? []).map(trait),
     "system.lores.list": system.lores.list.map((lore) => ({ ...lore, name: lore.name === "*" ? "*" : loreLabel(lore.name) })),
     "system.trappings.options": system.trappings.options.map(named)
   };
@@ -48,13 +58,45 @@ export function splitOwnedSkills(list, ownedNames) {
   return { keep, merge };
 }
 
+/** Wartość cechy wyliczona z wartości bazowej i ocen z nałożonych szablonów, dzięki czemu kolejność usuwania jest obojętna. */
+export function traitValue(base, ratings, additive) {
+  const active = ratings.filter((rating) => rating > 0);
+  return String(additive ? active.reduce((sum, rating) => sum + rating, base) : Math.max(base, ...active));
+}
+
+/** Dzieli cechy na nowe i te, które aktor już ma. Dla posiadanych z wartością liczbową zwraca ocenę z szablonu. */
+export function splitOwnedTraits(list, owned) {
+  const keep = [];
+  const raise = [];
+  for (const trait of list) {
+    const current = owned.find((other) => other.name === trait.name);
+    if (!current) {
+      keep.push(trait);
+      continue;
+    }
+    const rating = parseInt(trait.diff?.system?.specification?.value);
+    if (!Number.isNaN(rating) && !Number.isNaN(parseInt(current.value))) raise.push({ name: trait.name, rating });
+  }
+  return { keep, raise };
+}
+
+function specificationValue(value) {
+  if (!Number.isNaN(parseInt(value))) return value;
+  if (CORRUPTION_STRENGTH[value]) return game.i18n.localize(CORRUPTION_STRENGTH[value]);
+  return specialisation(value);
+}
+
 function onPreCreateTemplate(item) {
   if (!isManaged(item) || !item.parent) return;
-  const update = localizedSystem(item.toObject().system, translate, (key) => game.wfrp4e.config.magicLores[key] ?? key);
+  const update = localizedSystem(item.toObject().system, translate, (key) => game.wfrp4e.config.magicLores[key] ?? key, specificationValue);
   const owned = new Set(item.parent.itemTypes.skill.map((skill) => skill.name));
   const { keep, merge } = splitOwnedSkills(update["system.skills.list"], owned);
   update["system.skills.list"] = keep;
   update[`flags.${MODULE_ID}.pendingSkills`] = merge.map(({ name, advances }) => ({ name, advances }));
+  const ownedTraits = item.parent.itemTypes.trait.map((trait) => ({ name: trait.name, value: trait.system.specification.value }));
+  const { keep: newTraits, raise } = splitOwnedTraits(update["system.traits.list"], ownedTraits);
+  update["system.traits.list"] = newTraits;
+  update[`flags.${MODULE_ID}.pendingTraits`] = raise;
   item.updateSource(update);
 }
 
@@ -72,6 +114,19 @@ function onCreateTemplate(item, _options, userId) {
       [`flags.${MODULE_ID}.merged.${item.id}`]: advances
     });
   }
+  const additive = new Set(ADDITIVE_TRAITS.map(translate));
+  for (const { name, rating } of item.getFlag(MODULE_ID, "pendingTraits") ?? []) {
+    const trait = item.parent.itemTypes.trait.find((other) => other.name === name);
+    if (!trait) continue;
+    const base = trait.getFlag(MODULE_ID, "traitBase") ?? parseInt(trait.system.specification.value);
+    const ratings = [...Object.values(trait.getFlag(MODULE_ID, "traitRatings") ?? {}), rating];
+    updates.push({
+      _id: trait.id,
+      "system.specification.value": traitValue(base, ratings, additive.has(name)),
+      [`flags.${MODULE_ID}.traitBase`]: base,
+      [`flags.${MODULE_ID}.traitRatings.${item.id}`]: rating
+    });
+  }
   if (updates.length) item.parent.updateEmbeddedDocuments("Item", updates).catch((error) => log.error(error));
 }
 
@@ -86,6 +141,17 @@ function onDeleteTemplate(item, _options, userId) {
       _id: skill.id,
       "system.advances.value": Math.max(0, skill.system.advances.value - added),
       [`flags.${MODULE_ID}.merged.${item.id}`]: 0
+    });
+  }
+  const additive = new Set(ADDITIVE_TRAITS.map(translate));
+  for (const trait of item.parent.itemTypes.trait) {
+    const ratings = trait.getFlag(MODULE_ID, "traitRatings");
+    if (!ratings?.[item.id]) continue;
+    const others = Object.entries(ratings).filter(([id]) => id !== item.id).map(([, rating]) => rating);
+    updates.push({
+      _id: trait.id,
+      "system.specification.value": traitValue(trait.getFlag(MODULE_ID, "traitBase"), others, additive.has(trait.name)),
+      [`flags.${MODULE_ID}.traitRatings.${item.id}`]: 0
     });
   }
   if (updates.length) item.parent.updateEmbeddedDocuments("Item", updates).catch((error) => log.error(error));
@@ -108,9 +174,12 @@ export async function checkTemplates(pack) {
     }
   };
   for (const template of await pack.getDocuments()) {
-    const { skills, talents, trappings } = template.system;
+    const { skills, talents, trappings, traits } = template.system;
     for (const skill of skills.list) await find(game.wfrp4e.utility.findSkill.bind(game.wfrp4e.utility), template, skill.name);
     for (const talent of talents.list) await find(game.wfrp4e.utility.findTalent.bind(game.wfrp4e.utility), template, talent.name);
+    for (const trait of traits.list) {
+      if (!await fromUuid(trait.uuid)) missing.push(`${template.name}: ${trait.name}`);
+    }
     for (const option of trappings.options) {
       if (!await fromUuid(option.documentId)) missing.push(`${template.name}: ${option.name}`);
     }

@@ -1,12 +1,15 @@
 import { readFileSync } from "node:fs";
 import { describe, expect, it } from "vitest";
 import { ARCHETYPES, QUIRKS } from "../content/templates.mjs";
-import { accumulateRank, buildAll, buildTrappings, stableId } from "../tools/pack-builder.mjs";
+import { HUMAN_GROUPS } from "../content/human-overlays.mjs";
+import { MONSTER_GROUPS } from "../content/monster-upgrades.mjs";
+import { accumulateRank, buildAll, buildTraits, buildTrappings, stableId } from "../tools/pack-builder.mjs";
 import { buildNameMap, resolveName } from "../scripts/names.mjs";
-import { localizedSystem, splitOwnedSkills } from "../scripts/apply.mjs";
+import { localizedSystem, splitOwnedSkills, splitOwnedTraits, traitValue } from "../scripts/apply.mjs";
 
 const coreItems = JSON.parse(readFileSync(new URL("../content/core-items.json", import.meta.url), "utf8"));
-const built = buildAll({ archetypes: ARCHETYPES, quirks: QUIRKS, coreItems });
+const coreTraits = JSON.parse(readFileSync(new URL("../content/core-traits.json", import.meta.url), "utf8"));
+const built = buildAll({ archetypes: ARCHETYPES, quirks: QUIRKS, humanGroups: HUMAN_GROUPS, monsterGroups: MONSTER_GROUPS, coreItems, coreTraits });
 const byName = (name) => built.items.find((item) => item.name === name);
 
 describe("zestaw szablonów", () => {
@@ -58,6 +61,20 @@ describe("zestaw szablonów", () => {
     expect(result.options[0].documentId).toMatch(/^Compendium\.wfrp4e-core\.items\.Item\./);
   });
 
+  it("układa foldery w dwóch kategoriach", () => {
+    const top = built.folders.filter((f) => !f.folder).map((f) => f.name);
+    expect(top).toEqual(["People", "Monsters & Upgrades"]);
+    const monsters = built.folders.find((f) => f.name === "Monsters & Upgrades");
+    expect(built.folders.filter((f) => f.folder === monsters._id).map((f) => f.name)).toContain("Bane of Heroes");
+  });
+
+  it("zapisuje wartość cechy tak, by system o nią nie pytał", () => {
+    const [armour, fire] = buildTraits([["Armour", 3], ["Breath", 8, { breath: "fire" }]], coreTraits, "test");
+    expect(armour.diff.system.specification.value).toBe("3");
+    expect(fire.diff.flags.wfrp4e.breath).toBe("fire");
+    expect(() => buildTraits(["Nope"], coreTraits, "test")).toThrow(/Nope/);
+  });
+
   it("odrzuca nieznany przedmiot", () => {
     expect(() => buildTrappings(["Excalibur"], coreItems, "test")).toThrow(/Excalibur/);
   });
@@ -75,7 +92,7 @@ describe("zestaw szablonów", () => {
   it("zawiera każdą specjalizację użytą w szablonach w obu plikach językowych", () => {
     const load = (code) => JSON.parse(readFileSync(new URL(`../lang/${code}.json`, import.meta.url), "utf8")).WFRP4E_TEMPLATES.Specialisations;
     const [en, pl] = [load("en"), load("pl")];
-    const exact = /^(Melee|Ranged|Stealth|Ride|Sail|Language|Secret Signs|Channelling|Perform) \(|^Lore \((Magick|Theology|Law|Heraldry)\)|^Trade \(Apothecary\)/;
+    const exact = /^(Melee|Ranged|Stealth|Ride|Sail|Language|Secret Signs|Channelling|Perform|Entertain) \(|^Lore \((Magick|Theology|Law|Heraldry|Geology)\)|^Trade \((Apothecary|Smith)\)/;
     for (const item of built.items) {
       for (const { name } of [...item.system.skills.list, ...item.system.talents.list]) {
         const spec = name.match(/\((.*)\)/)?.[1];
@@ -114,6 +131,22 @@ describe("nazwy w aktywnym tłumaczeniu", () => {
     const { keep, merge } = splitOwnedSkills(list, new Set(["Cool"]));
     expect(merge).toEqual([{ name: "Cool", advances: 5 }]);
     expect(keep.map((s) => s.name)).toEqual(["Dodge", "Cool"]);
+  });
+
+  it("łączy cechy, które aktor już ma", () => {
+    const spec = (value) => ({ system: { specification: { value } } });
+    const list = [{ name: "Pancerz", diff: spec("2") }, { name: "Strach", diff: spec("1") }, { name: "Groza", diff: spec("3") }, { name: "Szał", diff: {} }, { name: "Nowa", diff: {} }];
+    const owned = [{ name: "Pancerz", value: "3" }, { name: "Strach", value: "2" }, { name: "Groza", value: "1" }, { name: "Szał", value: "" }];
+    const { keep, raise } = splitOwnedTraits(list, owned);
+    expect(keep.map((t) => t.name)).toEqual(["Nowa"]);
+    expect(raise).toEqual([{ name: "Pancerz", rating: 2 }, { name: "Strach", rating: 1 }, { name: "Groza", rating: 3 }]);
+  });
+
+  it("wylicza wartość cechy niezależnie od kolejności szablonów", () => {
+    expect(traitValue(2, [4, 5], true)).toBe("11");
+    expect(traitValue(2, [5], true)).toBe("7");
+    expect(traitValue(1, [3, 2], false)).toBe("3");
+    expect(traitValue(1, [0], false)).toBe("1");
   });
 
   it("przenosi tłumaczenia do danych szablonu", () => {

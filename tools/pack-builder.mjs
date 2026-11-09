@@ -92,7 +92,20 @@ export function buildTrappings(gear, coreItems, key) {
   return { structure, options, script: "" };
 }
 
-function buildItem({ key, en, icon, folder, sort, data, description, pre, coreItems }) {
+/** Cechy stworzeń jako odwołania do kompendium; wartość trafia do diff, a system pyta o nią tylko, gdy jej brak. */
+export function buildTraits(traits, coreTraits, key) {
+  return traits.map((entry) => {
+    const [name, value, extra] = Array.isArray(entry) ? entry : [entry];
+    const id = coreTraits[name];
+    if (!id) throw new Error(`Nieznana cecha "${name}" w szablonie ${key}`);
+    const diff = {};
+    if (value !== undefined) diff.system = { specification: { value: String(value) } };
+    if (extra?.breath) diff.flags = { wfrp4e: { breath: extra.breath } };
+    return { id, uuid: `Compendium.wfrp4e-core.items.Item.${id}`, name, diff };
+  });
+}
+
+function buildItem({ key, en, icon, folder, sort, data, description, pre, coreItems, coreTraits }) {
   const characteristics = Object.fromEntries(CHARACTERISTICS.map((c) => [c, data.c[c] ?? 0]));
   const _id = stableId(key);
   return {
@@ -105,7 +118,7 @@ function buildItem({ key, en, icon, folder, sort, data, description, pre, coreIt
       skills: { list: skillList(data.s, data.sc) },
       talents: { list: talentList(data.t, data.tc) },
       lores: { list: loreList(data.l) },
-      traits: { list: [] },
+      traits: { list: buildTraits(data.tr ?? [], coreTraits, key) },
       trappings: buildTrappings(data.gear, coreItems, key)
     },
     effects: [],
@@ -113,13 +126,15 @@ function buildItem({ key, en, icon, folder, sort, data, description, pre, coreIt
   };
 }
 
-function buildFolder(group, sort) {
+function buildFolder(group, sort, parent = null) {
   const _id = stableId(`folder/${group.id}`);
-  return { _id, _key: `!folders!${_id}`, name: group.en, type: "Item", sorting: "m", sort, folder: null, color: null, description: "" };
+  return { _id, _key: `!folders!${_id}`, name: group.en, type: "Item", sorting: "m", sort, folder: parent, color: null, description: "" };
 }
 
+const CATEGORIES = { people: { id: "people", en: "People", pl: "Ludzie" }, monsters: { id: "monsters", en: "Monsters & Upgrades", pl: "Potwory i ulepszenia" } };
+
 /** Składa dokumenty kompendium i polskie tłumaczenie. */
-export function buildAll({ archetypes, quirks, coreItems }) {
+export function buildAll({ archetypes, quirks, humanGroups = [], monsterGroups = [], coreItems, coreTraits = {} }) {
   const folders = [];
   const items = [];
   const entries = {};
@@ -129,20 +144,32 @@ export function buildAll({ archetypes, quirks, coreItems }) {
     const key = `${group.id}/${source.id}`;
     items.push(buildItem({
       key, en: source.en, icon: group.icon, folder: stableId(`folder/${group.id}`), sort: (index + 1) * 1000,
-      data, description: source.d[0], pre: source.pre?.[0], coreItems
+      data, description: source.d[0], pre: source.pre?.[0], coreItems, coreTraits
     }));
     if (entries[source.en]) throw new Error(`Powtórzona nazwa szablonu: ${source.en}`);
     entries[source.en] = { name: source.pl, description: `<p>${source.d[1]}</p>`, ...(source.pre ? { pre: source.pre[1] } : {}) };
   };
 
-  [...archetypes, quirks].forEach((group, groupIndex) => {
-    folders.push(buildFolder(group, (groupIndex + 1) * 1000));
-    folderNames[group.en] = group.pl;
-  });
+  const overlay = (item) => ({ c: item.c, s: item.s, t: item.t, sc: item.sc ?? [], tc: item.tc ?? [], l: item.l ?? {}, gear: item.gear ?? [], tr: item.tr ?? [] });
+
+  const addCategory = (category, groups, sort) => {
+    folders.push(buildFolder(category, sort));
+    folderNames[category.en] = category.pl;
+    groups.forEach((group, index) => {
+      folders.push(buildFolder(group, (index + 1) * 1000, stableId(`folder/${category.id}`)));
+      if (folderNames[group.en]) throw new Error(`Powtórzona nazwa folderu: ${group.en}`);
+      folderNames[group.en] = group.pl;
+    });
+  };
+  addCategory(CATEGORIES.people, [...archetypes, quirks, ...humanGroups], 1000);
+  addCategory(CATEGORIES.monsters, monsterGroups, 2000);
+
   for (const group of archetypes) {
     group.ranks.forEach((rank, index) => add(group, rank, index, accumulateRank(group.ranks, index)));
   }
-  quirks.items.forEach((quirk, index) => add(quirks, quirk, index, { c: quirk.c, s: quirk.s, t: quirk.t, sc: [], tc: [], l: {}, gear: [] }));
+  for (const group of [quirks, ...humanGroups, ...monsterGroups]) {
+    group.items.forEach((item, index) => add(group, item, index, overlay(item)));
+  }
 
   const translation = {
     label: "Szablony NPC",

@@ -8,16 +8,28 @@ Requires **Foundry VTT v14**, the **WFRP4e** system **10.0+** and the **WFRP4e C
 
 ## What's inside
 
-The **WFRP4e: NPC Templates** compendium holds 59 templates:
+The **WFRP4e: NPC Templates** compendium holds 172 templates in two categories.
+
+**People**
 
 - **12 archetypes with 4 ranks each.** Soldier (Recruit, Veteran, Sergeant, Captain), City Watch, Outlaw, Cultist, Hunter, River & Sea, Nobility, Trade, Underworld, Healing, Wizardry and Clergy.
 - **11 quirks that combine with anything.** Greenhorn, Grizzled, Elite, Brute, Cunning, Fanatic, Coward, Drunkard, Wounded, Tainted and Bodyguard.
+- **59 themed overlays.** Origins, Walks of Life, Combat Training, Faith, Afflictions, Dark Pacts and Reputation.
+
+**Monsters & Upgrades** (54 upgrades that also work on people)
+
+- **Prowess.** Mighty, Hulking, Elite Specimen, Champion, Alpha, Dim-Witted, Ancient and more.
+- **Wild Nature.** Venomous, Rabid, Iron-Hided, Winged, Man-Eater and more.
+- **Touch of Chaos.** Chaos-Marked, the four Marks, Warpstone-Gorged, Daemon-Possessed and more.
+- **Undeath.** Risen, Spectral, Barrow Lord, Deathless and more.
+- **Arcane Gifts.** Breath weapons, Aethyric Ward, Spell-Eater, Sorcerous and more.
+- **Bane of Heroes.** The strongest options for demanding parties, up to Doom Incarnate.
 
 ## How to use it
 
 Drag a template onto a character, NPC or creature. It changes the characteristics and adds skills, talents and gear. Some ranks ask you to pick a talent or a weapon, wizards choose their spells, and a few ranks add a title such as "Sergeant" to the name.
 
-Templates use the system's own Template item, so they appear under **Applied Templates** on the Notes tab. Deleting one there undoes it. A skill the actor already has gains the extra advances instead of being listed twice, and those advances are removed with the template.
+Templates use the system's own Template item, so they appear under **Applied Templates** on the Notes tab. Deleting one there undoes it. A skill the actor already has gains the extra advances instead of being listed twice. A trait the actor already has is raised to the higher rating, and Armour adds up. All of this is removed with the template.
 
 Each rank already includes the ranks below it, so apply only one rank per actor and add quirks on top.
 

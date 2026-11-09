@@ -8,16 +8,28 @@ Wymaga **Foundry VTT v14**, systemu **WFRP4e** w wersji **10.0+** i modułu **WF
 
 ## Co jest w środku
 
-Kompendium **WFRP4e: NPC Templates** zawiera 59 szablonów:
+Kompendium **WFRP4e: NPC Templates** zawiera 172 szablony w dwóch kategoriach.
+
+**Ludzie**
 
 - **12 archetypów po 4 stopnie.** Żołnierz (Rekrut, Weteran, Sierżant, Kapitan), Straż miejska, Banita, Kultysta, Łowca, Rzeka i morze, Szlachta, Handel, Półświatek, Medycyna, Magia i Duchowieństwo.
 - **11 nakładek do łączenia z czymkolwiek.** Żółtodziób, Stary wyga, Elita, Osiłek, Spryciarz, Fanatyk, Tchórz, Pijak, Ranny, Spaczony i Ochroniarz.
+- **59 nakładek tematycznych.** Pochodzenie, Fach, Szkoła walki, Wiara, Przypadłości, Mroczne konszachty i Pozycja.
+
+**Potwory i ulepszenia** (54 ulepszenia, działają też na ludziach)
+
+- **Tężyzna.** Silny, Olbrzymi, Elitarny, Czempion, Przewodnik stada, Głupi, Prastary i inne.
+- **Dzika natura.** Jadowity, Wściekły, Żelaznoskóry, Skrzydlaty, Ludojad i inne.
+- **Dotyk Chaosu.** Naznaczony przez Chaos, cztery Znamiona, Obżarty spaczeniem, Opętany przez demona i inne.
+- **Nieumarli.** Ożywiony, Widmowy, Pan Kurhanu, Niezniszczalny truposz i inne.
+- **Dary magii.** Zionięcie, Eteryczna osłona, Pożeracz czarów, Czarnoksięski i inne.
+- **Zguba bohaterów.** Najmocniejsze opcje dla wymagających drużyn, aż po Wcieloną zagładę.
 
 ## Jak używać
 
 Przeciągnij szablon na postać, NPC albo stwora. Szablon zmienia cechy oraz dodaje umiejętności, talenty i wyposażenie. Niektóre stopnie proszą o wybór talentu lub broni, czarodzieje wybierają czary, a część stopni dopisuje do imienia tytuł, np. „Sierżant”.
 
-Szablony korzystają z systemowego typu Template, więc widać je w sekcji **Applied Templates** na zakładce notatek. Usunięcie szablonu cofa jego działanie. Umiejętność, którą aktor już ma, dostaje dodatkowe rozwinięcia zamiast pojawić się drugi raz, a po usunięciu szablonu te rozwinięcia znikają.
+Szablony korzystają z systemowego typu Template, więc widać je w sekcji **Applied Templates** na zakładce notatek. Usunięcie szablonu cofa jego działanie. Umiejętność, którą aktor już ma, dostaje dodatkowe rozwinięcia zamiast pojawić się drugi raz. Cecha, którą aktor już ma, rośnie do wyższej wartości, a Pancerz się sumuje. Po usunięciu szablonu wszystko wraca do stanu poprzedniego.
 
 Każdy stopień zawiera już niższe, więc nakładaj na aktora jeden stopień i dowolne nakładki.
 

@@ -33,7 +33,11 @@
       "Verena": "Verena",
       "Manann": "Manann",
       "Rhya": "Rhya",
-      "Ranald": "Ranald"
+      "Ranald": "Ranald",
+      "Undead": "Undead",
+      "Humans": "Humans",
+      "Heroes": "Heroes",
+      "Wizards": "Wizards"
     }
   }
 }
