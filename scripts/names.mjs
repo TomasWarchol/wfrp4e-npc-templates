@@ -21,6 +21,22 @@ export function buildNameMap(entries) {
   return { names, bases };
 }
 
+/** Zbiory nazw dostępnych w aktywnych kompendiach, osobno dla każdego typu przedmiotu. */
+export function buildAvailability(entries) {
+  const available = {};
+  for (const { type, name } of entries) {
+    available[type] ??= { names: new Set(), bases: new Set() };
+    available[type].names.add(name);
+    available[type].bases.add(baseOf(name));
+  }
+  return available;
+}
+
+/** Tak samo jak system: pasuje nazwa dokładna albo podstawa nazwy przed specjalizacją. */
+export function isAvailable(name, entry) {
+  return !!entry && (entry.names.has(name) || entry.bases.has(baseOf(name)));
+}
+
 /** Zwraca nazwę w aktywnym tłumaczeniu; nieznana nazwa wraca bez zmian. */
 export function resolveName(name, { names, bases }, specialisation = (text) => text) {
   if (names.has(name)) return names.get(name);

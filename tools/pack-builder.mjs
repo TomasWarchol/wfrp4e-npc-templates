@@ -105,7 +105,7 @@ export function buildTraits(traits, coreTraits, key) {
   });
 }
 
-function buildItem({ key, en, icon, folder, sort, data, description, pre, coreItems, coreTraits }) {
+function buildItem({ key, en, icon, folder, sort, data, description, pre, coreItems, coreTraits, addonTalents }) {
   const characteristics = Object.fromEntries(CHARACTERISTICS.map((c) => [c, data.c[c] ?? 0]));
   const _id = stableId(key);
   return {
@@ -122,7 +122,7 @@ function buildItem({ key, en, icon, folder, sort, data, description, pre, coreIt
       trappings: buildTrappings(data.gear, coreItems, key)
     },
     effects: [],
-    flags: { [MODULE_ID]: { managed: true } }
+    flags: { [MODULE_ID]: { managed: true, optional: [...new Set([...data.t, ...data.tc.flat()])].filter((name) => addonTalents.has(name)) } }
   };
 }
 
@@ -134,7 +134,8 @@ function buildFolder(group, sort, parent = null) {
 const CATEGORIES = { people: { id: "people", en: "People", pl: "Ludzie" }, monsters: { id: "monsters", en: "Monsters & Upgrades", pl: "Potwory i ulepszenia" } };
 
 /** Składa dokumenty kompendium i polskie tłumaczenie. */
-export function buildAll({ archetypes, quirks, humanGroups = [], monsterGroups = [], coreItems, coreTraits = {} }) {
+export function buildAll({ archetypes, quirks, humanGroups = [], monsterGroups = [], coreItems, coreTraits = {}, addonTalents = [] }) {
+  const addons = new Set(addonTalents);
   const folders = [];
   const items = [];
   const entries = {};
@@ -144,7 +145,7 @@ export function buildAll({ archetypes, quirks, humanGroups = [], monsterGroups =
     const key = `${group.id}/${source.id}`;
     items.push(buildItem({
       key, en: source.en, icon: group.icon, folder: stableId(`folder/${group.id}`), sort: (index + 1) * 1000,
-      data, description: source.d[0], pre: source.pre?.[0], coreItems, coreTraits
+      data, description: source.d[0], pre: source.pre?.[0], coreItems, coreTraits, addonTalents: addons
     }));
     if (entries[source.en]) throw new Error(`Powtórzona nazwa szablonu: ${source.en}`);
     entries[source.en] = { name: source.pl, description: `<p>${source.d[1]}</p>`, ...(source.pre ? { pre: source.pre[1] } : {}) };

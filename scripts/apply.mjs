@@ -1,8 +1,8 @@
 /**
  * Przygotowuje szablony modułu w chwili dodania do aktora i scala umiejętności, które aktor już ma.
  */
-import { MODULE_ID, I18N, log } from "./constants.mjs";
-import { buildNameMap, resolveName } from "./names.mjs";
+import { MODULE_ID, I18N, log, t } from "./constants.mjs";
+import { buildAvailability, buildNameMap, isAvailable, resolveName } from "./names.mjs";
 
 const ITEM_TYPES = ["skill", "talent", "trait", "weapon", "armour", "trapping", "ammunition", "container"];
 
@@ -10,6 +10,7 @@ const ITEM_TYPES = ["skill", "talent", "trait", "weapon", "armour", "trapping", 
 const ADDITIVE_TRAITS = ["Armour"];
 const CORRUPTION_STRENGTH = { minor: "CORRUPTION.Minor", moderate: "CORRUPTION.Moderate", major: "CORRUPTION.Major" };
 let nameMap = { names: new Map(), bases: new Map() };
+let availability = {};
 
 const isManaged = (item) => item?.type === "template" && item.flags?.[MODULE_ID]?.managed === true;
 
@@ -30,6 +31,7 @@ export async function loadNames() {
     }
   }
   nameMap = buildNameMap(entries);
+  availability = buildAvailability(entries);
   log.info(`nazwy gotowe: ${nameMap.names.size}`);
 }
 
@@ -56,6 +58,29 @@ export function splitOwnedSkills(list, ownedNames) {
   const merge = [];
   for (const skill of list) (!skill.group && ownedNames.has(skill.name) ? merge : keep).push(skill);
   return { keep, merge };
+}
+
+/** Usuwa niedostępne pozycje. Wybór, w którym została jedna opcja, staje się zwykłą pozycją, bo system pominąłby go bez pytania. */
+export function keepAvailable(list, available) {
+  const kept = list.filter(available);
+  const skipped = list.filter((entry) => !available(entry)).map((entry) => entry.name);
+  const groupSize = new Map();
+  for (const { group } of kept) if (group) groupSize.set(group, (groupSize.get(group) ?? 0) + 1);
+  return { kept: kept.map((entry) => (entry.group && groupSize.get(entry.group) === 1 ? { ...entry, group: null } : entry)), skipped };
+}
+
+/** Usuwa z drzewa wyboru wyposażenia gałęzie bez dostępnych opcji. */
+export function pruneChoices(node, keepIds) {
+  const options = [];
+  for (const child of node.options ?? []) {
+    if (child.type === "option") {
+      if (keepIds.has(child.id)) options.push(child);
+    } else {
+      const pruned = pruneChoices(child, keepIds);
+      if (pruned.options.length) options.push(pruned);
+    }
+  }
+  return { ...node, options };
 }
 
 /** Wartość cechy wyliczona z wartości bazowej i ocen z nałożonych szablonów, dzięki czemu kolejność usuwania jest obojętna. */
@@ -86,6 +111,33 @@ function specificationValue(value) {
   return specialisation(value);
 }
 
+/** Czy pozycja o tej nazwie istnieje w świecie albo w aktywnym kompendium (tam szuka też system). */
+function nameExists(type, name) {
+  const base = name.split("(")[0].trim();
+  return isAvailable(name, availability[type]) || game.items.some((item) => item.type === type && item.name.split("(")[0].trim() === base);
+}
+
+function uuidExists(uuid) {
+  const [, packageName, packName, , id] = uuid.split(".");
+  return !!game.packs.get(`${packageName}.${packName}`)?.index.has(id);
+}
+
+/** System przerywa cały szablon, gdy nie znajdzie talentu albo umiejętności, więc brakujące pozycje wypadają wcześniej. */
+function removeUnavailable(update, source, name, optionalNames) {
+  const skills = keepAvailable(update["system.skills.list"], ({ name: skill }) => nameExists("skill", skill));
+  const talents = keepAvailable(update["system.talents.list"], ({ name: talent }) => nameExists("talent", talent));
+  const traits = keepAvailable(update["system.traits.list"], ({ uuid }) => uuidExists(uuid));
+  const gear = keepAvailable(update["system.trappings.options"], ({ documentId }) => uuidExists(documentId));
+  update["system.skills.list"] = skills.kept;
+  update["system.talents.list"] = talents.kept;
+  update["system.traits.list"] = traits.kept;
+  update["system.trappings.options"] = gear.kept;
+  update["system.trappings.structure"] = pruneChoices(source.trappings.structure, new Set(gear.kept.map((option) => option.id)));
+  const optional = new Set(optionalNames.map(translate));
+  const skipped = [...skills.skipped, ...talents.skipped.filter((talent) => !optional.has(talent)), ...traits.skipped, ...gear.skipped];
+  if (skipped.length) ui.notifications.warn(t("Notifications.Skipped", { template: name, items: skipped.join(", ") }));
+}
+
 function onPreCreateTemplate(item) {
   if (!isManaged(item) || !item.parent) return;
   const update = localizedSystem(item.toObject().system, translate, (key) => game.wfrp4e.config.magicLores[key] ?? key, specificationValue);
@@ -93,6 +145,7 @@ function onPreCreateTemplate(item) {
   const { keep, merge } = splitOwnedSkills(update["system.skills.list"], owned);
   update["system.skills.list"] = keep;
   update[`flags.${MODULE_ID}.pendingSkills`] = merge.map(({ name, advances }) => ({ name, advances }));
+  removeUnavailable(update, item.toObject().system, item.name, item.flags[MODULE_ID].optional ?? []);
   const ownedTraits = item.parent.itemTypes.trait.map((trait) => ({ name: trait.name, value: trait.system.specification.value }));
   const { keep: newTraits, raise } = splitOwnedTraits(update["system.traits.list"], ownedTraits);
   update["system.traits.list"] = newTraits;
@@ -170,7 +223,7 @@ export async function checkTemplates(pack) {
     try {
       await lookup(translate(name));
     } catch {
-      missing.push(`${template.name}: ${name}`);
+      if (!template.flags[MODULE_ID]?.optional?.includes(name)) missing.push(`${template.name}: ${name}`);
     }
   };
   for (const template of await pack.getDocuments()) {

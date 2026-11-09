@@ -13,6 +13,8 @@
  *
  * Nazwy talentów, umiejętności i przedmiotów są angielskie; moduł zamienia je na nazwy z aktywnego tłumaczenia.
  */
+import { SUFFUSE_WINDS } from "./addon-talents.mjs";
+
 const WINDS = ["Aqshy", "Azyr", "Chamon", "Ghur", "Ghyran", "Hysh", "Shyish", "Ulgu"].map((wind) => `Channelling (${wind})`);
 
 export const ARCHETYPES = [
@@ -115,7 +117,7 @@ export const ARCHETYPES = [
         gear: ["Hand Weapon", "Bow", "Arrow*20", "Leather Jack", "Cloak"] },
       { id: "road-warden", en: "Road Warden", pl: "Strażnik dróg",
         d: ["Lone rider between lonely villages, where help is two days away.", "Samotny jeździec między samotnymi wsiami, gdzie pomoc jest o dwa dni drogi."],
-        c: { ws: 5, bs: 5, wp: 5, fel: 5 }, s: { "Ride (Horse)": 20, "Melee (Basic)": 15, "Ranged (Crossbow)": 15, Intimidate: 10, "Lore (Law)": 5 }, t: ["Roughrider", "Seasoned Traveller", "Combat Aware"],
+        c: { ws: 5, bs: 5, wp: 5, fel: 5 }, s: { "Ride (Horse)": 20, "Melee (Basic)": 15, "Ranged (Crossbow)": 15, Intimidate: 10, "Lore (Law)": 5 }, t: ["Roughrider", "Seasoned Traveller", "Combat Aware", "Harpooner"],
         gear: ["Hand Weapon", "Crossbow", "Bolt*12", "Mail Shirt", "Leather Jack", "Leather Skullcap", "Saddle and Harness"] },
       { id: "beast-slayer", en: "Beast Slayer", pl: "Pogromca bestii",
         d: ["Collects bounties and teeth. Knows exactly where the monster's hide is thinnest.", "Zbiera nagrody i kły. Wie dokładnie, gdzie skóra potwora jest najcieńsza."],
@@ -128,7 +130,7 @@ export const ARCHETYPES = [
     ranks: [
       { id: "deckhand", en: "Deckhand", pl: "Majtek",
         d: ["Hauls rope for pennies and sings badly enough to scare the river trolls.", "Ciągnie liny za grosze i śpiewa tak fatalnie, że płoszy rzeczne trolle."],
-        c: { s: 5, ag: 5 }, s: { Row: 10, Swim: 10, Climb: 10, "Consume Alcohol": 5 }, t: ["Strong Swimmer"],
+        c: { s: 5, ag: 5 }, s: { Row: 10, Swim: 10, Climb: 10, "Consume Alcohol": 5 }, t: ["Strong Swimmer", "Chanty"],
         gear: ["Knife", "Boat Hook", "Clothing"] },
       { id: "smuggler", en: "Smuggler", pl: "Przemytnik",
         d: ["Moves the cargo at night and pays exactly the right customs officer.", "Przewozi towar nocą i płaci dokładnie właściwemu celnikowi."],
@@ -141,7 +143,7 @@ export const ARCHETYPES = [
         gear: ["Hand Weapon", "Dagger", ["Shield (Buckler)", "Pistol"], "Leather Jack", "Boots"] },
       { id: "ship-captain", en: "Ship's Captain", pl: "Szyper", pre: ["Captain", "Kapitan"],
         d: ["Knows every shoal and every harbourmaster's price, and rules the deck like a tyrant.", "Zna każdą mieliznę i cenę każdego kapitana portu, a na pokładzie rządzi jak tyran."],
-        c: { i: 5, int: 10, wp: 5, fel: 10 }, s: { Leadership: 20, Navigation: 20, "Sail (Cog)": 20, "Lore (Geography)": 10 }, t: ["Old Salt", "Orientation", "Read/Write", "Commanding Presence"],
+        c: { i: 5, int: 10, wp: 5, fel: 10 }, s: { Leadership: 20, Navigation: 20, "Sail (Cog)": 20, "Lore (Geography)": 10 }, t: ["Old Salt", "Orientation", "Read/Write", "Commanding Presence", "Master and Commander"],
         gear: ["Hand Weapon", "Pistol", "Bullet and Powder*6", "Mail Shirt", "Telescope", "Map", "Coat"] }
     ]
   },
@@ -243,11 +245,11 @@ export const ARCHETYPES = [
         gear: ["Quarterstaff", "Dagger", "Robes", "Book, Magic"] },
       { id: "wizard", en: "Wizard", pl: "Czarodziej",
         d: ["Treated with fear by peasants, with suspicion by priests and with envy by rivals.", "Chłopi się go boją, kapłani podejrzewają, a rywale zazdroszczą."],
-        c: { int: 5, wp: 10, fel: 5 }, s: { "Lore (Magick)": 15, Charm: 10, Leadership: 5 }, sc: [{ adv: 15, of: WINDS }], t: ["Instinctive Diction", "Aethyric Attunement", "Iron Will"], l: { any: 4 },
+        c: { int: 5, wp: 10, fel: 5 }, s: { "Lore (Magick)": 15, Charm: 10, Leadership: 5 }, sc: [{ adv: 15, of: WINDS }], t: ["Instinctive Diction", "Aethyric Attunement", "Iron Will"], tc: [SUFFUSE_WINDS], l: { any: 4 },
         gear: ["Quarterstaff", "Dagger", "Robes", "Book, Magic", "Amulet"] },
       { id: "master-wizard", en: "Master Wizard", pl: "Mistrz magii", pre: ["Magister", "Magister"],
         d: ["Reality bends politely in this person's presence, and so does the city council.", "W obecności tej osoby rzeczywistość uprzejmie się ugina, a rada miejska tym bardziej."],
-        c: { int: 10, wp: 15, i: 5 }, s: { "Language (Magick)": 15, "Lore (Magick)": 20, Leadership: 15, Cool: 15 }, sc: [{ adv: 20, of: WINDS }], t: ["War Wizard", "Magic Resistance", "Tower of Memories", "Instinctive Diction"], l: { any: 6 },
+        c: { int: 10, wp: 15, i: 5 }, s: { "Language (Magick)": 15, "Lore (Magick)": 20, Leadership: 15, Cool: 15 }, sc: [{ adv: 20, of: WINDS }], t: ["War Wizard", "Magic Resistance", "Tower of Memories", "Instinctive Diction", "Suffused with Magic"], l: { any: 6 },
         gear: ["Quarterstaff", "Dagger", "Robes", "Book, Magic", "Amulet", "Jewellery"] }
     ]
   },
@@ -303,7 +305,7 @@ export const QUIRKS = {
       c: { ag: 10, wp: -15 }, s: { Dodge: 15, Athletics: 15, Charm: 5 }, t: ["Flee!", "Sprinter"] },
     { id: "drunkard", en: "Drunkard", pl: "Pijak",
       d: ["Fully operational only after the fourth pint. Mostly.", "W pełni sprawny dopiero po czwartym kuflu. Zwykle."],
-      c: { ws: -5, i: -5, ag: -5, dex: -10, t: 5 }, s: { "Consume Alcohol": 25, Gossip: 15, Gamble: 5 }, t: ["Carouser"] },
+      c: { ws: -5, i: -5, ag: -5, dex: -10, t: 5 }, s: { "Consume Alcohol": 25, Gossip: 15, Gamble: 5 }, t: ["Carouser", "Vice (Alcohol)"] },
     { id: "wounded", en: "Wounded", pl: "Ranny",
       d: ["Bandaged badly, limping worse and short of temper.", "Źle opatrzony, kuleje jeszcze gorzej i łatwo traci cierpliwość."],
       c: { ws: -5, s: -5, t: -10, ag: -10 }, s: {}, t: [] },
@@ -312,7 +314,7 @@ export const QUIRKS = {
       c: { t: 10, wp: -5, fel: -15 }, s: { Intimidate: 15, Cool: 5 }, t: ["Frightening", "Doomed"] },
     { id: "bodyguard", en: "Bodyguard", pl: "Ochroniarz",
       d: ["Watches the hands and the exits. Rarely watches the conversation.", "Patrzy na ręce i wyjścia. Rozmowa rzadko go interesuje."],
-      c: { ws: 5, t: 5, i: 10 }, s: { Perception: 15, "Melee (Basic)": 10, Intuition: 10 }, t: ["Combat Aware", "Strike to Stun"] }
+      c: { ws: 5, t: 5, i: 10 }, s: { Perception: 15, "Melee (Basic)": 10, Intuition: 10 }, t: ["Combat Aware", "Strike to Stun", "Kingsguard"] }
   ]
 };
 

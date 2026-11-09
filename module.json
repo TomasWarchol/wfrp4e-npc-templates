@@ -2,7 +2,7 @@
   "id": "wfrp4e-npc-templates",
   "title": "WFRP4e – NPC Templates",
   "description": "Ready-made templates for WFRP4e: drag a rank or a quirk onto an actor to change its characteristics, skills, talents and gear.",
-  "version": "0.2.0",
+  "version": "0.3.0",
   "compatibility": {
     "minimum": "14",
     "verified": "14",

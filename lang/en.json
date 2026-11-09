@@ -37,7 +37,12 @@
       "Undead": "Undead",
       "Humans": "Humans",
       "Heroes": "Heroes",
-      "Wizards": "Wizards"
+      "Wizards": "Wizards",
+      "Alcohol": "Alcohol",
+      "Pleasure": "Pleasure"
+    },
+    "Notifications": {
+      "Skipped": "{template}: not available in your active compendiums, so not added: {items}"
     }
   }
 }

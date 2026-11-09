@@ -37,7 +37,12 @@
       "Undead": "Nieumarli",
       "Humans": "Ludzie",
       "Heroes": "Bohaterowie",
-      "Wizards": "Czarodzieje"
+      "Wizards": "Czarodzieje",
+      "Alcohol": "Alkohol",
+      "Pleasure": "Rozkosz"
+    },
+    "Notifications": {
+      "Skipped": "{template}: tych pozycji nie ma w aktywnych kompendiach, więc nie zostały dodane: {items}"
     }
   }
 }

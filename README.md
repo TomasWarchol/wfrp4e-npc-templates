@@ -31,6 +31,8 @@ Drag a template onto a character, NPC or creature. It changes the characteristic
 
 Templates use the system's own Template item, so they appear under **Applied Templates** on the Notes tab. Deleting one there undoes it. A skill the actor already has gains the extra advances instead of being listed twice. A trait the actor already has is raised to the higher rating, and Armour adds up. All of this is removed with the template.
 
+Anything missing from your active compendiums is skipped, and a notice lists what was left out. Talents from add-on books are optional extras, so they are skipped without a notice.
+
 Each rank already includes the ranks below it, so apply only one rank per actor and add quirks on top.
 
 The interface follows Foundry's language: **English** and **Polish** are built in, and more languages can be added (see *Languages*); anything untranslated falls back to English.

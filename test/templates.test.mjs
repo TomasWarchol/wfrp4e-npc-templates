@@ -1,15 +1,16 @@
 import { readFileSync } from "node:fs";
 import { describe, expect, it } from "vitest";
 import { ARCHETYPES, QUIRKS } from "../content/templates.mjs";
+import { ADDON_TALENTS } from "../content/addon-talents.mjs";
 import { HUMAN_GROUPS } from "../content/human-overlays.mjs";
 import { MONSTER_GROUPS } from "../content/monster-upgrades.mjs";
 import { accumulateRank, buildAll, buildTraits, buildTrappings, stableId } from "../tools/pack-builder.mjs";
-import { buildNameMap, resolveName } from "../scripts/names.mjs";
-import { localizedSystem, splitOwnedSkills, splitOwnedTraits, traitValue } from "../scripts/apply.mjs";
+import { buildAvailability, buildNameMap, isAvailable, resolveName } from "../scripts/names.mjs";
+import { keepAvailable, localizedSystem, pruneChoices, splitOwnedSkills, splitOwnedTraits, traitValue } from "../scripts/apply.mjs";
 
 const coreItems = JSON.parse(readFileSync(new URL("../content/core-items.json", import.meta.url), "utf8"));
 const coreTraits = JSON.parse(readFileSync(new URL("../content/core-traits.json", import.meta.url), "utf8"));
-const built = buildAll({ archetypes: ARCHETYPES, quirks: QUIRKS, humanGroups: HUMAN_GROUPS, monsterGroups: MONSTER_GROUPS, coreItems, coreTraits });
+const built = buildAll({ archetypes: ARCHETYPES, quirks: QUIRKS, humanGroups: HUMAN_GROUPS, monsterGroups: MONSTER_GROUPS, coreItems, coreTraits, addonTalents: ADDON_TALENTS });
 const byName = (name) => built.items.find((item) => item.name === name);
 
 describe("zestaw szablonów", () => {
@@ -59,6 +60,17 @@ describe("zestaw szablonów", () => {
     expect(result.structure.options[0].options).toHaveLength(2);
     expect(result.options.find((o) => o.name === "Arrow").diff.system.quantity.value).toBe(12);
     expect(result.options[0].documentId).toMatch(/^Compendium\.wfrp4e-core\.items\.Item\./);
+  });
+
+  it("oznacza talenty z dodatków jako opcjonalne", () => {
+    expect(byName("Ship's Captain").flags["wfrp4e-npc-templates"].optional).toEqual(["Chanty", "Master and Commander"]);
+    expect(byName("Wizard").flags["wfrp4e-npc-templates"].optional).toHaveLength(8);
+    expect(byName("Recruit").flags["wfrp4e-npc-templates"].optional).toEqual([]);
+  });
+
+  it("używa każdego talentu z listy dodatków", () => {
+    const used = new Set(built.items.flatMap((item) => item.system.talents.list.map((talent) => talent.name)));
+    for (const talent of ADDON_TALENTS) expect(used.has(talent), talent).toBe(true);
   });
 
   it("układa foldery w dwóch kategoriach", () => {
@@ -140,6 +152,27 @@ describe("nazwy w aktywnym tłumaczeniu", () => {
     const { keep, raise } = splitOwnedTraits(list, owned);
     expect(keep.map((t) => t.name)).toEqual(["Nowa"]);
     expect(raise).toEqual([{ name: "Pancerz", rating: 2 }, { name: "Strach", rating: 1 }, { name: "Groza", rating: 3 }]);
+  });
+
+  it("rozpoznaje dostępne nazwy po typie i podstawie", () => {
+    const available = buildAvailability([{ type: "talent", name: "Etykieta (Grupa Społeczna)" }, { type: "skill", name: "Unik" }]);
+    expect(isAvailable("Etykieta (Żołnierze)", available.talent)).toBe(true);
+    expect(isAvailable("Unik", available.talent)).toBe(false);
+    expect(isAvailable("Unik", undefined)).toBe(false);
+  });
+
+  it("pomija brakujące pozycje i rozwiązuje wybór z jedną opcją", () => {
+    const list = [{ name: "A", group: null }, { name: "Brak", group: null }, { name: "B", group: 1 }, { name: "Brak2", group: 1 }, { name: "C", group: 2 }, { name: "D", group: 2 }];
+    const { kept, skipped } = keepAvailable(list, ({ name }) => !name.startsWith("Brak"));
+    expect(skipped).toEqual(["Brak", "Brak2"]);
+    expect(kept).toEqual([{ name: "A", group: null }, { name: "B", group: null }, { name: "C", group: 2 }, { name: "D", group: 2 }]);
+  });
+
+  it("usuwa z wyposażenia puste gałęzie wyboru", () => {
+    const tree = { type: "and", id: "root", options: [{ type: "option", id: "a" }, { type: "or", id: "o1", options: [{ type: "option", id: "b" }] }, { type: "or", id: "o2", options: [{ type: "option", id: "c" }, { type: "option", id: "d" }] }] };
+    const result = pruneChoices(tree, new Set(["a", "c"]));
+    expect(result.options.map((o) => o.id)).toEqual(["a", "o2"]);
+    expect(result.options[1].options.map((o) => o.id)).toEqual(["c"]);
   });
 
   it("wylicza wartość cechy niezależnie od kolejności szablonów", () => {

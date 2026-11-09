@@ -31,6 +31,8 @@ Przeciągnij szablon na postać, NPC albo stwora. Szablon zmienia cechy oraz dod
 
 Szablony korzystają z systemowego typu Template, więc widać je w sekcji **Applied Templates** na zakładce notatek. Usunięcie szablonu cofa jego działanie. Umiejętność, którą aktor już ma, dostaje dodatkowe rozwinięcia zamiast pojawić się drugi raz. Cecha, którą aktor już ma, rośnie do wyższej wartości, a Pancerz się sumuje. Po usunięciu szablonu wszystko wraca do stanu poprzedniego.
 
+Pozycje, których nie ma w aktywnych kompendiach, są pomijane, a komunikat podaje, czego zabrakło. Talenty z dodatków są opcjonalne, więc pomijają się bez komunikatu.
+
 Każdy stopień zawiera już niższe, więc nakładaj na aktora jeden stopień i dowolne nakładki.
 
 Interfejs działa w języku Foundry: **angielski** i **polski** są wbudowane, a kolejne języki można dodać (zobacz *Języki*); to, czego nie przetłumaczono, pokazuje się po angielsku.
