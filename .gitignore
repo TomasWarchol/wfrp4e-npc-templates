@@ -1,0 +1,16 @@
+# Compendium database: built by `npm run packs` from content/
+packs/
+
+# Build output
+module.zip
+*.zip
+
+# Dev tooling
+node_modules/
+coverage/
+
+# Editors and OS
+.vscode/
+.idea/
+.DS_Store
+Thumbs.db

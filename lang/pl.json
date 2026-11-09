@@ -1,0 +1,39 @@
+{
+  "WFRP4E_TEMPLATES": {
+    "Title": "NPC Templates",
+    "Specialisations": {
+      "Soldiers": "Żołnierze",
+      "Guards": "Straż",
+      "Nobles": "Szlachta",
+      "Cultists": "Kultyści",
+      "Criminals": "Przestępcy",
+      "Guilders": "Członkowie Gildii",
+      "Warfare": "Wojskowość",
+      "Beasts": "Bestie",
+      "Geography": "Geografia",
+      "Medicine": "Medycyna",
+      "Herbalist": "Zielarz",
+      "Woodlands": "Lasy",
+      "Disease": "Choroby",
+      "Witch Hunters": "Łowcy Czarownic",
+      "Monsters": "Potwory",
+      "Fire": "Ogień",
+      "Heavens": "Niebiosa",
+      "Metal": "Metal",
+      "Life": "Życie",
+      "Light": "Światło",
+      "Shadow": "Cień",
+      "Death": "Śmierć",
+      "Sigmar": "Sigmar",
+      "Ulric": "Ulryk",
+      "Morr": "Morr",
+      "Shallya": "Shallya",
+      "Myrmidia": "Myrmidia",
+      "Taal": "Taal",
+      "Verena": "Verena",
+      "Manann": "Manann",
+      "Rhya": "Rhya",
+      "Ranald": "Ranald"
+    }
+  }
+}

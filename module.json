@@ -1,0 +1,89 @@
+{
+  "id": "wfrp4e-npc-templates",
+  "title": "WFRP4e – NPC Templates",
+  "description": "Ready-made templates for WFRP4e: drag a rank or a quirk onto an actor to change its characteristics, skills, talents and gear.",
+  "version": "0.1.0",
+  "compatibility": {
+    "minimum": "14",
+    "verified": "14",
+    "maximum": "14"
+  },
+  "authors": [
+    {
+      "name": "Tomek (TomasWarchol)",
+      "url": "https://github.com/TomasWarchol",
+      "discord": "tomek"
+    }
+  ],
+  "relationships": {
+    "systems": [
+      {
+        "id": "wfrp4e",
+        "type": "system",
+        "compatibility": {
+          "minimum": "10.0.0"
+        }
+      }
+    ],
+    "requires": [
+      {
+        "id": "wfrp4e-core",
+        "type": "module"
+      }
+    ],
+    "recommends": [
+      {
+        "id": "babele",
+        "type": "module",
+        "reason": "Needed to show the templates in Polish and other languages."
+      }
+    ]
+  },
+  "esmodules": [
+    "scripts/main.mjs"
+  ],
+  "styles": [
+    "styles/wfrp4e-npc-templates.css"
+  ],
+  "packs": [
+    {
+      "name": "npc-templates",
+      "label": "WFRP4e: NPC Templates",
+      "path": "packs/npc-templates",
+      "type": "Item",
+      "system": "wfrp4e",
+      "ownership": {
+        "PLAYER": "NONE",
+        "ASSISTANT": "OWNER"
+      }
+    }
+  ],
+  "languages": [
+    {
+      "lang": "en",
+      "name": "English",
+      "path": "lang/en.json"
+    },
+    {
+      "lang": "pl",
+      "name": "Polski",
+      "path": "lang/pl.json"
+    }
+  ],
+  "flags": {
+    "hotReload": {
+      "extensions": [
+        "css",
+        "hbs",
+        "json"
+      ]
+    }
+  },
+  "url": "https://github.com/TomasWarchol/wfrp4e-npc-templates",
+  "manifest": "https://github.com/TomasWarchol/wfrp4e-npc-templates/releases/latest/download/module.json",
+  "download": "https://github.com/TomasWarchol/wfrp4e-npc-templates/releases/latest/download/module.zip",
+  "bugs": "https://github.com/TomasWarchol/wfrp4e-npc-templates/issues",
+  "readme": "https://github.com/TomasWarchol/wfrp4e-npc-templates/blob/main/README.md",
+  "changelog": "https://github.com/TomasWarchol/wfrp4e-npc-templates/blob/main/CHANGELOG.md",
+  "license": "https://github.com/TomasWarchol/wfrp4e-npc-templates/blob/main/LICENSE"
+}
