@@ -2,9 +2,26 @@
   "label": "Szablony NPC",
   "mapping": {
     "description": "system.description.value",
-    "pre": "system.alterName.pre"
+    "pre": "system.alterName.pre",
+    "post": "system.alterName.post"
   },
   "folders": {
+    "Roles": "Role",
+    "Command": "Dowódcy",
+    "Magic and Faith": "Magia i wiara",
+    "Front Line": "Pierwsza linia",
+    "Ranged and Ambush": "Dystans i zasadzka",
+    "Support": "Wsparcie",
+    "Threat Level": "Poziom zagrożenia",
+    "Strength": "Siła",
+    "Bane of Heroes": "Zguba bohaterów",
+    "Traits": "Cechy",
+    "Body": "Ciało",
+    "Nature": "Natura",
+    "Powers": "Moce",
+    "Taint": "Skażenie",
+    "Undeath": "Nieumarłość",
+    "Weaknesses": "Słabości",
     "People": "Ludzie",
     "Soldier": "Żołnierz",
     "City Watch": "Straż miejska",
@@ -18,21 +35,10 @@
     "Healing": "Medycyna",
     "Wizardry": "Magia",
     "Clergy": "Duchowieństwo",
-    "Quirks": "Nakładki",
     "Origins": "Pochodzenie",
     "Walks of Life": "Fach",
-    "Combat Training": "Szkoła walki",
     "Faith": "Wiara",
-    "Afflictions": "Przypadłości",
-    "Dark Pacts": "Mroczne konszachty",
-    "Reputation": "Pozycja",
-    "Monsters & Upgrades": "Potwory i ulepszenia",
-    "Prowess": "Tężyzna",
-    "Wild Nature": "Dzika natura",
-    "Touch of Chaos": "Dotyk Chaosu",
-    "Undeath": "Nieumarli",
-    "Arcane Gifts": "Dary magii",
-    "Bane of Heroes": "Zguba bohaterów"
+    "Reputation": "Pozycja"
   },
   "entries": {
     "Recruit": {
@@ -237,21 +243,255 @@
       "description": "<p>Zarządza wielką świątynią, jej skarbcem i sporą częścią jej wrogów.</p>",
       "pre": "Czcigodny"
     },
-    "Greenhorn": {
-      "name": "Żółtodziób",
-      "description": "<p>Nigdy nie widział prawdziwych kłopotów. Nie spodobają mu się.</p>"
+    "Chieftain": {
+      "name": "Herszt",
+      "description": "<p>Pozostali najpierw patrzą na niego, a potem zawsze za nim idą.</p>",
+      "post": "(Herszt)"
+    },
+    "Warlord": {
+      "name": "Wódz",
+      "description": "<p>Cała armia złych pomysłów, a wszystkie działają.</p>",
+      "post": "(Wódz)"
+    },
+    "Standard Bearer": {
+      "name": "Chorąży",
+      "description": "<p>Póki sztandar stoi, nikomu innemu nie wolno uciekać.</p>",
+      "post": "(Chorąży)"
+    },
+    "Drummer": {
+      "name": "Dobosz",
+      "description": "<p>Trzyma tempo, nerwy i zwykle rytm.</p>",
+      "post": "(Dobosz)"
+    },
+    "Agitator": {
+      "name": "Podżegacz",
+      "description": "<p>Sam nie walczy. Tłumaczy, dlaczego ty powinieneś.</p>",
+      "post": "(Podżegacz)"
+    },
+    "Tactician": {
+      "name": "Taktyk",
+      "description": "<p>Już zdecydował, gdzie będziesz stać, gdy to się skończy.</p>",
+      "post": "(Taktyk)"
+    },
+    "Shaman": {
+      "name": "Szaman",
+      "description": "<p>Stare kości, smród i duchy, które odpowiadają.</p>",
+      "post": "(Szaman)"
+    },
+    "Sorcerer": {
+      "name": "Czarownik",
+      "description": "<p>Szepcze w języku, który boli, a powietrze słucha.</p>",
+      "post": "(Czarownik)"
+    },
+    "Acolyte": {
+      "name": "Akolita",
+      "description": "<p>Zna trzy słowa mocy, z czego dwa wymawia źle.</p>",
+      "post": "(Akolita)"
+    },
+    "Necromancer": {
+      "name": "Nekromanta",
+      "description": "<p>Nie pozwala swoim sługom przestać pracować, nawet po śmierci.</p>",
+      "post": "(Nekromanta)"
+    },
+    "Dark Priest": {
+      "name": "Mroczny kapłan",
+      "description": "<p>Głosi ewangelię, w której jest o wiele za dużo zębów.</p>",
+      "post": "(Mroczny kapłan)"
+    },
+    "Prophet": {
+      "name": "Prorok",
+      "description": "<p>Dokładnie wie, jak skończy się świat i kto jest temu winien.</p>",
+      "post": "(Prorok)"
+    },
+    "Thug": {
+      "name": "Osiłek",
+      "description": "<p>Rozwiązuje problemy, napierając na nie, aż przestaną.</p>",
+      "post": "(Osiłek)"
+    },
+    "Shield Bearer": {
+      "name": "Tarczownik",
+      "description": "<p>Wyszkolony, by trzymać szereg i osłaniać bok sąsiada.</p>",
+      "post": "(Tarczownik)"
+    },
+    "Berserker": {
+      "name": "Berserker",
+      "description": "<p>Przestaje myśleć przy pierwszej krwi, a czuć zaraz potem.</p>",
+      "post": "(Berserker)"
+    },
+    "Champion": {
+      "name": "Czempion",
+      "description": "<p>Walczy za honor swojego rodzaju i jeszcze nie przegrał.</p>",
+      "post": "(Czempion)"
+    },
+    "Bodyguard": {
+      "name": "Ochroniarz",
+      "description": "<p>Patrzy na ręce i wyjścia. Rozmowa rzadko go interesuje.</p>",
+      "post": "(Ochroniarz)"
+    },
+    "Duelling Master": {
+      "name": "Mistrz fechtunku",
+      "description": "<p>Uczy sztuki za pieniądze, a ćwiczy ją bez ostrzeżenia i za darmo.</p>",
+      "post": "(Mistrz fechtunku)"
+    },
+    "Brawler": {
+      "name": "Zabijaka",
+      "description": "<p>Walczyć uczył się w zaułkach, gdzie pierwsza zasada mówi, że zasad nie ma.</p>",
+      "post": "(Zabijaka)"
+    },
+    "Sharpshooter": {
+      "name": "Strzelec",
+      "description": "<p>Wstrzymuje oddech, liczy uderzenie serca i kończy spór z daleka.</p>",
+      "post": "(Strzelec)"
+    },
+    "Skirmisher": {
+      "name": "Harcownik",
+      "description": "<p>Uderza ze skraju walki i znika, zanim padnie odpowiedź.</p>",
+      "post": "(Harcownik)"
+    },
+    "Assassin": {
+      "name": "Zabójca",
+      "description": "<p>Przyjmuje zlecenie, nie zostawia świadków i wystawia rachunek przez pośrednika.</p>",
+      "post": "(Zabójca)"
+    },
+    "Scout": {
+      "name": "Zwiadowca",
+      "description": "<p>Zobaczył cię godzinę temu i zdążył już powiedzieć pozostałym.</p>",
+      "post": "(Zwiadowca)"
+    },
+    "Pathfinder": {
+      "name": "Tropiciel",
+      "description": "<p>Trzy dni za tobą i wciąż skraca dystans.</p>",
+      "post": "(Tropiciel)"
+    },
+    "Healer": {
+      "name": "Znachor",
+      "description": "<p>Trzyma pozostałych na nogach i później każe sobie za to płacić.</p>",
+      "post": "(Znachor)"
+    },
+    "Poisoner": {
+      "name": "Truciciel",
+      "description": "<p>Każde ostrze jest mokre, a nikt tu nie pije bez patrzenia.</p>",
+      "post": "(Truciciel)"
+    },
+    "Saboteur": {
+      "name": "Sabotażysta",
+      "description": "<p>Wczoraj most był w porządku. Tamten poprzedni też.</p>",
+      "post": "(Sabotażysta)"
+    },
+    "Beastmaster": {
+      "name": "Poganiacz bestii",
+      "description": "<p>Trzyma łańcuch, a to, co jest na jego końcu, jest bardzo głodne.</p>",
+      "post": "(Poganiacz bestii)"
+    },
+    "Rider": {
+      "name": "Jeździec",
+      "description": "<p>Połowa szarży to koń, a druga połowa to odwaga.</p>",
+      "post": "(Jeździec)"
+    },
+    "Torturer": {
+      "name": "Oprawca",
+      "description": "<p>Nigdy nie podnosi głosu. Nigdy nie musi.</p>",
+      "post": "(Oprawca)"
+    },
+    "Cannon Fodder": {
+      "name": "Mięso armatnie",
+      "description": "<p>Jest ich więcej tam, skąd przyszedł, i nikt ich nie liczy.</p>"
     },
     "Grizzled": {
-      "name": "Stary wyga",
+      "name": "Weteran",
       "description": "<p>Wolniejszy niż dawniej, ale nie sposób go zaskoczyć.</p>"
     },
     "Elite": {
       "name": "Elita",
       "description": "<p>Najlepszy w oddziale i doskonale zdaje sobie z tego sprawę.</p>"
     },
-    "Brute": {
-      "name": "Osiłek",
-      "description": "<p>Rozwiązuje problemy, napierając na nie, aż przestaną.</p>"
+    "Boss": {
+      "name": "Boss",
+      "description": "<p>Wszystko inne w tej komnacie tylko stało na drodze.</p>"
+    },
+    "Legendary": {
+      "name": "Legenda",
+      "description": "<p>Bardowie spierają się o szczegóły. Ocaleni nie spierają się o nic.</p>"
+    },
+    "Apex Predator": {
+      "name": "Szczytowy drapieżnik",
+      "description": "<p>Nic w tej okolicy na niego nie poluje. Nic, co przeżyło.</p>"
+    },
+    "Nemesis": {
+      "name": "Nemezis",
+      "description": "<p>Pamięta drużynę i przez cały ten czas się przygotowywał.</p>"
+    },
+    "Unkillable": {
+      "name": "Nie do zabicia",
+      "description": "<p>Mówili, że zginął przy moście. Mówili też, że zginął w zeszłym tygodniu.</p>"
+    },
+    "Scourge of the Province": {
+      "name": "Plaga prowincji",
+      "description": "<p>Na samą plotkę o nim ludzie porzucają wsie.</p>"
+    },
+    "Bane of Wizards": {
+      "name": "Zmora magów",
+      "description": "<p>Poluje na tych, od których czuć Wiatry, i właśnie ich zwietrzył.</p>"
+    },
+    "Doom Incarnate": {
+      "name": "Wcielona zagłada",
+      "description": "<p>Dla stołu, który przestał się bać. Kończy kampanie.</p>"
+    },
+    "Mighty": {
+      "name": "Silny",
+      "description": "<p>Każdy cios spada jak walący się strop.</p>"
+    },
+    "Hulking": {
+      "name": "Olbrzymi",
+      "description": "<p>O wiele większy, niż powinien być ktokolwiek z jego gatunku.</p>"
+    },
+    "Brutish": {
+      "name": "Brutalny",
+      "description": "<p>Powolny, ciężki i bardzo trudno się z nim spierać.</p>"
+    },
+    "Swift": {
+      "name": "Szybki",
+      "description": "<p>Przebiega komnatę, zanim krzyk zdąży ucichnąć.</p>"
+    },
+    "Hardened": {
+      "name": "Zahartowany",
+      "description": "<p>Otrząsał się już po gorszych od ciebie, i to niedawno.</p>"
+    },
+    "Ancient": {
+      "name": "Prastary",
+      "description": "<p>Starszy niż najbliższe miasto i dużo trudniej go spalić.</p>"
+    },
+    "Venomous": {
+      "name": "Jadowity",
+      "description": "<p>Wystarczy zadrapanie, a o zadrapanie mu chodzi.</p>"
+    },
+    "Thick-Hided": {
+      "name": "Gruboskóry",
+      "description": "<p>Strzały wbijają się w skórę i niewiele więcej.</p>"
+    },
+    "Iron-Hided": {
+      "name": "Żelaznoskóry",
+      "description": "<p>Płyty z kości i łusek, które odbijają dobrą stal.</p>"
+    },
+    "Horned": {
+      "name": "Rogaty",
+      "description": "<p>Opuszcza łeb i to jedyne ostrzeżenie, jakie dostaniesz.</p>"
+    },
+    "Lashing Tail": {
+      "name": "Biczujący ogon",
+      "description": "<p>Ten, kto stoi za nim, wcale nie jest tak bezpieczny, jak myślał.</p>"
+    },
+    "Winged": {
+      "name": "Skrzydlaty",
+      "description": "<p>Cień przelatuje nad głową chwilę przed szponami.</p>"
+    },
+    "Wall-Crawler": {
+      "name": "Pełzacz po ścianach",
+      "description": "<p>Sprawdź sufit. Potem sprawdź go jeszcze raz.</p>"
+    },
+    "Sly": {
+      "name": "Przebiegły",
+      "description": "<p>Tę zasadzkę przygotował specjalnie dla ciebie.</p>"
     },
     "Cunning": {
       "name": "Spryciarz",
@@ -260,6 +500,154 @@
     "Fanatic": {
       "name": "Fanatyk",
       "description": "<p>Wierzy bez reszty w coś, o co pożałujesz, że zapytałeś.</p>"
+    },
+    "Rabid": {
+      "name": "Wściekły",
+      "description": "<p>Piana na pysku i zero chęci, by przestać.</p>"
+    },
+    "Lurker": {
+      "name": "Czyhający",
+      "description": "<p>Czeka bez ruchu tak długo, jak trzeba.</p>"
+    },
+    "Marsh-Dweller": {
+      "name": "Bagienny",
+      "description": "<p>Błoto spowalnia ciebie. Jemu tylko dodaje wygody.</p>"
+    },
+    "Man-Eater": {
+      "name": "Ludojad",
+      "description": "<p>Nabrał smaku i wraca na tę samą drogę.</p>"
+    },
+    "Territorial": {
+      "name": "Terytorialny",
+      "description": "<p>Przekroczyłeś granicę, której nie widziałeś.</p>"
+    },
+    "Fire-Breather": {
+      "name": "Ziejący ogniem",
+      "description": "<p>Głęboki wdech to znak, że trzeba uciekać.</p>"
+    },
+    "Frost-Breather": {
+      "name": "Ziejący mrozem",
+      "description": "<p>Zostawia posągi z tego, co przed nim stało.</p>"
+    },
+    "Poison-Breather": {
+      "name": "Ziejący trucizną",
+      "description": "<p>Zielona mgła toczy się naprzód, a ptaki milkną.</p>"
+    },
+    "Storm-Breather": {
+      "name": "Ziejący burzą",
+      "description": "<p>Powietrze smakuje miedzią na sekundę przed uderzeniem.</p>"
+    },
+    "Aethyric Ward": {
+      "name": "Eteryczna osłona",
+      "description": "<p>Ciosy odbijają się od niczego, migocząc po drodze.</p>"
+    },
+    "Spell-Eater": {
+      "name": "Pożeracz czarów",
+      "description": "<p>Czary rozpadają się przy nim, a magowi leci krew z nosa.</p>"
+    },
+    "Stone-Gazer": {
+      "name": "Spojrzenie Kamienia",
+      "description": "<p>Ogród był pełen bardzo realistycznych posągów.</p>"
+    },
+    "Chaos-Marked": {
+      "name": "Naznaczony przez Chaos",
+      "description": "<p>Coś zza zasłony zauważyło to stworzenie i wprowadziło drobną poprawkę.</p>"
+    },
+    "Mark of the Blood God": {
+      "name": "Znamię Boga Krwi",
+      "description": "<p>Nie zatrzyma się, póki ktokolwiek stoi, wliczając jego samego.</p>"
+    },
+    "Mark of Decay": {
+      "name": "Znamię Rozkładu",
+      "description": "<p>Rozdęty, cierpliwy i niemożliwy do porządnego zabicia.</p>"
+    },
+    "Mark of Excess": {
+      "name": "Znamię Rozkoszy",
+      "description": "<p>Na przemian piękny i odrażający, a oderwać od niego wzrok bardzo trudno.</p>"
+    },
+    "Mark of Change": {
+      "name": "Znamię Przemiany",
+      "description": "<p>Jego kształt to raczej propozycja, a powietrze wokół wibruje.</p>"
+    },
+    "Warpstone-Gorged": {
+      "name": "Obżarty spaczeniem",
+      "description": "<p>Lekko świeci. Nie powinien był przeżyć tego posiłku.</p>"
+    },
+    "Spawn-Flesh": {
+      "name": "Ciało pomiotu",
+      "description": "<p>Rany się zamykają, a potem otwierają gdzie indziej, z zębami.</p>"
+    },
+    "Daemon-Possessed": {
+      "name": "Opętany przez demona",
+      "description": "<p>Oczy należą do kogoś innego i uważają cię za zabawnego.</p>"
+    },
+    "Tainted": {
+      "name": "Spaczony",
+      "description": "<p>Coś jest z nim nie tak, choć trudno powiedzieć co. Konie nie chcą podejść.</p>"
+    },
+    "Blood-Sworn": {
+      "name": "Zaprzysiężony krwi",
+      "description": "<p>Prowadzi rachunek czaszek i ma bardzo krótki lont.</p>"
+    },
+    "Plague-Blessed": {
+      "name": "Pobłogosławiony zarazą",
+      "description": "<p>Radośnie ropieje i uważa twoją troskę za wzruszającą.</p>"
+    },
+    "Depraved Libertine": {
+      "name": "Zepsuty rozpustnik",
+      "description": "<p>Próbował wszystkiego raz i szuka czegoś nowego. Nadasz się.</p>"
+    },
+    "Web-Weaver": {
+      "name": "Tkacz intryg",
+      "description": "<p>Każdy plan to tylko część planu, którego jeszcze nie zauważyłeś.</p>"
+    },
+    "Vampire's Thrall": {
+      "name": "Sługa wampira",
+      "description": "<p>Oddany, blady i czuwający przez cały dzień.</p>"
+    },
+    "Ratman's Informant": {
+      "name": "Donosiciel szczuroludzi",
+      "description": "<p>Bierze zapłatę w dziwnych zielonych monetach i omija kratki ściekowe.</p>"
+    },
+    "Hedge Witch": {
+      "name": "Wiedźma",
+      "description": "<p>Zna stare zaklęcia, za które świątynie paliły ludzi na stosach.</p>"
+    },
+    "Necromancer's Servant": {
+      "name": "Sługa nekromanty",
+      "description": "<p>Kopie przy księżycu, dostarcza wozem i o nic nie pyta.</p>"
+    },
+    "Risen": {
+      "name": "Ożywiony",
+      "description": "<p>Raz już go pochowano. Nie zgodził się z tym.</p>"
+    },
+    "Grave-Chill": {
+      "name": "Grobowy chłód",
+      "description": "<p>Jego dotyk zostawia szron na skórze i ciszę w piersi.</p>"
+    },
+    "Blood-Drinker": {
+      "name": "Krwiopijca",
+      "description": "<p>Każda zadana rana czyni go odrobinę silniejszym.</p>"
+    },
+    "Spectral": {
+      "name": "Widmowy",
+      "description": "<p>Ostrza przez niego przechodzą. Jego dłonie niestety nie.</p>"
+    },
+    "Barrow Lord": {
+      "name": "Pan Kurhanu",
+      "description": "<p>Wciąż dowodzi armiami pogrzebanymi wokół siebie.</p>"
+    },
+    "Deathless": {
+      "name": "Niezniszczalny truposz",
+      "description": "<p>Powal go, a o zmroku wróci, jeszcze bardziej wściekły.</p>"
+    },
+    "Dim-Witted": {
+      "name": "Głupi",
+      "description": "<p>Czasem zapomina o walce. Bywa, że zapomina o własnych nogach.</p>"
+    },
+    "Runt": {
+      "name": "Chuchro",
+      "description": "<p>Najsłabszy w stadzie i dobrze o tym wie.</p>"
     },
     "Coward": {
       "name": "Tchórz",
@@ -273,13 +661,37 @@
       "name": "Ranny",
       "description": "<p>Źle opatrzony, kuleje jeszcze gorzej i łatwo traci cierpliwość.</p>"
     },
-    "Tainted": {
-      "name": "Spaczony",
-      "description": "<p>Coś jest z nim nie tak, choć trudno powiedzieć co. Konie nie chcą podejść.</p>"
+    "Plague-Ridden": {
+      "name": "Zadżumiony",
+      "description": "<p>Kaszle w szmatę, której nikt nie powinien oglądać z bliska.</p>"
     },
-    "Bodyguard": {
-      "name": "Ochroniarz",
-      "description": "<p>Patrzy na ręce i wyjścia. Rozmowa rzadko go interesuje.</p>"
+    "One-Eyed": {
+      "name": "Jednooki",
+      "description": "<p>Stracił oko przed laty i co wieczór opowiada o tym inaczej.</p>"
+    },
+    "Starving": {
+      "name": "Wygłodzony",
+      "description": "<p>Same żebra i oczy. Za chleb zrobi rzeczy zadziwiające.</p>"
+    },
+    "Unhinged": {
+      "name": "Obłąkany",
+      "description": "<p>Prowadzi długie rozmowy z kimś, kto stoi tuż za tobą.</p>"
+    },
+    "Hunchback": {
+      "name": "Garbus",
+      "description": "<p>Pochylony od urodzenia lub od pracy, silniejszy, niż sądzili szydercy.</p>"
+    },
+    "Exhausted": {
+      "name": "Wycieńczony",
+      "description": "<p>Nie spał porządnie od ostatniej wsi, a może i od przedostatniej.</p>"
+    },
+    "Cursed": {
+      "name": "Przeklęty",
+      "description": "<p>Psy szczekają, mleko kwaśnieje, a przed zimą coś upomni się o dług.</p>"
+    },
+    "Horribly Scarred": {
+      "name": "Straszliwie okaleczony",
+      "description": "<p>Twarz opowiada historię, której nikt nie chce usłyszeć drugi raz.</p>"
     },
     "Reiklander": {
       "name": "Reiklandczyk",
@@ -365,38 +777,6 @@
       "name": "Rybak",
       "description": "<p>Cierpliwy, ogorzały i chętnie opowie o tej, która mu uciekła.</p>"
     },
-    "Shield Wall": {
-      "name": "Mur tarcz",
-      "description": "<p>Wyszkolony, by trzymać szereg i osłaniać bok sąsiada.</p>"
-    },
-    "Skirmisher": {
-      "name": "Harcownik",
-      "description": "<p>Uderza ze skraju walki i znika, zanim padnie odpowiedź.</p>"
-    },
-    "Berserker": {
-      "name": "Berserker",
-      "description": "<p>Przestaje myśleć przy pierwszej krwi, a czuć zaraz potem.</p>"
-    },
-    "Marksman": {
-      "name": "Strzelec wyborowy",
-      "description": "<p>Wstrzymuje oddech, liczy uderzenie serca i kończy spór z daleka.</p>"
-    },
-    "Fencing Master": {
-      "name": "Mistrz fechtunku",
-      "description": "<p>Uczy sztuki za pieniądze, a ćwiczy ją bez ostrzeżenia i za darmo.</p>"
-    },
-    "Cavalry Trooper": {
-      "name": "Kawalerzysta",
-      "description": "<p>Połowa szarży to koń, a druga połowa to odwaga.</p>"
-    },
-    "Street Brawler": {
-      "name": "Uliczny zabijaka",
-      "description": "<p>Walczyć uczył się w zaułkach, gdzie pierwsza zasada mówi, że zasad nie ma.</p>"
-    },
-    "Trained Killer": {
-      "name": "Wyszkolony zabójca",
-      "description": "<p>Przyjmuje zlecenie, nie zostawia świadków i wystawia rachunek przez pośrednika.</p>"
-    },
     "Sigmar's Faithful": {
       "name": "Wierny Sigmara",
       "description": "<p>Nosi młot na widoku i przygląda się uważnie tym, którzy tego nie robią.</p>"
@@ -429,70 +809,6 @@
       "name": "Skryty wątpiący",
       "description": "<p>Porusza ustami w modlitwie, a po cichu czyta księgi spalone gdzie indziej.</p>"
     },
-    "Plague-Ridden": {
-      "name": "Zadżumiony",
-      "description": "<p>Kaszle w szmatę, której nikt nie powinien oglądać z bliska.</p>"
-    },
-    "One-Eyed": {
-      "name": "Jednooki",
-      "description": "<p>Stracił oko przed laty i co wieczór opowiada o tym inaczej.</p>"
-    },
-    "Starving": {
-      "name": "Wygłodzony",
-      "description": "<p>Same żebra i oczy. Za chleb zrobi rzeczy zadziwiające.</p>"
-    },
-    "Unhinged": {
-      "name": "Obłąkany",
-      "description": "<p>Prowadzi długie rozmowy z kimś, kto stoi tuż za tobą.</p>"
-    },
-    "Hunchback": {
-      "name": "Garbus",
-      "description": "<p>Pochylony od urodzenia lub od pracy, silniejszy, niż sądzili szydercy.</p>"
-    },
-    "Exhausted": {
-      "name": "Wycieńczony",
-      "description": "<p>Nie spał porządnie od ostatniej wsi, a może i od przedostatniej.</p>"
-    },
-    "Cursed": {
-      "name": "Przeklęty",
-      "description": "<p>Psy szczekają, mleko kwaśnieje, a przed zimą coś upomni się o dług.</p>"
-    },
-    "Horribly Scarred": {
-      "name": "Straszliwie okaleczony",
-      "description": "<p>Twarz opowiada historię, której nikt nie chce usłyszeć drugi raz.</p>"
-    },
-    "Blood-Sworn": {
-      "name": "Zaprzysiężony krwi",
-      "description": "<p>Prowadzi rachunek czaszek i ma bardzo krótki lont.</p>"
-    },
-    "Plague-Blessed": {
-      "name": "Pobłogosławiony zarazą",
-      "description": "<p>Radośnie ropieje i uważa twoją troskę za wzruszającą.</p>"
-    },
-    "Depraved Libertine": {
-      "name": "Zepsuty rozpustnik",
-      "description": "<p>Próbował wszystkiego raz i szuka czegoś nowego. Nadasz się.</p>"
-    },
-    "Web-Weaver": {
-      "name": "Tkacz intryg",
-      "description": "<p>Każdy plan to tylko część planu, którego jeszcze nie zauważyłeś.</p>"
-    },
-    "Vampire's Thrall": {
-      "name": "Sługa wampira",
-      "description": "<p>Oddany, blady i czuwający przez cały dzień.</p>"
-    },
-    "Ratman's Informant": {
-      "name": "Donosiciel szczuroludzi",
-      "description": "<p>Bierze zapłatę w dziwnych zielonych monetach i omija kratki ściekowe.</p>"
-    },
-    "Hedge Witch": {
-      "name": "Wiedźma",
-      "description": "<p>Zna stare zaklęcia, za które świątynie paliły ludzi na stosach.</p>"
-    },
-    "Necromancer's Servant": {
-      "name": "Sługa nekromanty",
-      "description": "<p>Kopie przy księżycu, dostarcza wozem i o nic nie pyta.</p>"
-    },
     "Wealthy Patron": {
       "name": "Bogaty mecenas",
       "description": "<p>Większość spraw załatwia sakiewką, a resztę cudzym mieczem.</p>"
@@ -516,222 +832,6 @@
     "Corrupt Official": {
       "name": "Skorumpowany urzędnik",
       "description": "<p>Każda pieczątka ma swoją cenę, a dziś cena wzrosła.</p>"
-    },
-    "Mighty": {
-      "name": "Silny",
-      "description": "<p>Każdy cios spada jak walący się strop.</p>"
-    },
-    "Hulking": {
-      "name": "Olbrzymi",
-      "description": "<p>O wiele większy, niż powinien być ktokolwiek z jego gatunku.</p>"
-    },
-    "Brutish": {
-      "name": "Brutalny",
-      "description": "<p>Powolny, ciężki i bardzo trudno się z nim spierać.</p>"
-    },
-    "Swift": {
-      "name": "Szybki",
-      "description": "<p>Przebiega komnatę, zanim krzyk zdąży ucichnąć.</p>"
-    },
-    "Hardened": {
-      "name": "Zahartowany",
-      "description": "<p>Otrząsał się już po gorszych od ciebie, i to niedawno.</p>"
-    },
-    "Elite Specimen": {
-      "name": "Elitarny",
-      "description": "<p>Najlepsze, co wydał jego miot albo banda.</p>"
-    },
-    "Champion": {
-      "name": "Czempion",
-      "description": "<p>Walczy za honor swojego rodzaju i jeszcze nie przegrał.</p>"
-    },
-    "Alpha": {
-      "name": "Przewodnik stada",
-      "description": "<p>Pozostali najpierw patrzą na niego, a potem zawsze za nim idą.</p>"
-    },
-    "Dim-Witted": {
-      "name": "Głupi",
-      "description": "<p>Czasem zapomina o walce. Bywa, że zapomina o własnych nogach.</p>"
-    },
-    "Sly": {
-      "name": "Przebiegły",
-      "description": "<p>Tę zasadzkę przygotował specjalnie dla ciebie.</p>"
-    },
-    "Runt": {
-      "name": "Chuchro",
-      "description": "<p>Najsłabszy w stadzie i dobrze o tym wie.</p>"
-    },
-    "Ancient": {
-      "name": "Prastary",
-      "description": "<p>Starszy niż najbliższe miasto i dużo trudniej go spalić.</p>"
-    },
-    "Venomous": {
-      "name": "Jadowity",
-      "description": "<p>Wystarczy zadrapanie, a o zadrapanie mu chodzi.</p>"
-    },
-    "Rabid": {
-      "name": "Wściekły",
-      "description": "<p>Piana na pysku i zero chęci, by przestać.</p>"
-    },
-    "Thick-Hided": {
-      "name": "Gruboskóry",
-      "description": "<p>Strzały wbijają się w skórę i niewiele więcej.</p>"
-    },
-    "Iron-Hided": {
-      "name": "Żelaznoskóry",
-      "description": "<p>Płyty z kości i łusek, które odbijają dobrą stal.</p>"
-    },
-    "Horned": {
-      "name": "Rogaty",
-      "description": "<p>Opuszcza łeb i to jedyne ostrzeżenie, jakie dostaniesz.</p>"
-    },
-    "Lashing Tail": {
-      "name": "Biczujący ogon",
-      "description": "<p>Ten, kto stoi za nim, wcale nie jest tak bezpieczny, jak myślał.</p>"
-    },
-    "Winged": {
-      "name": "Skrzydlaty",
-      "description": "<p>Cień przelatuje nad głową chwilę przed szponami.</p>"
-    },
-    "Wall-Crawler": {
-      "name": "Pełzacz po ścianach",
-      "description": "<p>Sprawdź sufit. Potem sprawdź go jeszcze raz.</p>"
-    },
-    "Lurker": {
-      "name": "Czyhający",
-      "description": "<p>Czeka bez ruchu tak długo, jak trzeba.</p>"
-    },
-    "Marsh-Dweller": {
-      "name": "Bagienny",
-      "description": "<p>Błoto spowalnia ciebie. Jemu tylko dodaje wygody.</p>"
-    },
-    "Man-Eater": {
-      "name": "Ludojad",
-      "description": "<p>Nabrał smaku i wraca na tę samą drogę.</p>"
-    },
-    "Territorial": {
-      "name": "Terytorialny",
-      "description": "<p>Przekroczyłeś granicę, której nie widziałeś.</p>"
-    },
-    "Chaos-Marked": {
-      "name": "Naznaczony przez Chaos",
-      "description": "<p>Coś zza zasłony zauważyło to stworzenie i wprowadziło drobną poprawkę.</p>"
-    },
-    "Mark of the Blood God": {
-      "name": "Znamię Boga Krwi",
-      "description": "<p>Nie zatrzyma się, póki ktokolwiek stoi, wliczając jego samego.</p>"
-    },
-    "Mark of Decay": {
-      "name": "Znamię Rozkładu",
-      "description": "<p>Rozdęty, cierpliwy i niemożliwy do porządnego zabicia.</p>"
-    },
-    "Mark of Excess": {
-      "name": "Znamię Rozkoszy",
-      "description": "<p>Na przemian piękny i odrażający, a oderwać od niego wzrok bardzo trudno.</p>"
-    },
-    "Mark of Change": {
-      "name": "Znamię Przemiany",
-      "description": "<p>Jego kształt to raczej propozycja, a powietrze wokół wibruje.</p>"
-    },
-    "Warpstone-Gorged": {
-      "name": "Obżarty spaczeniem",
-      "description": "<p>Lekko świeci. Nie powinien był przeżyć tego posiłku.</p>"
-    },
-    "Spawn-Flesh": {
-      "name": "Ciało pomiotu",
-      "description": "<p>Rany się zamykają, a potem otwierają gdzie indziej, z zębami.</p>"
-    },
-    "Daemon-Possessed": {
-      "name": "Opętany przez demona",
-      "description": "<p>Oczy należą do kogoś innego i uważają cię za zabawnego.</p>"
-    },
-    "Risen": {
-      "name": "Ożywiony",
-      "description": "<p>Raz już go pochowano. Nie zgodził się z tym.</p>"
-    },
-    "Grave-Chill": {
-      "name": "Grobowy chłód",
-      "description": "<p>Jego dotyk zostawia szron na skórze i ciszę w piersi.</p>"
-    },
-    "Blood-Drinker": {
-      "name": "Krwiopijca",
-      "description": "<p>Każda zadana rana czyni go odrobinę silniejszym.</p>"
-    },
-    "Spectral": {
-      "name": "Widmowy",
-      "description": "<p>Ostrza przez niego przechodzą. Jego dłonie niestety nie.</p>"
-    },
-    "Barrow Lord": {
-      "name": "Pan Kurhanu",
-      "description": "<p>Wciąż dowodzi armiami pogrzebanymi wokół siebie.</p>"
-    },
-    "Deathless": {
-      "name": "Niezniszczalny truposz",
-      "description": "<p>Powal go, a o zmroku wróci, jeszcze bardziej wściekły.</p>"
-    },
-    "Fire-Breather": {
-      "name": "Ziejący ogniem",
-      "description": "<p>Głęboki wdech to znak, że trzeba uciekać.</p>"
-    },
-    "Frost-Breather": {
-      "name": "Ziejący mrozem",
-      "description": "<p>Zostawia posągi z tego, co przed nim stało.</p>"
-    },
-    "Poison-Breather": {
-      "name": "Ziejący trucizną",
-      "description": "<p>Zielona mgła toczy się naprzód, a ptaki milkną.</p>"
-    },
-    "Storm-Breather": {
-      "name": "Ziejący burzą",
-      "description": "<p>Powietrze smakuje miedzią na sekundę przed uderzeniem.</p>"
-    },
-    "Aethyric Ward": {
-      "name": "Eteryczna osłona",
-      "description": "<p>Ciosy odbijają się od niczego, migocząc po drodze.</p>"
-    },
-    "Spell-Eater": {
-      "name": "Pożeracz czarów",
-      "description": "<p>Czary rozpadają się przy nim, a magowi leci krew z nosa.</p>"
-    },
-    "Stone-Gazer": {
-      "name": "Spojrzenie Kamienia",
-      "description": "<p>Ogród był pełen bardzo realistycznych posągów.</p>"
-    },
-    "Sorcerous": {
-      "name": "Czarnoksięski",
-      "description": "<p>Szepcze w języku, który boli, a powietrze słucha.</p>"
-    },
-    "Apex Predator": {
-      "name": "Szczytowy drapieżnik",
-      "description": "<p>Nic w tej okolicy na niego nie poluje. Nic, co przeżyło.</p>"
-    },
-    "Nemesis": {
-      "name": "Nemezis",
-      "description": "<p>Pamięta drużynę i przez cały ten czas się przygotowywał.</p>"
-    },
-    "Unkillable": {
-      "name": "Nie do zabicia",
-      "description": "<p>Mówili, że zginął przy moście. Mówili też, że zginął w zeszłym tygodniu.</p>"
-    },
-    "Scourge of the Province": {
-      "name": "Plaga prowincji",
-      "description": "<p>Na samą plotkę o nim ludzie porzucają wsie.</p>"
-    },
-    "Bane of Wizards": {
-      "name": "Zmora magów",
-      "description": "<p>Poluje na tych, od których czuć Wiatry, i właśnie ich zwietrzył.</p>"
-    },
-    "Warlord": {
-      "name": "Wódz wojenny",
-      "description": "<p>Cała armia złych pomysłów, a wszystkie działają.</p>"
-    },
-    "Legendary": {
-      "name": "Legendarny",
-      "description": "<p>Bardowie spierają się o szczegóły. Ocaleni nie spierają się o nic.</p>"
-    },
-    "Doom Incarnate": {
-      "name": "Wcielona zagłada",
-      "description": "<p>Dla stołu, który przestał się bać. Kończy kampanie.</p>"
     }
   }
 }

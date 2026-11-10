@@ -1,16 +1,18 @@
 import { readFileSync } from "node:fs";
 import { describe, expect, it } from "vitest";
-import { ARCHETYPES, QUIRKS } from "../content/templates.mjs";
+import { ARCHETYPES } from "../content/templates.mjs";
 import { ADDON_TALENTS } from "../content/addon-talents.mjs";
 import { HUMAN_GROUPS } from "../content/human-overlays.mjs";
-import { MONSTER_GROUPS } from "../content/monster-upgrades.mjs";
-import { accumulateRank, buildAll, buildTraits, buildTrappings, stableId } from "../tools/pack-builder.mjs";
+import { ROLE_GROUPS } from "../content/roles.mjs";
+import { TIER_GROUPS } from "../content/tiers.mjs";
+import { TRAIT_GROUPS } from "../content/traits.mjs";
+import { accumulateRank, buildAll, buildSpellLinks, buildTraits, buildTrappings, stableId } from "../tools/pack-builder.mjs";
 import { buildAvailability, buildNameMap, isAvailable, resolveName } from "../scripts/names.mjs";
-import { keepAvailable, localizedSystem, pruneChoices, splitOwnedSkills, splitOwnedTraits, traitValue } from "../scripts/apply.mjs";
+import { grantedItemData, keepAvailable, localizedSystem, pruneChoices, splitOwnedSkills, splitOwnedTraits, traitValue } from "../scripts/apply.mjs";
 
 const coreItems = JSON.parse(readFileSync(new URL("../content/core-items.json", import.meta.url), "utf8"));
 const coreTraits = JSON.parse(readFileSync(new URL("../content/core-traits.json", import.meta.url), "utf8"));
-const built = buildAll({ archetypes: ARCHETYPES, quirks: QUIRKS, humanGroups: HUMAN_GROUPS, monsterGroups: MONSTER_GROUPS, coreItems, coreTraits, addonTalents: ADDON_TALENTS });
+const built = buildAll({ archetypes: ARCHETYPES, humanGroups: HUMAN_GROUPS, roleGroups: ROLE_GROUPS, tierGroups: TIER_GROUPS, traitGroups: TRAIT_GROUPS, coreItems, coreTraits, addonTalents: ADDON_TALENTS });
 const byName = (name) => built.items.find((item) => item.name === name);
 
 describe("zestaw szablonów", () => {
@@ -73,11 +75,78 @@ describe("zestaw szablonów", () => {
     for (const talent of ADDON_TALENTS) expect(used.has(talent), talent).toBe(true);
   });
 
-  it("układa foldery w dwóch kategoriach", () => {
-    const top = built.folders.filter((f) => !f.folder).map((f) => f.name);
-    expect(top).toEqual(["People", "Monsters & Upgrades"]);
-    const monsters = built.folders.find((f) => f.name === "Monsters & Upgrades");
-    expect(built.folders.filter((f) => f.folder === monsters._id).map((f) => f.name)).toContain("Bane of Heroes");
+  it("układa foldery w czterech kategoriach, od najczęściej używanych", () => {
+    const top = built.folders.filter((f) => !f.folder).sort((a, b) => a.sort - b.sort).map((f) => f.name);
+    expect(top).toEqual(["Roles", "Threat Level", "Traits", "People"]);
+    const tiers = built.folders.find((f) => f.name === "Threat Level");
+    expect(built.folders.filter((f) => f.folder === tiers._id).map((f) => f.name)).toContain("Bane of Heroes");
+  });
+
+  it("rola dopisuje się do imienia, a poziom i cecha nie", () => {
+    const shaman = byName("Shaman");
+    expect(shaman.system.alterName).toEqual({ pre: "", post: "(Shaman)" });
+    expect(built.translation.entries.Shaman.post).toBe("(Szaman)");
+    expect(built.translation.mapping.post).toBe("system.alterName.post");
+    expect(byName("Elite").system.alterName.post).toBe("");
+    expect(byName("Mighty").system.alterName.post).toBe("");
+  });
+
+  it("każda rola ma dopisek w obu językach i działa bez rasy", () => {
+    for (const group of ROLE_GROUPS) {
+      for (const item of group.items) {
+        expect(item.post, item.en).toHaveLength(2);
+        expect(item.post[0], item.en).toMatch(/^\(.+\)$/);
+        expect(item.post[1], item.en).toMatch(/^\(.+\)$/);
+      }
+    }
+  });
+
+  it("stałe zaklęcia są odwołaniami do kompendium i nie otwierają wyboru", () => {
+    const shaman = byName("Shaman");
+    const links = shaman.flags["wfrp4e-npc-templates"].spells;
+    expect(links).toHaveLength(6);
+    expect(links[0]).toMatch(/^Compendium\.wfrp4e-core\.items\.Item\./);
+    expect(shaman.system.trappings.options).toEqual([]);
+    expect(shaman.system.lores.list).toEqual([]);
+    expect(byName("Prophet").flags["wfrp4e-npc-templates"].spells).toHaveLength(3);
+    expect(byName("Thug").flags["wfrp4e-npc-templates"].spells).toEqual([]);
+    expect(() => buildSpellLinks(["Nope"], coreItems, "test")).toThrow(/Nope/);
+  });
+
+  it("zaklęcia dostają znacznik szablonu, a zapamiętanie tylko zaklęcia", () => {
+    globalThis.foundry = { utils: { mergeObject: (a, b) => {
+      const out = structuredClone(a);
+      for (const [path, value] of Object.entries(b)) {
+        const keys = path.split(".");
+        let node = out;
+        for (const key of keys.slice(0, -1)) node = node[key] ??= {};
+        node[keys.at(-1)] = value;
+      }
+      return out;
+    } } };
+    globalThis.game = { system: { id: "wfrp4e" } };
+    const [spell, prayer] = grantedItemData([{ _id: "a", type: "spell", system: { memorized: { value: false } } }, { _id: "b", type: "prayer", system: {} }], "tpl");
+    expect(spell._id).toBeUndefined();
+    expect(spell.system.memorized.value).toBe(true);
+    expect(spell.flags.wfrp4e.fromTemplate).toBe("tpl");
+    expect(prayer.system.memorized).toBeUndefined();
+    expect(prayer.flags.wfrp4e.fromTemplate).toBe("tpl");
+    delete globalThis.foundry;
+    delete globalThis.game;
+  });
+
+  it("Czarownik pyta o tradycję", () => {
+    expect(byName("Sorcerer").system.lores.list.map((l) => l.name)).toEqual(["petty", "*"]);
+  });
+
+  it("role i poziomy nie dublują się z cechami", () => {
+    const roles = new Set(ROLE_GROUPS.flatMap((g) => g.items.map((i) => i.id)));
+    for (const group of [...TIER_GROUPS, ...TRAIT_GROUPS]) {
+      for (const item of group.items) expect(roles.has(item.id), item.id).toBe(false);
+    }
+    expect(built.items.filter((i) => i.name === "Elite")).toHaveLength(1);
+    expect(byName("Elite Specimen")).toBeUndefined();
+    expect(byName("Champion").system.traits.list.map((t) => t.name)).toContain("Champion");
   });
 
   it("zapisuje wartość cechy tak, by system o nią nie pytał", () => {

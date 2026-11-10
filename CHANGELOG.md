@@ -1,5 +1,12 @@
 # Changelog
 
+## 0.4.0
+- **New layout for quick enemies.** Four folders: Roles, Threat Level, Traits and People. Any template works on any race: Goblin plus Shaman makes a goblin shaman.
+- **30 roles**, such as Chieftain, Warlord, Standard Bearer, Shaman, Necromancer, Shield Bearer, Assassin, Healer and Beastmaster. A role adds itself to the name, for example "Goblin (Shaman)".
+- **Threat Level**: Cannon Fodder, Grizzled, Elite, Boss and Legendary, plus the very strong Bane of Heroes templates.
+- Traits now gather what was scattered: Body, Nature, Powers, Taint, Undeath and Weaknesses. Duplicates were merged into one version each.
+- Casters such as the Shaman and Necromancer get a fixed set of memorised spells, with no selection windows. The Sorcerer still asks for a Lore.
+
 ## 0.3.0
 - Templates now use talents from add-on books where they fit. A group without the book simply does not get them, with no warning.
 

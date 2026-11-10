@@ -8,22 +8,34 @@ Requires **Foundry VTT v14**, the **WFRP4e** system **10.0+** and the **WFRP4e C
 
 ## What's inside
 
-The **WFRP4e: NPC Templates** compendium holds 172 templates in two categories.
+The **WFRP4e: NPC Templates** compendium is built for making enemies quickly. Drop templates onto any actor and combine them: Goblin plus Shaman makes a goblin shaman, and Goblin plus Warlord plus Elite makes the one in charge.
 
-**People**
+| Folder | The question it answers | How many to use |
+|---|---|---|
+| **Roles** (30) | Who is it in the group? | one |
+| **Threat Level** (11) | How dangerous is it? | one, plus Bane of Heroes for a real boss |
+| **Traits** (64) | What is special about it? | any number |
+| **People** (83) | Do you need a ready human from scratch? | one rank, plus any background |
 
-- **12 archetypes with 4 ranks each.** Soldier (Recruit, Veteran, Sergeant, Captain), City Watch, Outlaw, Cultist, Hunter, River & Sea, Nobility, Trade, Underworld, Healing, Wizardry and Clergy.
-- **11 quirks that combine with anything.** Greenhorn, Grizzled, Elite, Brute, Cunning, Fanatic, Coward, Drunkard, Wounded, Tainted and Bodyguard.
-- **59 themed overlays.** Origins, Walks of Life, Combat Training, Faith, Afflictions, Dark Pacts and Reputation.
+**Roles** work on any race and add themselves to the name, for example "Goblin (Shaman)".
 
-**Monsters & Upgrades** (54 upgrades that also work on people)
+- **Command:** Chieftain, Warlord, Standard Bearer, Drummer, Agitator, Tactician
+- **Magic and Faith:** Shaman, Sorcerer, Acolyte, Necromancer, Dark Priest, Prophet
+- **Front Line:** Thug, Shield Bearer, Berserker, Champion, Bodyguard, Duelling Master, Brawler
+- **Ranged and Ambush:** Sharpshooter, Skirmisher, Assassin, Scout, Pathfinder
+- **Support:** Healer, Poisoner, Saboteur, Beastmaster, Rider, Torturer
 
-- **Prowess.** Mighty, Hulking, Elite Specimen, Champion, Alpha, Dim-Witted, Ancient and more.
-- **Wild Nature.** Venomous, Rabid, Iron-Hided, Winged, Man-Eater and more.
-- **Touch of Chaos.** Chaos-Marked, the four Marks, Warpstone-Gorged, Daemon-Possessed and more.
-- **Undeath.** Risen, Spectral, Barrow Lord, Deathless and more.
-- **Arcane Gifts.** Breath weapons, Aethyric Ward, Spell-Eater, Sorcerous and more.
-- **Bane of Heroes.** The strongest options for demanding parties, up to Doom Incarnate.
+Casters get a fixed set of memorised spells with no selection windows. The Sorcerer asks you to pick a Lore.
+
+**Threat Level:** Cannon Fodder, Grizzled, Elite, Boss, Legendary and six very strong Bane of Heroes templates.
+
+**Traits:** Body, Nature, Powers, Taint, Undeath and Weaknesses.
+
+**People:** 12 archetypes of 4 ranks each, with Origins, Walks of Life, Faith and Reputation for background.
+
+Items missing from your active compendiums are skipped, and a notice says what was left out. Talents from add-on books are optional and are skipped silently.
+
+Each rank already includes the lower ones, so give an actor one rank.
 
 ## How to use it
 

@@ -8,14 +8,16 @@ import { tmpdir } from "node:os";
 import { join, resolve } from "node:path";
 import { ADDON_TALENTS } from "../content/addon-talents.mjs";
 import { HUMAN_GROUPS } from "../content/human-overlays.mjs";
-import { MONSTER_GROUPS } from "../content/monster-upgrades.mjs";
-import { ARCHETYPES, QUIRKS } from "../content/templates.mjs";
+import { ROLE_GROUPS } from "../content/roles.mjs";
+import { TIER_GROUPS } from "../content/tiers.mjs";
+import { TRAIT_GROUPS } from "../content/traits.mjs";
+import { ARCHETYPES } from "../content/templates.mjs";
 import { buildAll, MODULE_ID, PACK_NAME } from "./pack-builder.mjs";
 
 const root = resolve(import.meta.dirname, "..");
 const coreItems = JSON.parse(readFileSync(join(root, "content", "core-items.json"), "utf8"));
 const coreTraits = JSON.parse(readFileSync(join(root, "content", "core-traits.json"), "utf8"));
-const { folders, items, translation } = buildAll({ archetypes: ARCHETYPES, quirks: QUIRKS, humanGroups: HUMAN_GROUPS, monsterGroups: MONSTER_GROUPS, coreItems, coreTraits, addonTalents: ADDON_TALENTS });
+const { folders, items, translation } = buildAll({ archetypes: ARCHETYPES, humanGroups: HUMAN_GROUPS, roleGroups: ROLE_GROUPS, tierGroups: TIER_GROUPS, traitGroups: TRAIT_GROUPS, coreItems, coreTraits, addonTalents: ADDON_TALENTS });
 
 const source = mkdtempSync(join(tmpdir(), `${PACK_NAME}-`));
 for (const doc of [...folders, ...items]) writeFileSync(join(source, `${doc._id}.json`), JSON.stringify(doc));

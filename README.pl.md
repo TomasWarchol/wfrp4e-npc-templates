@@ -8,22 +8,34 @@ Wymaga **Foundry VTT v14**, systemu **WFRP4e** w wersji **10.0+** i modułu **WF
 
 ## Co jest w środku
 
-Kompendium **WFRP4e: NPC Templates** zawiera 172 szablony w dwóch kategoriach.
+Kompendium **WFRP4e: NPC Templates** służy do szybkiego robienia przeciwników. Przeciągasz szablony na dowolnego aktora i łączysz je: Goblin + Szaman to szaman goblinów, a Goblin + Wódz + Elita to ten, który tu rządzi.
 
-**Ludzie**
+| Folder | Pytanie | Ile nakładać |
+|---|---|---|
+| **Role** (30) | Kim jest w grupie? | jedną |
+| **Poziom zagrożenia** (11) | Jak jest groźny? | jeden, a dla prawdziwego bossa także Zgubę bohaterów |
+| **Cechy** (64) | Co ma w sobie szczególnego? | dowolnie |
+| **Ludzie** (83) | Potrzebujesz gotowego człowieka od zera? | jeden stopień i dowolne tło |
 
-- **12 archetypów po 4 stopnie.** Żołnierz (Rekrut, Weteran, Sierżant, Kapitan), Straż miejska, Banita, Kultysta, Łowca, Rzeka i morze, Szlachta, Handel, Półświatek, Medycyna, Magia i Duchowieństwo.
-- **11 nakładek do łączenia z czymkolwiek.** Żółtodziób, Stary wyga, Elita, Osiłek, Spryciarz, Fanatyk, Tchórz, Pijak, Ranny, Spaczony i Ochroniarz.
-- **59 nakładek tematycznych.** Pochodzenie, Fach, Szkoła walki, Wiara, Przypadłości, Mroczne konszachty i Pozycja.
+**Role** działają na każdej rasie i dopisują się do imienia, np. „Goblin (Szaman)”.
 
-**Potwory i ulepszenia** (54 ulepszenia, działają też na ludziach)
+- **Dowódcy:** Herszt, Wódz, Chorąży, Dobosz, Podżegacz, Taktyk
+- **Magia i wiara:** Szaman, Czarownik, Akolita, Nekromanta, Mroczny kapłan, Prorok
+- **Pierwsza linia:** Osiłek, Tarczownik, Berserker, Czempion, Ochroniarz, Mistrz fechtunku, Zabijaka
+- **Dystans i zasadzka:** Strzelec, Harcownik, Zabójca, Zwiadowca, Tropiciel
+- **Wsparcie:** Znachor, Truciciel, Sabotażysta, Poganiacz bestii, Jeździec, Oprawca
 
-- **Tężyzna.** Silny, Olbrzymi, Elitarny, Czempion, Przewodnik stada, Głupi, Prastary i inne.
-- **Dzika natura.** Jadowity, Wściekły, Żelaznoskóry, Skrzydlaty, Ludojad i inne.
-- **Dotyk Chaosu.** Naznaczony przez Chaos, cztery Znamiona, Obżarty spaczeniem, Opętany przez demona i inne.
-- **Nieumarli.** Ożywiony, Widmowy, Pan Kurhanu, Niezniszczalny truposz i inne.
-- **Dary magii.** Zionięcie, Eteryczna osłona, Pożeracz czarów, Czarnoksięski i inne.
-- **Zguba bohaterów.** Najmocniejsze opcje dla wymagających drużyn, aż po Wcieloną zagładę.
+Rzucający czary dostają stały zestaw zapamiętanych zaklęć, bez okien wyboru. Czarownik pyta o tradycję.
+
+**Poziom zagrożenia:** Mięso armatnie, Weteran, Elita, Boss, Legenda i sześć bardzo mocnych szablonów Zguby bohaterów.
+
+**Cechy:** Ciało, Natura, Moce, Skażenie, Nieumarłość i Słabości.
+
+**Ludzie:** 12 archetypów po 4 stopnie oraz Pochodzenie, Fach, Wiara i Pozycja jako tło.
+
+Pozycje, których nie ma w aktywnych kompendiach, są pomijane, a komunikat podaje, czego zabrakło. Talenty z dodatków są opcjonalne, więc pomijają się bez komunikatu.
+
+Każdy stopień zawiera już niższe, więc nakładaj na aktora jeden stopień.
 
 ## Jak używać
 

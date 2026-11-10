@@ -153,9 +153,33 @@ function onPreCreateTemplate(item) {
   item.updateSource(update);
 }
 
+/**
+ * Dane stałych zaklęć i modlitw szablonu: zaklęcia od razu zapamiętane, oznaczone jak pozostałe
+ * przedmioty z szablonu, więc system usunie je przy cofnięciu.
+ */
+export function grantedItemData(documents, templateId) {
+  return documents.map((data) => {
+    const rest = { ...data };
+    delete rest._id;
+    return foundry.utils.mergeObject(rest, {
+      ...(rest.type === "spell" ? { "system.memorized.value": true } : {}),
+      [`flags.${game.system.id}.fromTemplate`]: templateId
+    }, { inplace: false });
+  });
+}
+
+/** Lista wyposażenia systemu przerywa nakładanie przy zaklęciach, więc dodajemy je sami. */
+async function grantSpells(item) {
+  const uuids = item.getFlag(MODULE_ID, "spells") ?? [];
+  if (!uuids.length) return;
+  const documents = (await Promise.all(uuids.map((uuid) => fromUuid(uuid)))).filter(Boolean);
+  await item.parent.createEmbeddedDocuments("Item", grantedItemData(documents.map((doc) => doc.toObject()), item.id), { fromTemplate: item.id, skipExperienceChecks: true });
+}
+
 /** Podnosi rozwinięcia umiejętności, które aktor już ma, i zapamiętuje, ile dodał ten szablon. */
 function onCreateTemplate(item, _options, userId) {
   if (!isManaged(item) || !item.parent || userId !== game.user.id) return;
+  grantSpells(item).catch((error) => log.error(error));
   const skills = item.parent.itemTypes.skill;
   const updates = [];
   for (const { name, advances } of item.getFlag(MODULE_ID, "pendingSkills") ?? []) {

@@ -1,0 +1,63 @@
+/**
+ * Role: kim jest przeciwnik w swojej grupie. Działają na każdej rasie i dopisują rolę do imienia, np. "Goblin (Szaman)".
+ * Pola: d (opis EN/PL), c (cechy), s (umiejętności), t (talenty), tr (cechy stworzeń: "Nazwa" albo ["Nazwa", wartość]),
+ * sc i tc (wybór umiejętności i talentu), l (zaklęcia do wyboru), sp (stałe zaklęcia z podręcznika), gear (wyposażenie).
+ * post – dopisek do imienia EN/PL.
+ */
+export const ROLE_GROUPS = [
+  {
+    id: "role-command", en: "Command", pl: "Dowódcy", icon: "icons/svg/aura.svg",
+    items: [
+      { id: "chieftain", en: "Chieftain", pl: "Herszt", d: ["The others watch it first and follow it always.", "Pozostali najpierw patrzą na niego, a potem zawsze za nim idą."], c: { ws: 5 }, s: { Leadership: 20, Intimidate: 15 }, t: ["War Leader"], tr: ["Leader", ["Fear", 1]], post: ["(Chieftain)", "(Herszt)"] },
+      { id: "warlord", en: "Warlord", pl: "Wódz", d: ["An army's worth of bad ideas, all of them working.", "Cała armia złych pomysłów, a wszystkie działają."], c: { ws: 10, s: 5, t: 5, wp: 10 }, s: { Leadership: 30, "Melee (Basic)": 15, Intimidate: 20 }, t: ["War Leader", "Commanding Presence", "Combat Reflexes", "Strike Mighty Blow"], tr: ["Leader", "Champion", ["Fear", 2]], post: ["(Warlord)", "(Wódz)"] },
+      { id: "standard-bearer", en: "Standard Bearer", pl: "Chorąży", post: ["(Standard Bearer)", "(Chorąży)"], d: ["As long as the banner stands, nobody else is allowed to run.", "Póki sztandar stoi, nikomu innemu nie wolno uciekać."], c: { t: 5, wp: 10 }, s: { Leadership: 15, Cool: 20, Endurance: 10 }, t: ["Stout-hearted", "Drilled", "Inspiring"], tr: [] },
+      { id: "drummer", en: "Drummer", pl: "Dobosz", post: ["(Drummer)", "(Dobosz)"], d: ["Keeps the pace, the nerve and, mostly, the beat.", "Trzyma tempo, nerwy i zwykle rytm."], c: { i: 5, wp: 5 }, s: { "Play (Drum)": 20, Cool: 10, Athletics: 5 }, t: ["Drilled", "Supportive"], tr: [] },
+      { id: "agitator", en: "Agitator", pl: "Podżegacz", post: ["(Agitator)", "(Podżegacz)"], d: ["It does not fight. It explains why you should.", "Sam nie walczy. Tłumaczy, dlaczego ty powinieneś."], c: { fel: 10, int: 5 }, s: { Charm: 15, Leadership: 10, Intimidate: 10, Gossip: 10 }, t: ["Public Speaker", "Master Orator", "Schemer"], tr: [] },
+      { id: "tactician", en: "Tactician", pl: "Taktyk", post: ["(Tactician)", "(Taktyk)"], d: ["Has already decided where you will stand when this is over.", "Już zdecydował, gdzie będziesz stać, gdy to się skończy."], c: { i: 10, int: 10 }, s: { Leadership: 15, Intuition: 15, Perception: 10, "Lore (Warfare)": 15 }, t: ["Combat Aware", "Savvy", "Sharp"], tr: ["Cunning"] }
+    ]
+  },
+  {
+    id: "role-magic", en: "Magic and Faith", pl: "Magia i wiara", icon: "icons/svg/daze.svg",
+    items: [
+      { id: "shaman", en: "Shaman", pl: "Szaman", post: ["(Shaman)", "(Szaman)"], d: ["Old bones, bad smells and spirits that answer back.", "Stare kości, smród i duchy, które odpowiadają."], c: { int: 5, wp: 10 }, s: { "Language (Magick)": 15, "Channelling (Ghur)": 20, Intuition: 10 }, t: ["Petty Magic", "Instinctive Diction"], tr: ["Magical"], sp: ["Dart", "Shock", "Sleep", "Bolt (Hedgecraft)", "Entangle (Hedgecraft)", "Protective Charm"] },
+      { id: "sorcerer", en: "Sorcerer", pl: "Czarownik", d: ["Whispers in a language that hurts, and the air obeys.", "Szepcze w języku, który boli, a powietrze słucha."], c: { int: 15, wp: 15 }, s: { "Language (Magick)": 15 }, sc: [{ adv: 20, of: ["Channelling (Aqshy)", "Channelling (Azyr)", "Channelling (Chamon)", "Channelling (Ghur)", "Channelling (Ghyran)", "Channelling (Hysh)", "Channelling (Shyish)", "Channelling (Ulgu)"] }], t: ["Petty Magic", "Instinctive Diction"], l: { petty: 3, any: 5 }, tr: ["Magical"], tc: [["Arcane Magic (Fire)", "Arcane Magic (Heavens)", "Arcane Magic (Beasts)", "Arcane Magic (Metal)", "Arcane Magic (Life)", "Arcane Magic (Light)", "Arcane Magic (Shadow)", "Arcane Magic (Death)"]], post: ["(Sorcerer)", "(Czarownik)"] },
+      { id: "acolyte", en: "Acolyte", pl: "Akolita", post: ["(Acolyte)", "(Akolita)"], d: ["Knows three words of power and mispronounces two of them.", "Zna trzy słowa mocy, z czego dwa wymawia źle."], c: { int: 5, wp: 5 }, s: { "Language (Magick)": 10, "Channelling (Ulgu)": 10, Cool: 5 }, t: ["Petty Magic"], tr: [], sp: ["Dart", "Light", "Twitch", "Bolt (Witchcraft)"] },
+      { id: "necromancer", en: "Necromancer", pl: "Nekromanta", post: ["(Necromancer)", "(Nekromanta)"], d: ["Refuses to let anyone in their service stop working, even after death.", "Nie pozwala swoim sługom przestać pracować, nawet po śmierci."], c: { int: 10, wp: 15, fel: -5 }, s: { "Language (Magick)": 20, "Channelling (Shyish)": 25, "Lore (Magick)": 10 }, t: ["Petty Magic", "Instinctive Diction", "Fearless (Undead)"], tr: ["Magical", ["Fear", 1]], sp: ["Dart", "Drain", "Raise Dead", "Reanimate", "Screaming Skull", "Vanhel's Call"] },
+      { id: "dark-priest", en: "Dark Priest", pl: "Mroczny kapłan", post: ["(Dark Priest)", "(Mroczny kapłan)"], d: ["Preaches a gospel with far too many teeth.", "Głosi ewangelię, w której jest o wiele za dużo zębów."], c: { wp: 15, fel: 5 }, s: { Pray: 15, "Language (Magick)": 15, "Channelling (Shyish)": 15, Intimidate: 15 }, t: ["Petty Magic", "Menacing"], tr: ["Magical", ["Fear", 1], ["Corruption", "minor"]], sp: ["Dart", "Bolt (Daemonology)", "Manifest Lesser Daemon", "Octagram"] },
+      { id: "prophet", en: "Prophet", pl: "Prorok", post: ["(Prophet)", "(Prorok)"], d: ["Knows precisely how the world ends, and who is to blame.", "Dokładnie wie, jak skończy się świat i kto jest temu winien."], c: { wp: 15, fel: 10 }, s: { Leadership: 20, Charm: 15, Pray: 15 }, t: ["Public Speaker", "Inspiring", "Implacable"], tr: [], sp: ["Blessing of Courage", "Blessing of Battle", "Blessing of Righteousness"] }
+    ]
+  },
+  {
+    id: "role-front", en: "Front Line", pl: "Pierwsza linia", icon: "icons/svg/combat.svg",
+    items: [
+      { id: "thug", en: "Thug", pl: "Osiłek", d: ["Solves problems by leaning on them until they stop.", "Rozwiązuje problemy, napierając na nie, aż przestaną."], c: { s: 15, t: 10, int: -10, fel: -5 }, s: { Intimidate: 15, "Melee (Brawling)": 15 }, t: ["Strong Back", "Menacing", "Very Strong"], post: ["(Thug)", "(Osiłek)"] },
+      { id: "shield-bearer", en: "Shield Bearer", pl: "Tarczownik", d: ["Drilled to hold the line and to keep the next man's flank covered.", "Wyszkolony, by trzymać szereg i osłaniać bok sąsiada."], c: { t: 5, wp: 5 }, s: { "Melee (Basic)": 10, Endurance: 5, Cool: 10 }, t: ["Shieldsman", "Drilled"], post: ["(Shield Bearer)", "(Tarczownik)"] },
+      { id: "berserker", en: "Berserker", pl: "Berserker", d: ["Stops thinking at the first blood and stops feeling shortly after.", "Przestaje myśleć przy pierwszej krwi, a czuć zaraz potem."], c: { ws: 5, s: 10, t: 5, int: -10 }, s: { "Melee (Two-Handed)": 15, Intimidate: 10 }, t: ["Frenzy", "Berserk Charge", "Battle Rage", "Glorious Demise"], post: ["(Berserker)", "(Berserker)"] },
+      { id: "champion", en: "Champion", pl: "Czempion", d: ["Fights for the honour of its kind, and has not lost.", "Walczy za honor swojego rodzaju i jeszcze nie przegrał."], c: { ws: 10, wp: 10 }, s: { "Melee (Basic)": 15, Intimidate: 10 }, t: ["Combat Reflexes"], tr: ["Champion"], post: ["(Champion)", "(Czempion)"] },
+      { id: "bodyguard", en: "Bodyguard", pl: "Ochroniarz", d: ["Watches the hands and the exits. Rarely watches the conversation.", "Patrzy na ręce i wyjścia. Rozmowa rzadko go interesuje."], c: { ws: 5, t: 5, i: 10 }, s: { Perception: 15, "Melee (Basic)": 10, Intuition: 10 }, t: ["Combat Aware", "Strike to Stun", "Kingsguard"], post: ["(Bodyguard)", "(Ochroniarz)"] },
+      { id: "duelling-master", en: "Duelling Master", pl: "Mistrz fechtunku", d: ["Teaches the art for money and practises it, without warning, for free.", "Uczy sztuki za pieniądze, a ćwiczy ją bez ostrzeżenia i za darmo."], c: { ws: 15, ag: 10, i: 5 }, s: { "Melee (Fencing)": 20, "Melee (Parry)": 15, Dodge: 10 }, t: ["Riposte", "Feint", "Beat Blade"], post: ["(Duelling Master)", "(Mistrz fechtunku)"] },
+      { id: "brawler", en: "Brawler", pl: "Zabijaka", d: ["Learned to fight in alleys, where the first rule is that there are none.", "Walczyć uczył się w zaułkach, gdzie pierwsza zasada mówi, że zasad nie ma."], c: { s: 5, t: 5, i: 5 }, s: { "Melee (Brawling)": 20, Intimidate: 10, Dodge: 5 }, t: ["Dirty Fighting", "In-fighter", "Iron Jaw"], post: ["(Brawler)", "(Zabijaka)"] }
+    ]
+  },
+  {
+    id: "role-ambush", en: "Ranged and Ambush", pl: "Dystans i zasadzka", icon: "icons/svg/target.svg",
+    items: [
+      { id: "sharpshooter", en: "Sharpshooter", pl: "Strzelec", d: ["Holds a breath, counts a heartbeat and ends an argument at long range.", "Wstrzymuje oddech, liczy uderzenie serca i kończy spór z daleka."], c: { bs: 15, i: 5 }, s: { "Ranged (Bow)": 15, "Ranged (Crossbow)": 15, Perception: 10 }, t: ["Accurate Shot", "Sure Shot", "Marksman"], post: ["(Sharpshooter)", "(Strzelec)"] },
+      { id: "skirmisher", en: "Skirmisher", pl: "Harcownik", d: ["Strikes from the edge of the fight and is gone before the reply.", "Uderza ze skraju walki i znika, zanim padnie odpowiedź."], c: { bs: 5, i: 5, ag: 10 }, s: { Dodge: 15, Athletics: 10, "Ranged (Throwing)": 10 }, t: ["Fleet Footed", "Step Aside"], post: ["(Skirmisher)", "(Harcownik)"] },
+      { id: "assassin", en: "Assassin", pl: "Zabójca", d: ["Takes the job, leaves no witnesses and invoices through a third party.", "Przyjmuje zlecenie, nie zostawia świadków i wystawia rachunek przez pośrednika."], c: { ws: 10, i: 10, ag: 10 }, s: { "Melee (Basic)": 15, "Stealth (Urban)": 20, Perception: 10 }, t: ["Strike to Injure", "Shadow", "Careful Strike"], post: ["(Assassin)", "(Zabójca)"] },
+      { id: "scout", en: "Scout", pl: "Zwiadowca", post: ["(Scout)", "(Zwiadowca)"], d: ["Saw you an hour ago and has already told the others.", "Zobaczył cię godzinę temu i zdążył już powiedzieć pozostałym."], c: { i: 10, ag: 5 }, s: { Perception: 20, "Stealth (Rural)": 15, Athletics: 10 }, t: ["Nose for Trouble", "Sixth Sense", "Rover"], tr: [] },
+      { id: "pathfinder", en: "Pathfinder", pl: "Tropiciel", post: ["(Pathfinder)", "(Tropiciel)"], d: ["Three days behind you and gaining.", "Trzy dni za tobą i wciąż skraca dystans."], c: { i: 5, ag: 5 }, s: { Track: 25, Perception: 15, "Outdoor Survival": 15 }, t: ["Hunter's Eye", "Orientation"], tr: ["Tracker"] }
+    ]
+  },
+  {
+    id: "role-support", en: "Support", pl: "Wsparcie", icon: "icons/svg/heal.svg",
+    items: [
+      { id: "healer", en: "Healer", pl: "Znachor", post: ["(Healer)", "(Znachor)"], d: ["Keeps the others on their feet, and charges them for it later.", "Trzyma pozostałych na nogach i później każe sobie za to płacić."], c: { int: 5, wp: 5 }, s: { Heal: 25, "Trade (Apothecary)": 15 }, t: ["Field Dressing", "Surgery"], tr: [], gear: ["Bandage", "Healing Poultice"] },
+      { id: "poisoner", en: "Poisoner", pl: "Truciciel", post: ["(Poisoner)", "(Truciciel)"], d: ["Every blade is wet, and nobody here drinks without looking.", "Każde ostrze jest mokre, a nikt tu nie pije bez patrzenia."], c: { dex: 10, int: 5 }, s: { "Trade (Apothecary)": 20, "Sleight of Hand": 10, Perception: 5 }, t: ["Concoct", "Pharmacist"], tr: [["Venom", 1]] },
+      { id: "saboteur", en: "Saboteur", pl: "Sabotażysta", post: ["(Saboteur)", "(Sabotażysta)"], d: ["The bridge was fine yesterday. So was the bridge before that.", "Wczoraj most był w porządku. Tamten poprzedni też."], c: { dex: 10, i: 5 }, s: { "Stealth (Rural)": 15, "Sleight of Hand": 10, Perception: 10 }, t: ["Tinker", "Trapper"], tr: [] },
+      { id: "beastmaster", en: "Beastmaster", pl: "Poganiacz bestii", post: ["(Beastmaster)", "(Poganiacz bestii)"], d: ["Holds the chain, and the thing on the end of it is very hungry.", "Trzyma łańcuch, a to, co jest na jego końcu, jest bardzo głodne."], c: { wp: 10, fel: 5 }, s: { "Charm Animal": 25, Intimidate: 10, Leadership: 5 }, t: ["Animal Affinity", "Crack the Whip"], tr: [] },
+      { id: "rider", en: "Rider", pl: "Jeździec", d: ["Half the height of a charge is the horse, and the other half is nerve.", "Połowa szarży to koń, a druga połowa to odwaga."], c: { ws: 5, ag: 5, wp: 5 }, s: { "Ride (Horse)": 20, "Melee (Cavalry)": 15, "Animal Care": 5 }, t: ["Roughrider", "Trick Riding"], post: ["(Rider)", "(Jeździec)"] },
+      { id: "torturer", en: "Torturer", pl: "Oprawca", post: ["(Torturer)", "(Oprawca)"], d: ["Never raises its voice. Never needs to.", "Nigdy nie podnosi głosu. Nigdy nie musi."], c: { dex: 5, wp: 10 }, s: { Intimidate: 25, Cool: 15, Heal: 5 }, t: ["Menacing", "Frightening"], tr: [] }
+    ]
+  }
+];
