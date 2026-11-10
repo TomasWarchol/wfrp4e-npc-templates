@@ -85,5 +85,15 @@
   "bugs": "https://github.com/TomasWarchol/wfrp4e-npc-templates/issues",
   "readme": "https://github.com/TomasWarchol/wfrp4e-npc-templates/blob/main/README.md",
   "changelog": "https://github.com/TomasWarchol/wfrp4e-npc-templates/blob/main/CHANGELOG.md",
-  "license": "https://github.com/TomasWarchol/wfrp4e-npc-templates/blob/main/LICENSE"
+  "license": "https://github.com/TomasWarchol/wfrp4e-npc-templates/blob/main/LICENSE",
+  "packFolders": [
+    {
+      "name": "mods",
+      "sorting": "a",
+      "color": "#6b2d1f",
+      "packs": [
+        "npc-templates"
+      ]
+    }
+  ]
 }
