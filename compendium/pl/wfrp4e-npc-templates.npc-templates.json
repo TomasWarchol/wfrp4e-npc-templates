@@ -41,796 +41,796 @@
     "Reputation": "Pozycja"
   },
   "entries": {
-    "Recruit": {
-      "name": "Rekrut",
+    "Recruit (Tier II)": {
+      "name": "Rekrut (Tier II)",
       "description": "<p>Trzy tygodnie musztry i pożyczony hełm. Wie już, za który koniec trzymać włócznię.</p>"
     },
-    "Veteran": {
-      "name": "Weteran",
+    "Veteran (Tier III)": {
+      "name": "Weteran (Tier III)",
       "description": "<p>Przeżył tyle bitew, że przestał je liczyć, a blizny zastępują mu odznaczenia.</p>"
     },
-    "Sergeant": {
-      "name": "Sierżant",
+    "Sergeant (Tier III)": {
+      "name": "Sierżant (Tier III)",
       "description": "<p>Głos, którego wszyscy słuchają, gdy szereg zaczyna się chwiać. Budzi większy strach niż wróg.</p>",
       "pre": "Sierżant"
     },
-    "Captain": {
-      "name": "Kapitan",
+    "Captain (Tier IV)": {
+      "name": "Kapitan (Tier IV)",
       "description": "<p>Dowodzi kompanią, stawia jej piwo i odpowiada za jej poległych.</p>",
       "pre": "Kapitan"
     },
-    "Night Watchman": {
-      "name": "Nocny stróż",
+    "Night Watchman (Tier I)": {
+      "name": "Nocny stróż (Tier I)",
       "description": "<p>Przemierza ulice z latarnią i pałką, marząc głównie o tym, by być gdzie indziej.</p>"
     },
-    "Watchman": {
-      "name": "Strażnik miejski",
+    "Watchman (Tier II)": {
+      "name": "Strażnik miejski (Tier II)",
       "description": "<p>Zna każdą karczmę, każdego donosiciela i dokładną wysokość należnej łapówki.</p>"
     },
-    "Watch Sergeant": {
-      "name": "Sierżant straży",
+    "Watch Sergeant (Tier III)": {
+      "name": "Sierżant straży (Tier III)",
       "description": "<p>Utrzymuje spokój w dzielnicy, bo wie, kogo aresztować, a kogo najpierw ostrzec.</p>",
       "pre": "Sierżant"
     },
-    "Watch Captain": {
-      "name": "Kapitan straży",
+    "Watch Captain (Tier III)": {
+      "name": "Kapitan straży (Tier III)",
       "description": "<p>Po części oficer, po części polityk. Każdy sędzia w mieście ma u niego dług albo się go boi.</p>",
       "pre": "Kapitan"
     },
-    "Footpad": {
-      "name": "Rabuś",
+    "Footpad (Tier I)": {
+      "name": "Rabuś (Tier I)",
       "description": "<p>Głodny, zdesperowany i czeka w rowie na kogoś, kto wygląda na słabszego.</p>"
     },
-    "Bandit": {
-      "name": "Bandyta",
+    "Bandit (Tier II)": {
+      "name": "Bandyta (Tier II)",
       "description": "<p>Członek bandy, która pobiera myto na gościńcu, w monecie albo we krwi.</p>"
     },
-    "Highwayman": {
-      "name": "Rozbójnik",
+    "Highwayman (Tier III)": {
+      "name": "Rozbójnik (Tier III)",
       "description": "<p>Efektowny, dobrze konny i sławny w karczmach, które sam okrada.</p>"
     },
-    "Bandit Chief": {
-      "name": "Herszt",
+    "Bandit Chief (Tier IV)": {
+      "name": "Herszt (Tier IV)",
       "description": "<p>Trzyma bandę w ryzach złotem, charyzmą i jednym publicznym przykładem na sezon.</p>"
     },
-    "Cult Initiate": {
-      "name": "Adept kultu",
+    "Cult Initiate (Tier I)": {
+      "name": "Adept kultu (Tier I)",
       "description": "<p>Zwyczajny sąsiad z niebezpieczną tajemnicą i spotkaniem w każdy czwartek.</p>"
     },
-    "Cultist": {
-      "name": "Kultysta",
+    "Cultist (Tier II)": {
+      "name": "Kultysta (Tier II)",
       "description": "<p>Widział już rytuał i pyta tylko, kiedy zostanie odprawiony ponownie.</p>"
     },
-    "Cult Zealot": {
-      "name": "Zelota kultu",
+    "Cult Zealot (Tier III)": {
+      "name": "Zelota kultu (Tier III)",
       "description": "<p>Odwala krwawą robotę kultu z uśmiechem i śpiewem na ustach.</p>"
     },
-    "Cult Leader": {
-      "name": "Przywódca kultu",
+    "Cult Leader (Tier III)": {
+      "name": "Przywódca kultu (Tier III)",
       "description": "<p>Szanowany za dnia, czczony przy pochodniach. Nikt nie podejrzewa, póki nie jest za późno.</p>"
     },
-    "Trapper": {
-      "name": "Traper",
+    "Trapper (Tier I)": {
+      "name": "Traper (Tier I)",
       "description": "<p>O świcie obchodzi te same leśne ścieżki i sprawdza każde sidła.</p>"
     },
-    "Hunter": {
-      "name": "Myśliwy",
+    "Hunter (Tier II)": {
+      "name": "Myśliwy (Tier II)",
       "description": "<p>Cierpliwy strzelec, który ze złamanej gałązki odczyta wczorajszą pogodę.</p>"
     },
-    "Road Warden": {
-      "name": "Strażnik dróg",
+    "Road Warden (Tier III)": {
+      "name": "Strażnik dróg (Tier III)",
       "description": "<p>Samotny jeździec między samotnymi wsiami, gdzie pomoc jest o dwa dni drogi.</p>"
     },
-    "Beast Slayer": {
-      "name": "Pogromca bestii",
+    "Beast Slayer (Tier IV)": {
+      "name": "Pogromca bestii (Tier IV)",
       "description": "<p>Zbiera nagrody i kły. Wie dokładnie, gdzie skóra potwora jest najcieńsza.</p>"
     },
-    "Deckhand": {
-      "name": "Majtek",
+    "Deckhand (Tier I)": {
+      "name": "Majtek (Tier I)",
       "description": "<p>Ciągnie liny za grosze i śpiewa tak fatalnie, że płoszy rzeczne trolle.</p>"
     },
-    "Smuggler": {
-      "name": "Przemytnik",
+    "Smuggler (Tier II)": {
+      "name": "Przemytnik (Tier II)",
       "description": "<p>Przewozi towar nocą i płaci dokładnie właściwemu celnikowi.</p>"
     },
-    "Reaver": {
-      "name": "Łupieżca",
+    "Reaver (Tier III)": {
+      "name": "Łupieżca (Tier III)",
       "description": "<p>Wchodzi na cudze statki i zostawia je lżejsze albo w płomieniach.</p>"
     },
-    "Ship's Captain": {
-      "name": "Szyper",
+    "Ship's Captain (Tier III)": {
+      "name": "Szyper (Tier III)",
       "description": "<p>Zna każdą mieliznę i cenę każdego kapitana portu, a na pokładzie rządzi jak tyran.</p>",
       "pre": "Kapitan"
     },
-    "Scion": {
-      "name": "Panicz",
+    "Scion (Tier I)": {
+      "name": "Panicz (Tier I)",
       "description": "<p>Młody, bogaty i przekonany, że świat urządzono dla jego rozrywki.</p>"
     },
-    "Courtier": {
-      "name": "Dworzanin",
+    "Courtier (Tier II)": {
+      "name": "Dworzanin (Tier II)",
       "description": "<p>Walczy szeptem, zaproszeniami i starannie wymierzonymi komplementami.</p>"
     },
-    "Duellist": {
-      "name": "Pojedynkowicz",
+    "Duellist (Tier III)": {
+      "name": "Pojedynkowicz (Tier III)",
       "description": "<p>Łatwo się obraża i zostawia eleganckie, bardzo małe dziury w tych, którzy to sprawili.</p>"
     },
-    "Noble Lord": {
-      "name": "Wielmoża",
+    "Noble Lord (Tier III)": {
+      "name": "Wielmoża (Tier III)",
       "description": "<p>Do niego należy ziemia, młyn i większość okolicznych sędziów.</p>",
       "pre": "Pan"
     },
-    "Peddler": {
-      "name": "Domokrążca",
+    "Peddler (Tier I)": {
+      "name": "Domokrążca (Tier I)",
       "description": "<p>Wędruje od wsi do wsi ze wstążkami, plotkami i podejrzaną maścią.</p>"
     },
-    "Trader": {
-      "name": "Handlarz",
+    "Trader (Tier II)": {
+      "name": "Handlarz (Tier II)",
       "description": "<p>Liczy na liczydle, pamięta każdy dług i nigdy nie podaje najpierw prawdziwej ceny.</p>"
     },
-    "Merchant": {
-      "name": "Kupiec",
+    "Merchant (Tier II)": {
+      "name": "Kupiec (Tier II)",
       "description": "<p>Najmuje strażników, przekupuje poborców i ma o jeden magazyn za dużo.</p>"
     },
-    "Guild Master": {
-      "name": "Mistrz cechu",
+    "Guild Master (Tier II)": {
+      "name": "Mistrz cechu (Tier II)",
       "description": "<p>Podpis złożony przy tym biurku otworzy bramy miasta albo zrujnuje rywala.</p>",
       "pre": "Mistrz"
     },
-    "Urchin": {
-      "name": "Ulicznik",
+    "Urchin (Tier I)": {
+      "name": "Ulicznik (Tier I)",
       "description": "<p>Mały, szybki i niewidzialny dla każdego, kto powinien go zauważyć.</p>"
     },
-    "Pickpocket": {
-      "name": "Kieszonkowiec",
+    "Pickpocket (Tier II)": {
+      "name": "Kieszonkowiec (Tier II)",
       "description": "<p>Wpada na ciebie, serdecznie przeprasza i odchodzi z twoją sakiewką.</p>"
     },
-    "Burglar": {
-      "name": "Włamywacz",
+    "Burglar (Tier II)": {
+      "name": "Włamywacz (Tier II)",
       "description": "<p>Woli puste domy i ciche zamki. Ma wyrobione zdanie o zasuwach okiennych.</p>"
     },
-    "Gang Boss": {
-      "name": "Szef gangu",
+    "Gang Boss (Tier III)": {
+      "name": "Szef gangu (Tier III)",
       "description": "<p>Rządzi dokami z zaplecza karczmy. Nikt nie pamięta głosowania.</p>"
     },
-    "Herbalist": {
-      "name": "Zielarz",
+    "Herbalist (Tier I)": {
+      "name": "Zielarz (Tier I)",
       "description": "<p>Wie, który korzeń leczy, a który zabija, i jak niewielka to różnica w dawce.</p>"
     },
-    "Barber-Surgeon": {
-      "name": "Cyrulik",
+    "Barber-Surgeon (Tier II)": {
+      "name": "Cyrulik (Tier II)",
       "description": "<p>W dni targowe goli, w pozostałe amputuje, tą samą brzytwą.</p>"
     },
-    "Physician": {
-      "name": "Medyk",
+    "Physician (Tier II)": {
+      "name": "Medyk (Tier II)",
       "description": "<p>Wykształcony na uniwersytecie, drogi i tylko czasem śmiertelny.</p>"
     },
-    "Master Physician": {
-      "name": "Doktor medycyny",
+    "Master Physician (Tier II)": {
+      "name": "Doktor medycyny (Tier II)",
       "description": "<p>Wzywany do łoża hrabiów i pierwszy, którego się radzi, gdy nadchodzi zaraza.</p>",
       "pre": "Doktor"
     },
-    "Wizard's Apprentice": {
-      "name": "Uczeń maga",
+    "Wizard's Apprentice (Tier II)": {
+      "name": "Uczeń maga (Tier II)",
       "description": "<p>Nosi księgi, szoruje osmalenia i zdążył już przypalić obie brwi.</p>"
     },
-    "Journeyman Wizard": {
-      "name": "Czeladnik magii",
+    "Journeyman Wizard (Tier III)": {
+      "name": "Czeladnik magii (Tier III)",
       "description": "<p>Wreszcie z licencją, wysyłany tam, gdzie Kolegium samo nie chce się pojawiać.</p>"
     },
-    "Wizard": {
-      "name": "Czarodziej",
+    "Wizard (Tier IV)": {
+      "name": "Czarodziej (Tier IV)",
       "description": "<p>Chłopi się go boją, kapłani podejrzewają, a rywale zazdroszczą.</p>"
     },
-    "Master Wizard": {
-      "name": "Mistrz magii",
+    "Master Wizard (Tier IV)": {
+      "name": "Mistrz magii (Tier IV)",
       "description": "<p>W obecności tej osoby rzeczywistość uprzejmie się ugina, a rada miejska tym bardziej.</p>",
       "pre": "Magister"
     },
-    "Novice": {
-      "name": "Nowicjusz",
+    "Novice (Tier I)": {
+      "name": "Nowicjusz (Tier I)",
       "description": "<p>Zamiata świątynię i uczy się litanii na pamięć, po setce naraz.</p>"
     },
-    "Priest": {
-      "name": "Kapłan",
+    "Priest (Tier II)": {
+      "name": "Kapłan (Tier II)",
       "description": "<p>Błogosławi plony, grzebie zmarłych i zna wszystkie sekrety parafii.</p>"
     },
-    "Warrior Priest": {
-      "name": "Kapłan wojownik",
+    "Warrior Priest (Tier IV)": {
+      "name": "Kapłan wojownik (Tier IV)",
       "description": "<p>Naucza z otwartą księgą w jednej ręce i rozłupaną czaszką w drugiej.</p>"
     },
-    "High Priest": {
-      "name": "Arcykapłan",
+    "High Priest (Tier IV)": {
+      "name": "Arcykapłan (Tier IV)",
       "description": "<p>Zarządza wielką świątynią, jej skarbcem i sporą częścią jej wrogów.</p>",
       "pre": "Czcigodny"
     },
-    "Chieftain": {
-      "name": "Herszt",
+    "Chieftain (Tier II)": {
+      "name": "Herszt (Tier II)",
       "description": "<p>Pozostali najpierw patrzą na niego, a potem zawsze za nim idą.</p>",
       "post": "(Herszt)"
     },
-    "Warlord": {
-      "name": "Wódz",
+    "Warlord (Tier IV)": {
+      "name": "Wódz (Tier IV)",
       "description": "<p>Cała armia złych pomysłów, a wszystkie działają.</p>",
       "post": "(Wódz)"
     },
-    "Standard Bearer": {
-      "name": "Chorąży",
+    "Standard Bearer (Tier II)": {
+      "name": "Chorąży (Tier II)",
       "description": "<p>Póki sztandar stoi, nikomu innemu nie wolno uciekać.</p>",
       "post": "(Chorąży)"
     },
-    "Drummer": {
-      "name": "Dobosz",
+    "Drummer (Tier I)": {
+      "name": "Dobosz (Tier I)",
       "description": "<p>Trzyma tempo, nerwy i zwykle rytm.</p>",
       "post": "(Dobosz)"
     },
-    "Agitator": {
-      "name": "Podżegacz",
+    "Agitator (Tier I)": {
+      "name": "Podżegacz (Tier I)",
       "description": "<p>Sam nie walczy. Tłumaczy, dlaczego ty powinieneś.</p>",
       "post": "(Podżegacz)"
     },
-    "Tactician": {
-      "name": "Taktyk",
+    "Tactician (Tier II)": {
+      "name": "Taktyk (Tier II)",
       "description": "<p>Już zdecydował, gdzie będziesz stać, gdy to się skończy.</p>",
       "post": "(Taktyk)"
     },
-    "Shaman": {
-      "name": "Szaman",
+    "Shaman (Tier III)": {
+      "name": "Szaman (Tier III)",
       "description": "<p>Stare kości, smród i duchy, które odpowiadają.</p>",
       "post": "(Szaman)"
     },
-    "Sorcerer": {
-      "name": "Czarownik",
+    "Sorcerer (Tier IV)": {
+      "name": "Czarownik (Tier IV)",
       "description": "<p>Szepcze w języku, który boli, a powietrze słucha.</p>",
       "post": "(Czarownik)"
     },
-    "Acolyte": {
-      "name": "Akolita",
+    "Acolyte (Tier II)": {
+      "name": "Akolita (Tier II)",
       "description": "<p>Zna trzy słowa mocy, z czego dwa wymawia źle.</p>",
       "post": "(Akolita)"
     },
-    "Necromancer": {
-      "name": "Nekromanta",
+    "Necromancer (Tier III)": {
+      "name": "Nekromanta (Tier III)",
       "description": "<p>Nie pozwala swoim sługom przestać pracować, nawet po śmierci.</p>",
       "post": "(Nekromanta)"
     },
-    "Dark Priest": {
-      "name": "Mroczny kapłan",
+    "Dark Priest (Tier III)": {
+      "name": "Mroczny kapłan (Tier III)",
       "description": "<p>Głosi ewangelię, w której jest o wiele za dużo zębów.</p>",
       "post": "(Mroczny kapłan)"
     },
-    "Prophet": {
-      "name": "Prorok",
+    "Prophet (Tier II)": {
+      "name": "Prorok (Tier II)",
       "description": "<p>Dokładnie wie, jak skończy się świat i kto jest temu winien.</p>",
       "post": "(Prorok)"
     },
-    "Thug": {
-      "name": "Osiłek",
+    "Thug (Tier III)": {
+      "name": "Osiłek (Tier III)",
       "description": "<p>Rozwiązuje problemy, napierając na nie, aż przestaną.</p>",
       "post": "(Osiłek)"
     },
-    "Shield Bearer": {
-      "name": "Tarczownik",
+    "Shield Bearer (Tier II)": {
+      "name": "Tarczownik (Tier II)",
       "description": "<p>Wyszkolony, by trzymać szereg i osłaniać bok sąsiada.</p>",
       "post": "(Tarczownik)"
     },
-    "Berserker": {
-      "name": "Berserker",
+    "Berserker (Tier III)": {
+      "name": "Berserker (Tier III)",
       "description": "<p>Przestaje myśleć przy pierwszej krwi, a czuć zaraz potem.</p>",
       "post": "(Berserker)"
     },
-    "Champion": {
-      "name": "Czempion",
+    "Champion (Tier III)": {
+      "name": "Czempion (Tier III)",
       "description": "<p>Walczy za honor swojego rodzaju i jeszcze nie przegrał.</p>",
       "post": "(Czempion)"
     },
-    "Bodyguard": {
-      "name": "Ochroniarz",
+    "Bodyguard (Tier II)": {
+      "name": "Ochroniarz (Tier II)",
       "description": "<p>Patrzy na ręce i wyjścia. Rozmowa rzadko go interesuje.</p>",
       "post": "(Ochroniarz)"
     },
-    "Duelling Master": {
-      "name": "Mistrz fechtunku",
+    "Duelling Master (Tier III)": {
+      "name": "Mistrz fechtunku (Tier III)",
       "description": "<p>Uczy sztuki za pieniądze, a ćwiczy ją bez ostrzeżenia i za darmo.</p>",
       "post": "(Mistrz fechtunku)"
     },
-    "Brawler": {
-      "name": "Zabijaka",
+    "Brawler (Tier II)": {
+      "name": "Zabijaka (Tier II)",
       "description": "<p>Walczyć uczył się w zaułkach, gdzie pierwsza zasada mówi, że zasad nie ma.</p>",
       "post": "(Zabijaka)"
     },
-    "Sharpshooter": {
-      "name": "Strzelec",
+    "Sharpshooter (Tier III)": {
+      "name": "Strzelec (Tier III)",
       "description": "<p>Wstrzymuje oddech, liczy uderzenie serca i kończy spór z daleka.</p>",
       "post": "(Strzelec)"
     },
-    "Skirmisher": {
-      "name": "Harcownik",
+    "Skirmisher (Tier II)": {
+      "name": "Harcownik (Tier II)",
       "description": "<p>Uderza ze skraju walki i znika, zanim padnie odpowiedź.</p>",
       "post": "(Harcownik)"
     },
-    "Assassin": {
-      "name": "Zabójca",
+    "Assassin (Tier III)": {
+      "name": "Zabójca (Tier III)",
       "description": "<p>Przyjmuje zlecenie, nie zostawia świadków i wystawia rachunek przez pośrednika.</p>",
       "post": "(Zabójca)"
     },
-    "Scout": {
-      "name": "Zwiadowca",
+    "Scout (Tier II)": {
+      "name": "Zwiadowca (Tier II)",
       "description": "<p>Zobaczył cię godzinę temu i zdążył już powiedzieć pozostałym.</p>",
       "post": "(Zwiadowca)"
     },
-    "Pathfinder": {
-      "name": "Tropiciel",
+    "Pathfinder (Tier I)": {
+      "name": "Tropiciel (Tier I)",
       "description": "<p>Trzy dni za tobą i wciąż skraca dystans.</p>",
       "post": "(Tropiciel)"
     },
-    "Healer": {
-      "name": "Znachor",
+    "Healer (Tier I)": {
+      "name": "Znachor (Tier I)",
       "description": "<p>Trzyma pozostałych na nogach i później każe sobie za to płacić.</p>",
       "post": "(Znachor)"
     },
-    "Poisoner": {
-      "name": "Truciciel",
+    "Poisoner (Tier II)": {
+      "name": "Truciciel (Tier II)",
       "description": "<p>Każde ostrze jest mokre, a nikt tu nie pije bez patrzenia.</p>",
       "post": "(Truciciel)"
     },
-    "Saboteur": {
-      "name": "Sabotażysta",
+    "Saboteur (Tier I)": {
+      "name": "Sabotażysta (Tier I)",
       "description": "<p>Wczoraj most był w porządku. Tamten poprzedni też.</p>",
       "post": "(Sabotażysta)"
     },
-    "Beastmaster": {
-      "name": "Poganiacz bestii",
+    "Beastmaster (Tier I)": {
+      "name": "Poganiacz bestii (Tier I)",
       "description": "<p>Trzyma łańcuch, a to, co jest na jego końcu, jest bardzo głodne.</p>",
       "post": "(Poganiacz bestii)"
     },
-    "Rider": {
-      "name": "Jeździec",
+    "Rider (Tier II)": {
+      "name": "Jeździec (Tier II)",
       "description": "<p>Połowa szarży to koń, a druga połowa to odwaga.</p>",
       "post": "(Jeździec)"
     },
-    "Torturer": {
-      "name": "Oprawca",
+    "Torturer (Tier II)": {
+      "name": "Oprawca (Tier II)",
       "description": "<p>Nigdy nie podnosi głosu. Nigdy nie musi.</p>",
       "post": "(Oprawca)"
     },
-    "Cannon Fodder": {
-      "name": "Mięso armatnie",
+    "Cannon Fodder (Tier I)": {
+      "name": "Mięso armatnie (Tier I)",
       "description": "<p>Jest ich więcej tam, skąd przyszedł, i nikt ich nie liczy.</p>"
     },
-    "Grizzled": {
-      "name": "Weteran",
+    "Grizzled (Tier II)": {
+      "name": "Weteran (Tier II)",
       "description": "<p>Wolniejszy niż dawniej, ale nie sposób go zaskoczyć.</p>"
     },
-    "Elite": {
-      "name": "Elita",
+    "Elite (Tier III)": {
+      "name": "Elita (Tier III)",
       "description": "<p>Najlepszy w oddziale i doskonale zdaje sobie z tego sprawę.</p>"
     },
-    "Boss": {
-      "name": "Boss",
+    "Boss (Tier IV)": {
+      "name": "Boss (Tier IV)",
       "description": "<p>Wszystko inne w tej komnacie tylko stało na drodze.</p>"
     },
-    "Legendary": {
-      "name": "Legenda",
+    "Legendary (Tier V)": {
+      "name": "Legenda (Tier V)",
       "description": "<p>Bardowie spierają się o szczegóły. Ocaleni nie spierają się o nic.</p>"
     },
-    "Apex Predator": {
-      "name": "Szczytowy drapieżnik",
+    "Apex Predator (Tier IV)": {
+      "name": "Szczytowy drapieżnik (Tier IV)",
       "description": "<p>Nic w tej okolicy na niego nie poluje. Nic, co przeżyło.</p>"
     },
-    "Nemesis": {
-      "name": "Nemezis",
+    "Nemesis (Tier V)": {
+      "name": "Nemezis (Tier V)",
       "description": "<p>Pamięta drużynę i przez cały ten czas się przygotowywał.</p>"
     },
-    "Unkillable": {
-      "name": "Nie do zabicia",
+    "Unkillable (Tier V)": {
+      "name": "Nie do zabicia (Tier V)",
       "description": "<p>Mówili, że zginął przy moście. Mówili też, że zginął w zeszłym tygodniu.</p>"
     },
-    "Scourge of the Province": {
-      "name": "Plaga prowincji",
+    "Scourge of the Province (Tier V)": {
+      "name": "Plaga prowincji (Tier V)",
       "description": "<p>Na samą plotkę o nim ludzie porzucają wsie.</p>"
     },
-    "Bane of Wizards": {
-      "name": "Zmora magów",
+    "Bane of Wizards (Tier IV)": {
+      "name": "Zmora magów (Tier IV)",
       "description": "<p>Poluje na tych, od których czuć Wiatry, i właśnie ich zwietrzył.</p>"
     },
-    "Doom Incarnate": {
-      "name": "Wcielona zagłada",
+    "Doom Incarnate (Tier V)": {
+      "name": "Wcielona zagłada (Tier V)",
       "description": "<p>Dla stołu, który przestał się bać. Kończy kampanie.</p>"
     },
-    "Mighty": {
-      "name": "Silny",
+    "Mighty (Tier II)": {
+      "name": "Silny (Tier II)",
       "description": "<p>Każdy cios spada jak walący się strop.</p>"
     },
-    "Hulking": {
-      "name": "Olbrzymi",
+    "Hulking (Tier II)": {
+      "name": "Olbrzymi (Tier II)",
       "description": "<p>O wiele większy, niż powinien być ktokolwiek z jego gatunku.</p>"
     },
-    "Brutish": {
-      "name": "Brutalny",
+    "Brutish (Tier II)": {
+      "name": "Brutalny (Tier II)",
       "description": "<p>Powolny, ciężki i bardzo trudno się z nim spierać.</p>"
     },
-    "Swift": {
-      "name": "Szybki",
+    "Swift (Tier II)": {
+      "name": "Szybki (Tier II)",
       "description": "<p>Przebiega komnatę, zanim krzyk zdąży ucichnąć.</p>"
     },
-    "Hardened": {
-      "name": "Zahartowany",
+    "Hardened (Tier II)": {
+      "name": "Zahartowany (Tier II)",
       "description": "<p>Otrząsał się już po gorszych od ciebie, i to niedawno.</p>"
     },
-    "Ancient": {
-      "name": "Prastary",
+    "Ancient (Tier IV)": {
+      "name": "Prastary (Tier IV)",
       "description": "<p>Starszy niż najbliższe miasto i dużo trudniej go spalić.</p>"
     },
-    "Venomous": {
-      "name": "Jadowity",
+    "Venomous (Tier II)": {
+      "name": "Jadowity (Tier II)",
       "description": "<p>Wystarczy zadrapanie, a o zadrapanie mu chodzi.</p>"
     },
-    "Thick-Hided": {
-      "name": "Gruboskóry",
+    "Thick-Hided (Tier II)": {
+      "name": "Gruboskóry (Tier II)",
       "description": "<p>Strzały wbijają się w skórę i niewiele więcej.</p>"
     },
-    "Iron-Hided": {
-      "name": "Żelaznoskóry",
+    "Iron-Hided (Tier III)": {
+      "name": "Żelaznoskóry (Tier III)",
       "description": "<p>Płyty z kości i łusek, które odbijają dobrą stal.</p>"
     },
-    "Horned": {
-      "name": "Rogaty",
+    "Horned (Tier I)": {
+      "name": "Rogaty (Tier I)",
       "description": "<p>Opuszcza łeb i to jedyne ostrzeżenie, jakie dostaniesz.</p>"
     },
-    "Lashing Tail": {
-      "name": "Biczujący ogon",
+    "Lashing Tail (Tier II)": {
+      "name": "Biczujący ogon (Tier II)",
       "description": "<p>Ten, kto stoi za nim, wcale nie jest tak bezpieczny, jak myślał.</p>"
     },
-    "Winged": {
-      "name": "Skrzydlaty",
+    "Winged (Tier II)": {
+      "name": "Skrzydlaty (Tier II)",
       "description": "<p>Cień przelatuje nad głową chwilę przed szponami.</p>"
     },
-    "Wall-Crawler": {
-      "name": "Pełzacz po ścianach",
+    "Wall-Crawler (Tier I)": {
+      "name": "Pełzacz po ścianach (Tier I)",
       "description": "<p>Sprawdź sufit. Potem sprawdź go jeszcze raz.</p>"
     },
-    "Sly": {
-      "name": "Przebiegły",
+    "Sly (Tier I)": {
+      "name": "Przebiegły (Tier I)",
       "description": "<p>Tę zasadzkę przygotował specjalnie dla ciebie.</p>"
     },
-    "Cunning": {
-      "name": "Spryciarz",
+    "Cunning (Tier I)": {
+      "name": "Spryciarz (Tier I)",
       "description": "<p>Zawsze ma drugie wyjście i kogoś innego do obwinienia.</p>"
     },
-    "Fanatic": {
-      "name": "Fanatyk",
+    "Fanatic (Tier II)": {
+      "name": "Fanatyk (Tier II)",
       "description": "<p>Wierzy bez reszty w coś, o co pożałujesz, że zapytałeś.</p>"
     },
-    "Rabid": {
-      "name": "Wściekły",
+    "Rabid (Tier II)": {
+      "name": "Wściekły (Tier II)",
       "description": "<p>Piana na pysku i zero chęci, by przestać.</p>"
     },
-    "Lurker": {
-      "name": "Czyhający",
+    "Lurker (Tier I)": {
+      "name": "Czyhający (Tier I)",
       "description": "<p>Czeka bez ruchu tak długo, jak trzeba.</p>"
     },
-    "Marsh-Dweller": {
-      "name": "Bagienny",
+    "Marsh-Dweller (Tier I)": {
+      "name": "Bagienny (Tier I)",
       "description": "<p>Błoto spowalnia ciebie. Jemu tylko dodaje wygody.</p>"
     },
-    "Man-Eater": {
-      "name": "Ludojad",
+    "Man-Eater (Tier I)": {
+      "name": "Ludojad (Tier I)",
       "description": "<p>Nabrał smaku i wraca na tę samą drogę.</p>"
     },
-    "Territorial": {
-      "name": "Terytorialny",
+    "Territorial (Tier I)": {
+      "name": "Terytorialny (Tier I)",
       "description": "<p>Przekroczyłeś granicę, której nie widziałeś.</p>"
     },
-    "Fire-Breather": {
-      "name": "Ziejący ogniem",
+    "Fire-Breather (Tier III)": {
+      "name": "Ziejący ogniem (Tier III)",
       "description": "<p>Głęboki wdech to znak, że trzeba uciekać.</p>"
     },
-    "Frost-Breather": {
-      "name": "Ziejący mrozem",
+    "Frost-Breather (Tier III)": {
+      "name": "Ziejący mrozem (Tier III)",
       "description": "<p>Zostawia posągi z tego, co przed nim stało.</p>"
     },
-    "Poison-Breather": {
-      "name": "Ziejący trucizną",
+    "Poison-Breather (Tier III)": {
+      "name": "Ziejący trucizną (Tier III)",
       "description": "<p>Zielona mgła toczy się naprzód, a ptaki milkną.</p>"
     },
-    "Storm-Breather": {
-      "name": "Ziejący burzą",
+    "Storm-Breather (Tier III)": {
+      "name": "Ziejący burzą (Tier III)",
       "description": "<p>Powietrze smakuje miedzią na sekundę przed uderzeniem.</p>"
     },
-    "Aethyric Ward": {
-      "name": "Eteryczna osłona",
+    "Aethyric Ward (Tier II)": {
+      "name": "Eteryczna osłona (Tier II)",
       "description": "<p>Ciosy odbijają się od niczego, migocząc po drodze.</p>"
     },
-    "Spell-Eater": {
-      "name": "Pożeracz czarów",
+    "Spell-Eater (Tier II)": {
+      "name": "Pożeracz czarów (Tier II)",
       "description": "<p>Czary rozpadają się przy nim, a magowi leci krew z nosa.</p>"
     },
-    "Stone-Gazer": {
-      "name": "Spojrzenie Kamienia",
+    "Stone-Gazer (Tier III)": {
+      "name": "Spojrzenie Kamienia (Tier III)",
       "description": "<p>Ogród był pełen bardzo realistycznych posągów.</p>"
     },
-    "Chaos-Marked": {
-      "name": "Naznaczony przez Chaos",
+    "Chaos-Marked (Tier II)": {
+      "name": "Naznaczony przez Chaos (Tier II)",
       "description": "<p>Coś zza zasłony zauważyło to stworzenie i wprowadziło drobną poprawkę.</p>"
     },
-    "Mark of the Blood God": {
-      "name": "Znamię Boga Krwi",
+    "Mark of the Blood God (Tier IV)": {
+      "name": "Znamię Boga Krwi (Tier IV)",
       "description": "<p>Nie zatrzyma się, póki ktokolwiek stoi, wliczając jego samego.</p>"
     },
-    "Mark of Decay": {
-      "name": "Znamię Rozkładu",
+    "Mark of Decay (Tier IV)": {
+      "name": "Znamię Rozkładu (Tier IV)",
       "description": "<p>Rozdęty, cierpliwy i niemożliwy do porządnego zabicia.</p>"
     },
-    "Mark of Excess": {
-      "name": "Znamię Rozkoszy",
+    "Mark of Excess (Tier III)": {
+      "name": "Znamię Rozkoszy (Tier III)",
       "description": "<p>Na przemian piękny i odrażający, a oderwać od niego wzrok bardzo trudno.</p>"
     },
-    "Mark of Change": {
-      "name": "Znamię Przemiany",
+    "Mark of Change (Tier III)": {
+      "name": "Znamię Przemiany (Tier III)",
       "description": "<p>Jego kształt to raczej propozycja, a powietrze wokół wibruje.</p>"
     },
-    "Warpstone-Gorged": {
-      "name": "Obżarty spaczeniem",
+    "Warpstone-Gorged (Tier II)": {
+      "name": "Obżarty spaczeniem (Tier II)",
       "description": "<p>Lekko świeci. Nie powinien był przeżyć tego posiłku.</p>"
     },
-    "Spawn-Flesh": {
-      "name": "Ciało pomiotu",
+    "Spawn-Flesh (Tier III)": {
+      "name": "Ciało pomiotu (Tier III)",
       "description": "<p>Rany się zamykają, a potem otwierają gdzie indziej, z zębami.</p>"
     },
-    "Daemon-Possessed": {
-      "name": "Opętany przez demona",
+    "Daemon-Possessed (Tier IV)": {
+      "name": "Opętany przez demona (Tier IV)",
       "description": "<p>Oczy należą do kogoś innego i uważają cię za zabawnego.</p>"
     },
-    "Tainted": {
-      "name": "Spaczony",
+    "Tainted (Tier II)": {
+      "name": "Spaczony (Tier II)",
       "description": "<p>Coś jest z nim nie tak, choć trudno powiedzieć co. Konie nie chcą podejść.</p>"
     },
-    "Blood-Sworn": {
-      "name": "Zaprzysiężony krwi",
+    "Blood-Sworn (Tier II)": {
+      "name": "Zaprzysiężony krwi (Tier II)",
       "description": "<p>Prowadzi rachunek czaszek i ma bardzo krótki lont.</p>"
     },
-    "Plague-Blessed": {
-      "name": "Pobłogosławiony zarazą",
+    "Plague-Blessed (Tier II)": {
+      "name": "Pobłogosławiony zarazą (Tier II)",
       "description": "<p>Radośnie ropieje i uważa twoją troskę za wzruszającą.</p>"
     },
-    "Depraved Libertine": {
-      "name": "Zepsuty rozpustnik",
+    "Depraved Libertine (Tier I)": {
+      "name": "Zepsuty rozpustnik (Tier I)",
       "description": "<p>Próbował wszystkiego raz i szuka czegoś nowego. Nadasz się.</p>"
     },
-    "Web-Weaver": {
-      "name": "Tkacz intryg",
+    "Web-Weaver (Tier I)": {
+      "name": "Tkacz intryg (Tier I)",
       "description": "<p>Każdy plan to tylko część planu, którego jeszcze nie zauważyłeś.</p>"
     },
-    "Vampire's Thrall": {
-      "name": "Sługa wampira",
+    "Vampire's Thrall (Tier I)": {
+      "name": "Sługa wampira (Tier I)",
       "description": "<p>Oddany, blady i czuwający przez cały dzień.</p>"
     },
-    "Ratman's Informant": {
-      "name": "Donosiciel szczuroludzi",
+    "Ratman's Informant (Tier I)": {
+      "name": "Donosiciel szczuroludzi (Tier I)",
       "description": "<p>Bierze zapłatę w dziwnych zielonych monetach i omija kratki ściekowe.</p>"
     },
-    "Hedge Witch": {
-      "name": "Wiedźma",
+    "Hedge Witch (Tier II)": {
+      "name": "Wiedźma (Tier II)",
       "description": "<p>Zna stare zaklęcia, za które świątynie paliły ludzi na stosach.</p>"
     },
-    "Necromancer's Servant": {
-      "name": "Sługa nekromanty",
+    "Necromancer's Servant (Tier II)": {
+      "name": "Sługa nekromanty (Tier II)",
       "description": "<p>Kopie przy księżycu, dostarcza wozem i o nic nie pyta.</p>"
     },
-    "Risen": {
-      "name": "Ożywiony",
+    "Risen (Tier II)": {
+      "name": "Ożywiony (Tier II)",
       "description": "<p>Raz już go pochowano. Nie zgodził się z tym.</p>"
     },
-    "Grave-Chill": {
-      "name": "Grobowy chłód",
+    "Grave-Chill (Tier II)": {
+      "name": "Grobowy chłód (Tier II)",
       "description": "<p>Jego dotyk zostawia szron na skórze i ciszę w piersi.</p>"
     },
-    "Blood-Drinker": {
-      "name": "Krwiopijca",
+    "Blood-Drinker (Tier II)": {
+      "name": "Krwiopijca (Tier II)",
       "description": "<p>Każda zadana rana czyni go odrobinę silniejszym.</p>"
     },
-    "Spectral": {
-      "name": "Widmowy",
+    "Spectral (Tier IV)": {
+      "name": "Widmowy (Tier IV)",
       "description": "<p>Ostrza przez niego przechodzą. Jego dłonie niestety nie.</p>"
     },
-    "Barrow Lord": {
-      "name": "Pan Kurhanu",
+    "Barrow Lord (Tier IV)": {
+      "name": "Pan Kurhanu (Tier IV)",
       "description": "<p>Wciąż dowodzi armiami pogrzebanymi wokół siebie.</p>"
     },
-    "Deathless": {
-      "name": "Niezniszczalny truposz",
+    "Deathless (Tier V)": {
+      "name": "Niezniszczalny truposz (Tier V)",
       "description": "<p>Powal go, a o zmroku wróci, jeszcze bardziej wściekły.</p>"
     },
-    "Dim-Witted": {
-      "name": "Głupi",
+    "Dim-Witted (Tier I)": {
+      "name": "Głupi (Tier I)",
       "description": "<p>Czasem zapomina o walce. Bywa, że zapomina o własnych nogach.</p>"
     },
-    "Runt": {
-      "name": "Chuchro",
+    "Runt (Tier I)": {
+      "name": "Chuchro (Tier I)",
       "description": "<p>Najsłabszy w stadzie i dobrze o tym wie.</p>"
     },
-    "Coward": {
-      "name": "Tchórz",
+    "Coward (Tier I)": {
+      "name": "Tchórz (Tier I)",
       "description": "<p>Pierwszy do ucieczki, ostatni, by się przyznać, i zaskakująco trudny do złapania.</p>"
     },
-    "Drunkard": {
-      "name": "Pijak",
+    "Drunkard (Tier I)": {
+      "name": "Pijak (Tier I)",
       "description": "<p>W pełni sprawny dopiero po czwartym kuflu. Zwykle.</p>"
     },
-    "Wounded": {
-      "name": "Ranny",
+    "Wounded (Tier I)": {
+      "name": "Ranny (Tier I)",
       "description": "<p>Źle opatrzony, kuleje jeszcze gorzej i łatwo traci cierpliwość.</p>"
     },
-    "Plague-Ridden": {
-      "name": "Zadżumiony",
+    "Plague-Ridden (Tier I)": {
+      "name": "Zadżumiony (Tier I)",
       "description": "<p>Kaszle w szmatę, której nikt nie powinien oglądać z bliska.</p>"
     },
-    "One-Eyed": {
-      "name": "Jednooki",
+    "One-Eyed (Tier I)": {
+      "name": "Jednooki (Tier I)",
       "description": "<p>Stracił oko przed laty i co wieczór opowiada o tym inaczej.</p>"
     },
-    "Starving": {
-      "name": "Wygłodzony",
+    "Starving (Tier I)": {
+      "name": "Wygłodzony (Tier I)",
       "description": "<p>Same żebra i oczy. Za chleb zrobi rzeczy zadziwiające.</p>"
     },
-    "Unhinged": {
-      "name": "Obłąkany",
+    "Unhinged (Tier I)": {
+      "name": "Obłąkany (Tier I)",
       "description": "<p>Prowadzi długie rozmowy z kimś, kto stoi tuż za tobą.</p>"
     },
-    "Hunchback": {
-      "name": "Garbus",
+    "Hunchback (Tier I)": {
+      "name": "Garbus (Tier I)",
       "description": "<p>Pochylony od urodzenia lub od pracy, silniejszy, niż sądzili szydercy.</p>"
     },
-    "Exhausted": {
-      "name": "Wycieńczony",
+    "Exhausted (Tier I)": {
+      "name": "Wycieńczony (Tier I)",
       "description": "<p>Nie spał porządnie od ostatniej wsi, a może i od przedostatniej.</p>"
     },
-    "Cursed": {
-      "name": "Przeklęty",
+    "Cursed (Tier I)": {
+      "name": "Przeklęty (Tier I)",
       "description": "<p>Psy szczekają, mleko kwaśnieje, a przed zimą coś upomni się o dług.</p>"
     },
-    "Horribly Scarred": {
-      "name": "Straszliwie okaleczony",
+    "Horribly Scarred (Tier I)": {
+      "name": "Straszliwie okaleczony (Tier I)",
       "description": "<p>Twarz opowiada historię, której nikt nie chce usłyszeć drugi raz.</p>"
     },
-    "Reiklander": {
-      "name": "Reiklandczyk",
+    "Reiklander (Tier I)": {
+      "name": "Reiklandczyk (Tier I)",
       "description": "<p>Wychowany nad najruchliwszą rzeką Imperium i pewien, że to środek świata.</p>"
     },
-    "Middenheimer": {
-      "name": "Middenheimczyk",
+    "Middenheimer (Tier I)": {
+      "name": "Middenheimczyk (Tier I)",
       "description": "<p>Urodzony na wielkiej skale, wierny Białemu Wilkowi i nieufny wobec południowców.</p>"
     },
-    "Stirlander": {
-      "name": "Stirlandczyk",
+    "Stirlander (Tier I)": {
+      "name": "Stirlandczyk (Tier I)",
       "description": "<p>Biedny, ubłocony i dobrze wie, co wychodzi z cmentarzy.</p>"
     },
-    "Nordlander": {
-      "name": "Nordlandczyk",
+    "Nordlander (Tier I)": {
+      "name": "Nordlandczyk (Tier I)",
       "description": "<p>Dorastał z jednym okiem na lesie, a drugim na Morzu Szponów.</p>"
     },
-    "Hochlander": {
-      "name": "Hochlandczyk",
+    "Hochlander (Tier I)": {
+      "name": "Hochlandczyk (Tier I)",
       "description": "<p>Poluje w głębokich lasach i przysięga, że długa strzelba to rodzinna pamiątka.</p>"
     },
-    "Kislevite": {
-      "name": "Kislevita",
+    "Kislevite (Tier I)": {
+      "name": "Kislevita (Tier I)",
       "description": "<p>Urodzony w chłodzie stepu, przy tętencie kopyt w ciemności.</p>"
     },
-    "Tilean": {
-      "name": "Tileańczyk",
+    "Tilean (Tier I)": {
+      "name": "Tileańczyk (Tier I)",
       "description": "<p>Szybki z ostrzem, jeszcze szybszy z umową i zawsze ktoś jest mu winien pieniądze.</p>"
     },
-    "Bretonnian": {
-      "name": "Bretończyk",
+    "Bretonnian (Tier I)": {
+      "name": "Bretończyk (Tier I)",
       "description": "<p>Dokładnie wie, kto jakie ma miejsce, i ma zdanie o manierach w Imperium.</p>"
     },
-    "Estalian": {
-      "name": "Estalijczyk",
+    "Estalian (Tier I)": {
+      "name": "Estalijczyk (Tier I)",
       "description": "<p>Dumny, cięty w mowie i nauczony załatwiać oba problemy rapierem.</p>"
     },
-    "Norscan": {
-      "name": "Norsmen",
+    "Norscan (Tier II)": {
+      "name": "Norsmen (Tier II)",
       "description": "<p>Przybył zza morza, żeby handlować. Handel nie był pierwszym pomysłem.</p>"
     },
-    "Innkeeper": {
-      "name": "Karczmarz",
+    "Innkeeper (Tier I)": {
+      "name": "Karczmarz (Tier I)",
       "description": "<p>Pamięta każdą twarz, każdy dług i każdą bójkę, w której pękło krzesło.</p>"
     },
-    "Blacksmith": {
-      "name": "Kowal",
+    "Blacksmith (Tier II)": {
+      "name": "Kowal (Tier II)",
       "description": "<p>Ramiona jak korzenie i mało cierpliwości do tych, co poganiają dobrą robotę.</p>"
     },
-    "Farmer": {
-      "name": "Chłop",
+    "Farmer (Tier I)": {
+      "name": "Chłop (Tier I)",
       "description": "<p>Wstaje przed świtem, zna się na pogodzie i pogrzebał już zbyt wiele plonów.</p>"
     },
-    "Scribe": {
-      "name": "Skryba",
+    "Scribe (Tier I)": {
+      "name": "Skryba (Tier I)",
       "description": "<p>Upstrzony atramentem, krótkowzroczny i w posiadaniu wszystkich dokumentów.</p>"
     },
-    "Miner": {
-      "name": "Górnik",
+    "Miner (Tier II)": {
+      "name": "Górnik (Tier II)",
       "description": "<p>Wie, co żyje pod wzgórzem i czemu zasypano trzeci szyb.</p>"
     },
-    "Coachman": {
-      "name": "Woźnica",
+    "Coachman (Tier I)": {
+      "name": "Woźnica (Tier I)",
       "description": "<p>Jeździł każdą złą drogą, a na najgorsze ma garłacz.</p>"
     },
-    "Servant": {
-      "name": "Służący",
+    "Servant (Tier I)": {
+      "name": "Służący (Tier I)",
       "description": "<p>Cichy, niewidzialny i świetnie wie, kto zeszłej nocy odwiedził pana domu.</p>"
     },
-    "Beggar": {
-      "name": "Żebrak",
+    "Beggar (Tier I)": {
+      "name": "Żebrak (Tier I)",
       "description": "<p>Wszyscy odwracają wzrok, więc to najlepsze miejsce na całej ulicy.</p>"
     },
-    "Entertainer": {
-      "name": "Kuglarz",
+    "Entertainer (Tier I)": {
+      "name": "Kuglarz (Tier I)",
       "description": "<p>Żongluje, śpiewa i wyjeżdża z miasta tuż przed nadejściem rachunku.</p>"
     },
-    "Butcher": {
-      "name": "Rzeźnik",
+    "Butcher (Tier II)": {
+      "name": "Rzeźnik (Tier II)",
       "description": "<p>Sprawnie włada tasakiem i nie rusza go widok tego, co w środku.</p>"
     },
-    "Fisher": {
-      "name": "Rybak",
+    "Fisher (Tier I)": {
+      "name": "Rybak (Tier I)",
       "description": "<p>Cierpliwy, ogorzały i chętnie opowie o tej, która mu uciekła.</p>"
     },
-    "Sigmar's Faithful": {
-      "name": "Wierny Sigmara",
+    "Sigmar's Faithful (Tier I)": {
+      "name": "Wierny Sigmara (Tier I)",
       "description": "<p>Nosi młot na widoku i przygląda się uważnie tym, którzy tego nie robią.</p>"
     },
-    "Ulric's Faithful": {
-      "name": "Wierny Ulryka",
+    "Ulric's Faithful (Tier I)": {
+      "name": "Wierny Ulryka (Tier I)",
       "description": "<p>Modli się z zaciśniętą pięścią i tylko przy dostatecznie złej pogodzie.</p>"
     },
-    "Shallya's Faithful": {
-      "name": "Wierny Shallyi",
+    "Shallya's Faithful (Tier I)": {
+      "name": "Wierny Shallyi (Tier I)",
       "description": "<p>Opiekuje się umierającymi, nie pytając, po której stronie walczyli.</p>"
     },
-    "Morr's Faithful": {
-      "name": "Wierny Morra",
+    "Morr's Faithful (Tier I)": {
+      "name": "Wierny Morra (Tier I)",
       "description": "<p>Spokojny przy zmarłych i po cichu niepokojący dla żywych.</p>"
     },
-    "Ranald's Faithful": {
-      "name": "Wierny Ranalda",
+    "Ranald's Faithful (Tier I)": {
+      "name": "Wierny Ranalda (Tier I)",
       "description": "<p>Zamiast się modlić, krzyżuje palce, a na wynik i tak się zakłada.</p>"
     },
-    "Flagellant": {
-      "name": "Biczownik",
+    "Flagellant (Tier II)": {
+      "name": "Biczownik (Tier II)",
       "description": "<p>Chętnie krwawi w imię końca świata i szuka towarzystwa.</p>"
     },
-    "Templar's Informer": {
-      "name": "Donosiciel templariuszy",
+    "Templar's Informer (Tier I)": {
+      "name": "Donosiciel templariuszy (Tier I)",
       "description": "<p>Spisuje nazwiska i przekazuje je panom w szerokich kapeluszach.</p>"
     },
-    "Secret Doubter": {
-      "name": "Skryty wątpiący",
+    "Secret Doubter (Tier I)": {
+      "name": "Skryty wątpiący (Tier I)",
       "description": "<p>Porusza ustami w modlitwie, a po cichu czyta księgi spalone gdzie indziej.</p>"
     },
-    "Wealthy Patron": {
-      "name": "Bogaty mecenas",
+    "Wealthy Patron (Tier I)": {
+      "name": "Bogaty mecenas (Tier I)",
       "description": "<p>Większość spraw załatwia sakiewką, a resztę cudzym mieczem.</p>"
     },
-    "Local Hero": {
-      "name": "Lokalny bohater",
+    "Local Hero (Tier I)": {
+      "name": "Lokalny bohater (Tier I)",
       "description": "<p>Raz uratował wieś i od tamtej pory pije za darmo.</p>"
     },
-    "Spy": {
-      "name": "Szpieg",
+    "Spy (Tier I)": {
+      "name": "Szpieg (Tier I)",
       "description": "<p>Ma trzy nazwiska, dwóch pracodawców i jedną drogę ucieczki z każdego pokoju.</p>"
     },
-    "Disgraced": {
-      "name": "Zhańbiony",
+    "Disgraced (Tier I)": {
+      "name": "Zhańbiony (Tier I)",
       "description": "<p>Kiedyś ktoś znaczny. Dziś unika herbów pewnych rodów.</p>"
     },
-    "Wanted": {
-      "name": "Poszukiwany",
+    "Wanted (Tier I)": {
+      "name": "Poszukiwany (Tier I)",
       "description": "<p>Rysunek tej twarzy wisi na bramie. Nie jest pochlebny.</p>"
     },
-    "Corrupt Official": {
-      "name": "Skorumpowany urzędnik",
+    "Corrupt Official (Tier I)": {
+      "name": "Skorumpowany urzędnik (Tier I)",
       "description": "<p>Każda pieczątka ma swoją cenę, a dziś cena wzrosła.</p>"
     }
   }

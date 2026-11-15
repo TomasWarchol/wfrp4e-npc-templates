@@ -147,8 +147,15 @@ const CATEGORIES = {
   people: { id: "people", en: "People", pl: "Ludzie" }
 };
 
+const ROMAN = ["I", "II", "III", "IV", "V"];
+
+/** Dopisek tieru siły do nazwy, np. " (Tier IV)". */
+export function tierSuffix(tier) {
+  return ` (Tier ${ROMAN[tier - 1]})`;
+}
+
 /** Składa dokumenty kompendium i polskie tłumaczenie. */
-export function buildAll({ archetypes, humanGroups = [], roleGroups = [], tierGroups = [], traitGroups = [], coreItems, coreTraits = {}, addonTalents = [] }) {
+export function buildAll({ archetypes, humanGroups = [], roleGroups = [], tierGroups = [], traitGroups = [], powerTiers, coreItems, coreTraits = {}, addonTalents = [] }) {
   const addons = new Set(addonTalents);
   const folders = [];
   const items = [];
@@ -157,12 +164,15 @@ export function buildAll({ archetypes, humanGroups = [], roleGroups = [], tierGr
 
   const add = (group, source, index, data) => {
     const key = `${group.id}/${source.id}`;
+    const tier = powerTiers[key];
+    if (!ROMAN[tier - 1]) throw new Error(`Brak tieru siły dla szablonu ${key}`);
+    const en = source.en + tierSuffix(tier);
     items.push(buildItem({
-      key, en: source.en, icon: group.icon, folder: stableId(`folder/${group.id}`), sort: (index + 1) * 1000,
+      key, en, icon: group.icon, folder: stableId(`folder/${group.id}`), sort: (index + 1) * 1000,
       data, description: source.d[0], pre: source.pre?.[0], post: source.post?.[0], coreItems, coreTraits, addonTalents: addons
     }));
-    if (entries[source.en]) throw new Error(`Powtórzona nazwa szablonu: ${source.en}`);
-    entries[source.en] = { name: source.pl, description: `<p>${source.d[1]}</p>`, ...(source.pre ? { pre: source.pre[1] } : {}), ...(source.post ? { post: source.post[1] } : {}) };
+    if (entries[en]) throw new Error(`Powtórzona nazwa szablonu: ${en}`);
+    entries[en] = { name: source.pl + tierSuffix(tier), description: `<p>${source.d[1]}</p>`, ...(source.pre ? { pre: source.pre[1] } : {}), ...(source.post ? { post: source.post[1] } : {}) };
   };
 
   const overlay = (item) => ({ c: item.c, s: item.s, t: item.t, sc: item.sc ?? [], tc: item.tc ?? [], l: item.l ?? {}, gear: item.gear ?? [], tr: item.tr ?? [], sp: item.sp ?? [] });
@@ -187,6 +197,10 @@ export function buildAll({ archetypes, humanGroups = [], roleGroups = [], tierGr
   for (const group of [...roleGroups, ...tierGroups, ...traitGroups, ...humanGroups]) {
     group.items.forEach((item, index) => add(group, item, index, overlay(item)));
   }
+  // Wpis tieru bez szablonu to literówka w kluczu albo usunięty szablon
+  const keys = new Set(items.map((item) => item._id));
+  const orphans = Object.keys(powerTiers).filter((key) => !keys.has(stableId(key)));
+  if (orphans.length) throw new Error(`Tier siły dla nieistniejących szablonów: ${orphans.join(", ")}`);
 
   const translation = {
     label: "Szablony NPC",

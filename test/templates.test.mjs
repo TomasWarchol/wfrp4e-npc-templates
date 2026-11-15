@@ -1,21 +1,44 @@
 import { readFileSync } from "node:fs";
 import { describe, expect, it } from "vitest";
+import { POWER_TIERS } from "../content/power-tiers.mjs";
 import { ARCHETYPES } from "../content/templates.mjs";
 import { ADDON_TALENTS } from "../content/addon-talents.mjs";
 import { HUMAN_GROUPS } from "../content/human-overlays.mjs";
 import { ROLE_GROUPS } from "../content/roles.mjs";
 import { TIER_GROUPS } from "../content/tiers.mjs";
 import { TRAIT_GROUPS } from "../content/traits.mjs";
-import { accumulateRank, buildAll, buildSpellLinks, buildTraits, buildTrappings, stableId } from "../tools/pack-builder.mjs";
+import { accumulateRank, buildAll, buildSpellLinks, buildTraits, buildTrappings, stableId, tierSuffix } from "../tools/pack-builder.mjs";
 import { buildAvailability, buildNameMap, isAvailable, resolveName } from "../scripts/names.mjs";
 import { grantedItemData, keepAvailable, localizedSystem, pruneChoices, splitOwnedSkills, splitOwnedTraits, traitValue } from "../scripts/apply.mjs";
 
 const coreItems = JSON.parse(readFileSync(new URL("../content/core-items.json", import.meta.url), "utf8"));
 const coreTraits = JSON.parse(readFileSync(new URL("../content/core-traits.json", import.meta.url), "utf8"));
-const built = buildAll({ archetypes: ARCHETYPES, humanGroups: HUMAN_GROUPS, roleGroups: ROLE_GROUPS, tierGroups: TIER_GROUPS, traitGroups: TRAIT_GROUPS, coreItems, coreTraits, addonTalents: ADDON_TALENTS });
-const byName = (name) => built.items.find((item) => item.name === name);
+const built = buildAll({ archetypes: ARCHETYPES, humanGroups: HUMAN_GROUPS, roleGroups: ROLE_GROUPS, tierGroups: TIER_GROUPS, traitGroups: TRAIT_GROUPS, powerTiers: POWER_TIERS, coreItems, coreTraits, addonTalents: ADDON_TALENTS });
+// Nazwy w kompendium mają dopisek tieru, np. "Boss (Tier IV)"; testy szukają po nazwie bazowej
+const baseName = (name) => name.replace(/ \(Tier [IV]+\)$/, "");
+const byName = (name) => built.items.find((item) => baseName(item.name) === name);
 
 describe("zestaw szablonów", () => {
+  it("dopisuje tier siły do nazwy EN i PL każdego szablonu", () => {
+    expect(Object.keys(POWER_TIERS)).toHaveLength(built.items.length);
+    for (const item of built.items) {
+      expect(item.name).toMatch(/ \(Tier (I|II|III|IV|V)\)$/);
+      expect(built.translation.entries[item.name].name.endsWith(item.name.match(/ \(Tier .+\)$/)[0]), item.name).toBe(true);
+    }
+    expect(byName("Cannon Fodder").name).toBe("Cannon Fodder (Tier I)");
+    expect(byName("Legendary").name).toBe("Legendary (Tier V)");
+    expect(built.translation.entries["Boss (Tier IV)"].name).toBe("Boss (Tier IV)");
+    expect(tierSuffix(3)).toBe(" (Tier III)");
+  });
+
+  it("odrzuca szablon bez tieru i tier bez szablonu", () => {
+    const base = { archetypes: ARCHETYPES, humanGroups: HUMAN_GROUPS, roleGroups: ROLE_GROUPS, tierGroups: TIER_GROUPS, traitGroups: TRAIT_GROUPS, coreItems, coreTraits };
+    const missing = { ...POWER_TIERS };
+    delete missing["soldier/recruit"];
+    expect(() => buildAll({ ...base, powerTiers: missing })).toThrow(/soldier\/recruit/);
+    expect(() => buildAll({ ...base, powerTiers: { ...POWER_TIERS, "soldier/nope": 2 } })).toThrow(/soldier\/nope/);
+  });
+
   it("daje stałe i poprawne identyfikatory", () => {
     expect(stableId("a")).toBe(stableId("a"));
     expect(new Set(built.items.map((i) => i._id)).size).toBe(built.items.length);
@@ -85,7 +108,7 @@ describe("zestaw szablonów", () => {
   it("rola dopisuje się do imienia, a poziom i cecha nie", () => {
     const shaman = byName("Shaman");
     expect(shaman.system.alterName).toEqual({ pre: "", post: "(Shaman)" });
-    expect(built.translation.entries.Shaman.post).toBe("(Szaman)");
+    expect(built.translation.entries[shaman.name].post).toBe("(Szaman)");
     expect(built.translation.mapping.post).toBe("system.alterName.post");
     expect(byName("Elite").system.alterName.post).toBe("");
     expect(byName("Mighty").system.alterName.post).toBe("");
@@ -144,7 +167,7 @@ describe("zestaw szablonów", () => {
     for (const group of [...TIER_GROUPS, ...TRAIT_GROUPS]) {
       for (const item of group.items) expect(roles.has(item.id), item.id).toBe(false);
     }
-    expect(built.items.filter((i) => i.name === "Elite")).toHaveLength(1);
+    expect(built.items.filter((i) => baseName(i.name) === "Elite")).toHaveLength(1);
     expect(byName("Elite Specimen")).toBeUndefined();
     expect(byName("Champion").system.traits.list.map((t) => t.name)).toContain("Champion");
   });

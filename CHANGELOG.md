@@ -6,6 +6,8 @@
 - **Threat Level**: Cannon Fodder, Grizzled, Elite, Boss and Legendary, plus the very strong Bane of Heroes templates.
 - Traits now gather what was scattered: Body, Nature, Powers, Taint, Undeath and Weaknesses. Duplicates were merged into one version each.
 - Casters such as the Shaman and Necromancer get a fixed set of memorised spells, with no selection windows. The Sorcerer still asks for a Lore.
+- **Power tiers.** Every template name now ends with Tier I–V, for example "Boss (Tier IV)", in English and Polish. The tier rates how much more dangerous in combat the template makes an actor under WFRP4e rules. Criteria and a reason for each template are in `docs/power-tiers.md`.
+- Templates already applied to actors keep their old names. Document ids are unchanged.
 
 ## 0.3.0
 - Templates now use talents from add-on books where they fit. A group without the book simply does not get them, with no warning.

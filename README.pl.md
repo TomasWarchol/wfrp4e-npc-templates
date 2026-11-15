@@ -29,6 +29,8 @@ Rzucający czary dostają stały zestaw zapamiętanych zaklęć, bez okien wybor
 
 **Poziom zagrożenia:** Mięso armatnie, Weteran, Elita, Boss, Legenda i sześć bardzo mocnych szablonów Zguby bohaterów.
 
+**Tiery siły:** każda nazwa szablonu kończy się tierem od **Tier I** (kosmetyka lub słabość) do **Tier V** (finał kampanii), np. „Boss (Tier IV)”. Tier mówi, o ile groźniejszy w walce staje się aktor po nałożeniu szablonu. Kryteria i krótkie uzasadnienie każdego szablonu są w [docs/power-tiers.md](docs/power-tiers.md).
+
 **Cechy:** Ciało, Natura, Moce, Skażenie, Nieumarłość i Słabości.
 
 **Ludzie:** 12 archetypów po 4 stopnie oraz Pochodzenie, Fach, Wiara i Pozycja jako tło.

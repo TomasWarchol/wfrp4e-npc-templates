@@ -29,6 +29,8 @@ Casters get a fixed set of memorised spells with no selection windows. The Sorce
 
 **Threat Level:** Cannon Fodder, Grizzled, Elite, Boss, Legendary and six very strong Bane of Heroes templates.
 
+**Power tiers:** every template name ends with a tier from **Tier I** (cosmetic or a weakness) to **Tier V** (campaign finale), for example "Boss (Tier IV)". The tier says how much more dangerous in combat a template makes the actor. Criteria and a short reason for each template are in [docs/power-tiers.md](docs/power-tiers.md) (Polish).
+
 **Traits:** Body, Nature, Powers, Taint, Undeath and Weaknesses.
 
 **People:** 12 archetypes of 4 ranks each, with Origins, Walks of Life, Faith and Reputation for background.
