@@ -114,7 +114,7 @@ export function buildSpellLinks(names, coreItems, key) {
   });
 }
 
-function buildItem({ key, en, icon, folder, sort, data, description, pre, post, coreItems, coreTraits, addonTalents }) {
+function buildItem({ key, en, icon, folder, sort, data, description, pre, post, tier, category, coreItems, coreTraits, addonTalents }) {
   const characteristics = Object.fromEntries(CHARACTERISTICS.map((c) => [c, data.c[c] ?? 0]));
   const _id = stableId(key);
   return {
@@ -131,7 +131,7 @@ function buildItem({ key, en, icon, folder, sort, data, description, pre, post, 
       trappings: buildTrappings(data.gear, coreItems, key)
     },
     effects: [],
-    flags: { [MODULE_ID]: { managed: true, spells: buildSpellLinks(data.sp ?? [], coreItems, key), ...(data.lc ? { loreChoice: data.lc } : {}), optional: [...new Set([...data.t, ...data.tc.flat()])].filter((name) => addonTalents.has(name)) } }
+    flags: { [MODULE_ID]: { managed: true, tier, category, spells: buildSpellLinks(data.sp ?? [], coreItems, key), ...(data.lc ? { loreChoice: data.lc } : {}), optional: [...new Set([...data.t, ...data.tc.flat()])].filter((name) => addonTalents.has(name)) } }
   };
 }
 
@@ -162,14 +162,14 @@ export function buildAll({ archetypes, humanGroups = [], roleGroups = [], tierGr
   const entries = {};
   const folderNames = {};
 
-  const add = (group, source, index, data) => {
+  const add = (category, group, source, index, data) => {
     const key = `${group.id}/${source.id}`;
     const tier = powerTiers[key];
     if (!ROMAN[tier - 1]) throw new Error(`Brak tieru siły dla szablonu ${key}`);
     const en = source.en + tierSuffix(tier);
     items.push(buildItem({
       key, en, icon: group.icon, folder: stableId(`folder/${group.id}`), sort: (index + 1) * 1000,
-      data, description: source.d[0], pre: source.pre?.[0], post: source.post?.[0], coreItems, coreTraits, addonTalents: addons
+      data, description: source.d[0], pre: source.pre?.[0], post: source.post?.[0], tier, category: category.id, coreItems, coreTraits, addonTalents: addons
     }));
     if (entries[en]) throw new Error(`Powtórzona nazwa szablonu: ${en}`);
     entries[en] = { name: source.pl + tierSuffix(tier), description: `<p>${source.d[1]}</p>`, ...(source.pre ? { pre: source.pre[1] } : {}), ...(source.post ? { post: source.post[1] } : {}) };
@@ -192,10 +192,10 @@ export function buildAll({ archetypes, humanGroups = [], roleGroups = [], tierGr
   addCategory(CATEGORIES.people, [...archetypes, ...humanGroups], 4000);
 
   for (const group of archetypes) {
-    group.ranks.forEach((rank, index) => add(group, rank, index, accumulateRank(group.ranks, index)));
+    group.ranks.forEach((rank, index) => add(CATEGORIES.people, group, rank, index, accumulateRank(group.ranks, index)));
   }
-  for (const group of [...roleGroups, ...tierGroups, ...traitGroups, ...humanGroups]) {
-    group.items.forEach((item, index) => add(group, item, index, overlay(item)));
+  for (const [category, groups] of [[CATEGORIES.roles, roleGroups], [CATEGORIES.tiers, tierGroups], [CATEGORIES.traits, traitGroups], [CATEGORIES.people, humanGroups]]) {
+    for (const group of groups) group.items.forEach((item, index) => add(category, group, item, index, overlay(item)));
   }
   // Wpis tieru bez szablonu to literówka w kluczu albo usunięty szablon
   const keys = new Set(items.map((item) => item._id));

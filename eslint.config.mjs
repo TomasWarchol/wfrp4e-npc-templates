@@ -18,7 +18,8 @@ const foundryGlobals = {
   fromUuid: "readonly",
   fromUuidSync: "readonly",
   getDocumentClass: "readonly",
-  warhammer: "readonly"
+  warhammer: "readonly",
+  PIXI: "readonly"
 };
 
 export default [

@@ -68,6 +68,61 @@
     },
     "Notifications": {
       "Skipped": "{template}: tych pozycji nie ma w aktywnych kompendiach, więc nie zostały dodane: {items}"
+    },
+    "Forge": {
+      "Title": "Kuźnia przeciwnika",
+      "HudButton": "Kuźnia przeciwnika: szablony",
+      "Search": "Szukaj szablonu…",
+      "Tier": "Tier",
+      "Remove": "Zdejmij ten szablon",
+      "Targets": "Cele ({count}): {names}",
+      "NoTargets": "Najpierw zaznacz token.",
+      "Shared": "{count} zaznaczonych tokenów dzieli aktora z innym, więc zmienią się wszystkie naraz.",
+      "Stack": "Szablony: {name}",
+      "StackOthers": "(zmiany obejmą też pozostałe cele: {count})",
+      "StackEmpty": "Brak szablonów z tego modułu.",
+      "NoResults": "Żaden szablon nie pasuje.",
+      "Applied": "{template}: nałożono na {count}.",
+      "BadgeTitle": "Szablony (widzi tylko MG)",
+      "Category": {
+        "all": "Wszystkie",
+        "roles": "Role",
+        "tiers": "Zagrożenie",
+        "traits": "Cechy",
+        "people": "Ludzie"
+      },
+      "ApplyQuick": "Nałóż od razu na cele",
+      "Preview": {
+        "Show": "Pokaż podgląd",
+        "Empty": "Kliknij szablon, aby zobaczyć, co daje.",
+        "Characteristics": "Cechy",
+        "Skills": "Umiejętności",
+        "Talents": "Talenty",
+        "Traits": "Cechy stworzeń",
+        "Magic": "Magia",
+        "Spells": "Stałe zaklęcia i modlitwy",
+        "Trappings": "Wyposażenie",
+        "Name": "Imię",
+        "OneOf": "jedno z: {options}",
+        "Petty": "czary proste do wyboru: {count}",
+        "CollegeLore": "czary jednej tradycji Kolegium, wybieranej przy nakładaniu: {count}",
+        "AnyLore": "czary dowolnej tradycji z czarami w kompendiach, wybieranej przy nakładaniu: {count}",
+        "NamedLore": "czary ({lore}): {count}",
+        "Pre": "Tytuł przed imieniem: {title}",
+        "Post": "Po imieniu: {title}",
+        "Apply": "Nałóż na cele ({count})",
+        "LoreNote": "Splatanie i talent magii zgodne z tradycją wybraną przy nakładaniu.",
+        "ChosenDeity": "wybrane bóstwo"
+      }
+    },
+    "Settings": {
+      "NameAffixes": {
+        "Name": "Dopiski w imieniu aktora",
+        "Hint": "Co szablony dopisują do imienia aktora. Rola w nawiasie zdradza graczom, kim jest przeciwnik, więc domyślnie dopisywane są tylko tytuły, np. Sierżant. MG widzi wszystkie szablony na odznace tokena.",
+        "Titles": "Tylko tytuły (Sierżant Hans)",
+        "None": "Nic",
+        "All": "Tytuły i role (Hans (Szaman))"
+      }
     }
   }
 }

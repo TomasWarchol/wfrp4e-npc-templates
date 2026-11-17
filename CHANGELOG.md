@@ -1,5 +1,12 @@
 # Changelog
 
+## 0.5.0
+- **Enemy Forge.** A hammer button on the token HUD (GM only) opens a panel with every template: search, categories and a tier filter. A click on a template shows a preview: description, characteristics, skills, talents, creature traits, magic, spells, trappings, choices and the title it adds. The preview's button, or + on a row, applies the template to all selected tokens, and × removes it from all of them. Clicking an applied template opens its preview too. The panel warns when tokens share one actor.
+- **GM-only token badge.** Tokens with templates show their highest tier and the number of templates, and hovering lists them. Only the GM's screen draws it, so players never see it.
+- **Titles in actor names** setting. By default templates now add only titles such as "Sergeant" to the name, not roles in brackets such as "(Shaman)", which told players who the enemy was. Choose "Titles and roles" to keep the old behaviour.
+- Templates store their tier and category, which the panel and badge use.
+- Removing a template no longer shows red "ActiveEffect … does not exist" errors on encumbered characters. The module now waits until the system has removed the template's items, then restores names, skills and creature traits in a single update, so the system's encumbrance checks no longer run several times at once.
+
 ## 0.4.3
 - **No more "Advancement Cost" on player characters.** A template that raises a skill the character already has no longer asks for the experience cost. Removing it no longer asks either.
 - **Full Wounds after a template.** After a template is applied, current Wounds are set to the new maximum. After one is removed, Wounds are kept within the new maximum.

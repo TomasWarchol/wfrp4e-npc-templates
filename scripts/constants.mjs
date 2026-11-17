@@ -1,6 +1,9 @@
 /** Identyfikator modułu – musi być zgodny z "id" w module.json. */
 export const MODULE_ID = "wfrp4e-npc-templates";
 
+/** Kompendium z szablonami modułu. */
+export const PACK_ID = `${MODULE_ID}.npc-templates`;
+
 /** Przestrzeń kluczy tłumaczeń modułu (lang/*.json). */
 export const I18N = "WFRP4E_TEMPLATES";
 

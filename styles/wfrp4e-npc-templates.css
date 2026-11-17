@@ -1,2 +1,340 @@
 /* WFRP4e – NPC Templates */
 /* Klasy modułu poprzedzaj prefiksem wfrp4e-npc-templates, żeby nie kolidowały z systemem. */
+
+/* Kolory tierów: te same co na odznace tokena (scripts/forge-model.mjs) */
+.wfrp4e-npc-templates-forge,
+.wfrp4e-npc-templates-tooltip {
+  --npct-tier-1: #8a8a8a;
+  --npct-tier-2: #3f8f4f;
+  --npct-tier-3: #2f6fb0;
+  --npct-tier-4: #7a3fb0;
+  --npct-tier-5: #b03a2e;
+}
+
+.wfrp4e-npc-templates-forge .window-content {
+  padding: 0;
+  overflow: hidden;
+}
+
+.wfrp4e-npc-templates-forge .forge {
+  display: grid;
+  grid-template-columns: minmax(300px, 1fr) minmax(280px, 1fr);
+  gap: 10px;
+  height: 100%;
+  padding: 8px;
+}
+
+.wfrp4e-npc-templates-forge .forge-browse {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  min-height: 0;
+}
+
+/* Podgląd szablonu */
+.wfrp4e-npc-templates-forge .forge-preview {
+  display: flex;
+  flex-direction: column;
+  min-height: 0;
+  padding-left: 10px;
+  border-left: 1px solid rgb(0 0 0 / 25%);
+}
+
+.wfrp4e-npc-templates-forge .forge-preview-empty {
+  justify-content: center;
+  text-align: center;
+  opacity: 0.7;
+}
+
+.wfrp4e-npc-templates-forge .forge-preview header {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 6px;
+}
+
+.wfrp4e-npc-templates-forge .forge-preview header img {
+  width: 36px;
+  height: 36px;
+  border: none;
+}
+
+.wfrp4e-npc-templates-forge .forge-preview header h3 {
+  flex: 1;
+  margin: 0;
+  border: none;
+}
+
+.wfrp4e-npc-templates-forge .forge-preview-body {
+  flex: 1;
+  overflow-y: auto;
+}
+
+.wfrp4e-npc-templates-forge .forge-description {
+  margin-bottom: 6px;
+  font-style: italic;
+  opacity: 0.85;
+}
+
+.wfrp4e-npc-templates-forge .forge-description p {
+  margin: 0;
+}
+
+.wfrp4e-npc-templates-forge .forge-preview section {
+  margin-bottom: 8px;
+}
+
+.wfrp4e-npc-templates-forge .forge-preview section h4 {
+  margin: 0 0 2px;
+  border: none;
+  font-size: var(--font-size-12, 12px);
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  opacity: 0.75;
+}
+
+.wfrp4e-npc-templates-forge .forge-preview section ul {
+  margin: 0;
+  padding-left: 16px;
+}
+
+.wfrp4e-npc-templates-forge .forge-preview .forge-choice {
+  font-style: italic;
+}
+
+.wfrp4e-npc-templates-forge .forge-stats {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 4px;
+}
+
+.wfrp4e-npc-templates-forge .forge-stats span {
+  padding: 0 6px;
+  border-radius: 4px;
+  font-size: var(--font-size-12, 12px);
+  background: rgb(63 143 79 / 25%);
+}
+
+.wfrp4e-npc-templates-forge .forge-stats span.minus {
+  background: rgb(176 58 46 / 25%);
+}
+
+.wfrp4e-npc-templates-forge .forge-preview footer {
+  padding-top: 6px;
+}
+
+.wfrp4e-npc-templates-forge .forge-preview footer button {
+  width: 100%;
+}
+
+.wfrp4e-npc-templates-forge .forge-row.selected {
+  background: rgb(255 255 255 / 12%);
+  box-shadow: inset 3px 0 0 var(--npct-tier-color, transparent);
+}
+
+.wfrp4e-npc-templates-forge .forge-quick {
+  flex: 0 0 auto;
+  width: 22px;
+  height: 22px;
+  min-height: 0;
+  padding: 0;
+  line-height: 20px;
+  visibility: hidden;
+}
+
+.wfrp4e-npc-templates-forge .forge-row:hover .forge-quick,
+.wfrp4e-npc-templates-forge .forge-row.selected .forge-quick {
+  visibility: visible;
+}
+
+.wfrp4e-npc-templates-forge .forge-chip a[data-action="select"] {
+  opacity: 1;
+  text-decoration: underline dotted;
+}
+
+.wfrp4e-npc-templates-forge .forge-targets,
+.wfrp4e-npc-templates-forge .forge-warning {
+  margin: 0;
+  font-size: var(--font-size-13, 13px);
+}
+
+.wfrp4e-npc-templates-forge .forge-warning {
+  color: var(--color-level-warning, #c9a03a);
+}
+
+.wfrp4e-npc-templates-forge .forge-stack h4 {
+  margin: 0 0 4px;
+  border: none;
+  font-size: var(--font-size-13, 13px);
+}
+
+.wfrp4e-npc-templates-forge .forge-chips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 4px;
+}
+
+.wfrp4e-npc-templates-forge .forge-chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  padding: 1px 4px 1px 2px;
+  border: 1px solid rgb(0 0 0 / 25%);
+  border-radius: 4px;
+  font-size: var(--font-size-12, 12px);
+}
+
+.wfrp4e-npc-templates-forge .forge-chip a {
+  opacity: 0.6;
+}
+
+.wfrp4e-npc-templates-forge .forge-chip a:hover {
+  opacity: 1;
+}
+
+.wfrp4e-npc-templates-forge .forge-filters {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.wfrp4e-npc-templates-forge .forge-tabs,
+.wfrp4e-npc-templates-forge .forge-tiers {
+  display: flex;
+  gap: 3px;
+  align-items: center;
+}
+
+.wfrp4e-npc-templates-forge .forge-tabs button,
+.wfrp4e-npc-templates-forge .forge-tiers button {
+  flex: 1;
+  min-height: 24px;
+  padding: 0 4px;
+  font-size: var(--font-size-12, 12px);
+  line-height: 22px;
+}
+
+.wfrp4e-npc-templates-forge .forge-tiers span {
+  margin-right: 4px;
+  font-size: var(--font-size-12, 12px);
+}
+
+.wfrp4e-npc-templates-forge .forge-tabs button.active {
+  font-weight: bold;
+  box-shadow: inset 0 -2px 0 currentcolor;
+}
+
+.wfrp4e-npc-templates-forge .forge-tiers button.active {
+  color: #fff;
+  background: var(--npct-tier-color);
+}
+
+.wfrp4e-npc-templates-forge .forge-list {
+  flex: 1;
+  margin: 0;
+  padding: 0;
+  overflow-y: auto;
+  list-style: none;
+}
+
+.wfrp4e-npc-templates-forge .forge-group {
+  position: sticky;
+  top: 0;
+  padding: 4px 2px 2px;
+  font-size: var(--font-size-11, 11px);
+  font-weight: bold;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  opacity: 0.75;
+  background: var(--color-cool-5, rgb(0 0 0 / 50%));
+}
+
+.wfrp4e-npc-templates-forge .forge-row {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding: 2px;
+  border-radius: 3px;
+  cursor: pointer;
+}
+
+.wfrp4e-npc-templates-forge .forge-row:hover {
+  background: rgb(255 255 255 / 8%);
+  box-shadow: inset 2px 0 0 var(--npct-tier-color, transparent);
+}
+
+.wfrp4e-npc-templates-forge .forge-row img {
+  width: 24px;
+  height: 24px;
+  border: none;
+}
+
+.wfrp4e-npc-templates-forge .forge-name {
+  flex: 1;
+}
+
+.wfrp4e-npc-templates-forge .forge-empty {
+  padding: 6px 2px;
+  opacity: 0.7;
+}
+
+/* Pigułka tieru (panel i dymek) */
+.wfrp4e-npc-templates-forge .forge-tier,
+.wfrp4e-npc-templates-tooltip .forge-tier {
+  min-width: 26px;
+  padding: 0 4px;
+  border-radius: 8px;
+  color: #fff;
+  font-size: 11px;
+  font-weight: bold;
+  line-height: 16px;
+  text-align: center;
+  background: var(--npct-tier-color, #555);
+}
+
+.wfrp4e-npc-templates-forge .tier-1,
+.wfrp4e-npc-templates-tooltip .tier-1 { --npct-tier-color: var(--npct-tier-1); }
+.wfrp4e-npc-templates-forge .tier-2,
+.wfrp4e-npc-templates-tooltip .tier-2 { --npct-tier-color: var(--npct-tier-2); }
+.wfrp4e-npc-templates-forge .tier-3,
+.wfrp4e-npc-templates-tooltip .tier-3 { --npct-tier-color: var(--npct-tier-3); }
+.wfrp4e-npc-templates-forge .tier-4,
+.wfrp4e-npc-templates-tooltip .tier-4 { --npct-tier-color: var(--npct-tier-4); }
+.wfrp4e-npc-templates-forge .tier-5,
+.wfrp4e-npc-templates-tooltip .tier-5 { --npct-tier-color: var(--npct-tier-5); }
+
+/* Dymek po najechaniu na token (tylko MG) */
+.wfrp4e-npc-templates-tooltip {
+  position: fixed;
+  z-index: 100;
+  max-width: 260px;
+  padding: 6px 8px;
+  border: 1px solid rgb(0 0 0 / 60%);
+  border-radius: 5px;
+  color: #eee;
+  font-size: 12px;
+  pointer-events: none;
+  background: rgb(20 18 16 / 92%);
+  box-shadow: 0 2px 8px rgb(0 0 0 / 50%);
+}
+
+.wfrp4e-npc-templates-tooltip h4 {
+  margin: 0 0 4px;
+  border: none;
+  font-size: 11px;
+  text-transform: uppercase;
+  opacity: 0.7;
+}
+
+.wfrp4e-npc-templates-tooltip ul {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.wfrp4e-npc-templates-tooltip li {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  margin: 2px 0;
+}

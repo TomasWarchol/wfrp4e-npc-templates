@@ -41,6 +41,10 @@ Each rank already includes the lower ones, so give an actor one rank.
 
 ## How to use it
 
+**Enemy Forge (GM).** Select one or more tokens, open the token HUD and click the hammer. The panel lists every template with search, categories and a tier filter. Click a template to preview what it gives: characteristics, skills, talents, creature traits, magic, trappings and choices. Apply it to all selected tokens with the button under the preview or with + on the row, and click × on an applied one to remove it from all of them. Linked tokens that share an actor change together, and the panel warns about that.
+
+**GM-only badge.** A token with templates shows a small badge with its highest tier, for example "IV ·2" for two templates. Hovering over the token lists them. Only the GM's screen draws this, so players never see it. By default the name gets only titles such as "Sergeant", not roles in brackets; the **Titles in actor names** setting changes that.
+
 Drag a template onto a character, NPC or creature. It changes the characteristics and adds skills, talents and gear. Some ranks ask you to pick a talent or a weapon, wizards choose their spells, and a few ranks add a title such as "Sergeant" to the name.
 
 Templates use the system's own Template item, so they appear under **Applied Templates** on the Notes tab. Deleting one there undoes it. A skill the actor already has gains the extra advances instead of being listed twice. A trait the actor already has is raised to the higher rating, and Armour adds up. All of this is removed with the template.

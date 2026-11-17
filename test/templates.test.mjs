@@ -9,9 +9,10 @@ import { TIER_GROUPS } from "../content/tiers.mjs";
 import { TRAIT_GROUPS } from "../content/traits.mjs";
 import { accumulateRank, buildAll, buildSpellLinks, buildTraits, buildTrappings, stableId, tierSuffix } from "../tools/pack-builder.mjs";
 import { buildAvailability, buildNameMap, isAvailable, resolveName } from "../scripts/names.mjs";
+import { affixesFor, describeTemplate, filterTemplates, romanTier, stripTier, summarizeStack, uniqueTargets } from "../scripts/forge-model.mjs";
 import { BLESS_SCRIPT, blessingsFor, deityInName, deityOptions, needsDeityChoice, withDeity, withoutBlessScript } from "../scripts/deity.mjs";
 import { ARCANE_LORES, arcaneOptions, loreOptions, loreProfile, loreSpecialisation, needsLoreChoice, withLore } from "../scripts/lore.mjs";
-import { grantedItemData, keepAvailable, localizedSystem, pruneChoices, splitOwnedSkills, splitOwnedTraits, stripAffixes, templateUpdate, traitValue, woundsAfterTemplate } from "../scripts/apply.mjs";
+import { grantedItemData, keepAvailable, localizedSystem, pruneChoices, splitOwnedSkills, revertUpdate, splitOwnedTraits, stripAffixes, templateUpdate, traitValue, woundsAfterTemplate } from "../scripts/apply.mjs";
 
 const coreItems = JSON.parse(readFileSync(new URL("../content/core-items.json", import.meta.url), "utf8"));
 const coreTraits = JSON.parse(readFileSync(new URL("../content/core-traits.json", import.meta.url), "utf8"));
@@ -412,6 +413,109 @@ describe("nazwy w aktywnym tłumaczeniu", () => {
       const lang = JSON.parse(readFileSync(new URL(`../lang/${code}.json`, import.meta.url), "utf8")).WFRP4E_TEMPLATES;
       for (const key of ["Hint", "Label", "Confirm"]) expect(lang.DeityChoice[key], `${code} ${key}`).toBeTruthy();
     }
+  });
+
+  it("zapisuje w szablonie tier i kategorię dla Kuźni", () => {
+    for (const item of built.items) {
+      const flags = item.flags["wfrp4e-npc-templates"];
+      expect(flags.tier, item.name).toBe(["I", "II", "III", "IV", "V"].indexOf(item.name.match(/\(Tier ([IV]+)\)$/)[1]) + 1);
+      expect(["roles", "tiers", "traits", "people"], item.name).toContain(flags.category);
+    }
+    expect(byName("Boss").flags["wfrp4e-npc-templates"].category).toBe("tiers");
+    expect(byName("Shaman").flags["wfrp4e-npc-templates"].category).toBe("roles");
+    expect(byName("Recruit").flags["wfrp4e-npc-templates"].category).toBe("people");
+    expect(byName("Reiklander").flags["wfrp4e-npc-templates"].category).toBe("people");
+  });
+
+  it("filtruje szablony w Kuźni po tekście, kategorii i tierach", () => {
+    const entries = [
+      { name: "Szaman (Tier III)", tier: 3, category: "roles", group: "Magia i wiara" },
+      { name: "Boss (Tier IV)", tier: 4, category: "tiers", group: "Siła" },
+      { name: "Głupi (Tier I)", tier: 1, category: "traits", group: "Słabości" }
+    ];
+    expect(filterTemplates(entries, { search: "szam" }).map((e) => e.tier)).toEqual([3]);
+    expect(filterTemplates(entries, { search: "glupi" }).map((e) => e.tier)).toEqual([1]);
+    expect(filterTemplates(entries, { search: "slabosci" }).map((e) => e.tier)).toEqual([1]);
+    expect(filterTemplates(entries, { search: "tier" })).toEqual([]);
+    expect(filterTemplates(entries, { category: "tiers" }).map((e) => e.tier)).toEqual([4]);
+    expect(filterTemplates(entries, { tiers: new Set([1, 4]) }).map((e) => e.tier)).toEqual([4, 1]);
+    expect(filterTemplates(entries)).toHaveLength(3);
+  });
+
+  it("podsumowuje stos szablonów na odznakę", () => {
+    const stack = summarizeStack([{ name: "Elita (Tier III)", tier: 3 }, { name: "Goblin Szaman (Tier III)", tier: 3 }, { name: "Boss (Tier IV)", tier: 4 }]);
+    expect(stack.tier).toBe(4);
+    expect(stack.count).toBe(3);
+    expect(stack.list.map((e) => e.name)).toEqual(["Boss", "Elita", "Goblin Szaman"]);
+    expect(summarizeStack([]).count).toBe(0);
+    expect(romanTier(5)).toBe("V");
+    expect(romanTier(0)).toBe("");
+    expect(stripTier("Boss (Tier IV)")).toBe("Boss");
+  });
+
+  it("opisuje szablon do podglądu w Kuźni", () => {
+    const sergeant = describeTemplate(byName("Sergeant").system, byName("Sergeant").flags["wfrp4e-npc-templates"], { abbrev: { ws: "WW" }, affixMode: "titles" });
+    expect(sergeant.characteristics[0]).toEqual({ label: "WW", value: "+15" });
+    expect(sergeant.skills).toContain("Melee (Basic) +20");
+    expect(sergeant.talents).toContainEqual({ oneOf: ["Reaction Strike", "Strike to Stun", "Shieldsman"] });
+    expect(sergeant.talents).toContain("Strike Mighty Blow");
+    expect(sergeant.trappings).toContain("Mail Coat");
+    expect(sergeant.pre).toBe("Sergeant");
+    const veteran = describeTemplate(byName("Veteran").system);
+    expect(veteran.trappings).toContainEqual({ oneOf: ["Shield", "Halberd"] });
+    const legend = describeTemplate(byName("Legendary").system, {}, { translate: (n) => `[${n}]`, specification: (v) => `<${v}>` });
+    expect(legend.traits).toContain("[Ward] <8>");
+    expect(legend.talents).toContain("[Strike Mighty Blow] ×2");
+    const sorcerer = describeTemplate(byName("Sorcerer").system, byName("Sorcerer").flags["wfrp4e-npc-templates"]);
+    expect(sorcerer.lores).toEqual([{ lore: "petty", number: 3 }, { lore: "*", number: 5 }]);
+    expect(sorcerer.loreChoice).toBe("any");
+    // Jeden wybór tradycji zamiast osobnych wyborów Splatania i Magii Tajemnej
+    expect(sorcerer.chooseLore).toBe(true);
+    expect([...sorcerer.skills, ...sorcerer.talents].some((entry) => typeof entry !== "string" || /Channelling|Arcane/.test(entry))).toBe(false);
+    const warriorPriest = describeTemplate(byName("Warrior Priest").system, {}, { deityLabel: "bóstwo" });
+    expect(warriorPriest.chooseDeity).toBe(true);
+    expect(warriorPriest.talents).toEqual(expect.arrayContaining(["Bless (bóstwo)", "Invoke (bóstwo)"]));
+    const shaman = byName("Shaman").system;
+    expect(describeTemplate(shaman, {}, { affixMode: "titles" }).post).toBe("");
+    expect(describeTemplate(shaman, {}, { affixMode: "all" }).post).toBe("(Shaman)");
+    expect(describeTemplate(byName("Wounded").system).characteristics.every((c) => c.value.startsWith("-"))).toBe(true);
+    expect(describeTemplate(byName("Shaman").system, byName("Shaman").flags["wfrp4e-npc-templates"], { spellName: () => "x" }).spells).toHaveLength(6);
+    expect(describeTemplate(byName("Hunter").system).trappings).toContain("Arrow ×20");
+  });
+
+  it("dopisuje do imienia tylko to, na co pozwala ustawienie", () => {
+    const alter = { pre: "Sierżant", post: "(Szaman)" };
+    expect(affixesFor("titles", alter)).toEqual({ pre: "Sierżant", post: "" });
+    expect(affixesFor("none", alter)).toEqual({ pre: "", post: "" });
+    expect(affixesFor("all", alter)).toEqual(alter);
+    expect(affixesFor(undefined, alter)).toEqual({ pre: "Sierżant", post: "" });
+  });
+
+  it("rozpoznaje tokeny dzielące jednego aktora", () => {
+    const a = { uuid: "Actor.a" };
+    const b = { uuid: "Scene.s.Token.t.Actor.b" };
+    const { actors, shared } = uniqueTargets([{ actor: a }, { actor: a }, { actor: b }, { actor: null }]);
+    expect(actors).toEqual([a, b]);
+    expect(shared).toBe(1);
+  });
+
+  it("cofa szablon jedną aktualizacją aktora", () => {
+    const flagged = (data, flags) => ({ ...data, getFlag: (_scope, key) => key.split(".").reduce((o, k) => o?.[k], flags) });
+    const actor = {
+      name: "Sierżant Hans",
+      itemTypes: {
+        skill: [flagged({ id: "s1", system: { advances: { value: 25 } } }, { merged: { T1: 20 } }), flagged({ id: "s2", system: { advances: { value: 5 } } }, {})],
+        trait: [flagged({ id: "f1", name: "Armour", system: { specification: { value: "5" } } }, { traitBase: 2, traitRatings: { T1: 3 } })]
+      }
+    };
+    const template = { id: "T1", system: { alterName: { pre: "Sierżant", post: "" } } };
+    const update = revertUpdate(actor, template, { translateName: (n) => n });
+    expect(update.name).toBe("Hans");
+    expect(update.items).toEqual([
+      { _id: "s1", system: { advances: { value: 5 } }, flags: { "wfrp4e-npc-templates": { merged: { T1: 0 } } } },
+      { _id: "f1", system: { specification: { value: "2" } }, flags: { "wfrp4e-npc-templates": { traitRatings: { T1: 0 } } } }
+    ]);
+    expect(revertUpdate({ name: "Hans", itemTypes: { skill: [], trait: [] } }, { id: "T2", system: { alterName: { pre: "", post: "" } } })).toEqual({});
   });
 
   it("usuwa dopisek szablonu z imienia, także ze środka", () => {

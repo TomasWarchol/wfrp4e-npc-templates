@@ -2,6 +2,7 @@
  * Przygotowuje szablony modułu w chwili dodania do aktora i scala umiejętności, które aktor już ma.
  */
 import { MODULE_ID, I18N, log, t } from "./constants.mjs";
+import { affixesFor } from "./forge-model.mjs";
 import { blessingsFor, deityInName, deityOptions, needsDeityChoice, withDeity, withoutBlessScript } from "./deity.mjs";
 import { arcaneOptions, loreOptions, loreProfile, loreSpecialisation, needsLoreChoice, withLore } from "./lore.mjs";
 import { buildAvailability, buildNameMap, isAvailable, resolveName } from "./names.mjs";
@@ -31,6 +32,12 @@ function specialisation(text) {
 }
 
 const translate = (name) => resolveName(name, nameMap, specialisation);
+
+/** Nazwa z danych szablonu (angielska) w aktywnym tłumaczeniu, do wyświetlania w Kuźni. */
+export const displayName = (name) => translate(name);
+
+/** Wartość cechy stworzenia do wyświetlania (liczba, siła Skażenia albo przetłumaczona specjalizacja). */
+export const displaySpecification = (value) => specificationValue(value);
 
 /** Wczytuje indeksy kompendiów. Hooki Foundry przed utworzeniem dokumentu są synchroniczne, więc mapa musi być gotowa. */
 export async function loadNames() {
@@ -231,6 +238,9 @@ function onPreCreateTemplate(item, _data, options) {
   if (chosen?.lore) system = withLore(system, chosen.lore);
   if (chosen?.deity) system = withDeity(system, chosen.deity);
   const update = localizedSystem(system, translate, (key) => game.wfrp4e.config.magicLores[key] ?? key, specificationValue);
+  const affixes = affixesFor(game.settings.get(MODULE_ID, "nameAffixes"), system.alterName);
+  update["system.alterName.pre"] = affixes.pre;
+  update["system.alterName.post"] = affixes.post;
   const owned = new Set(item.parent.itemTypes.skill.map((skill) => skill.name));
   const { keep, merge } = splitOwnedSkills(update["system.skills.list"], owned);
   update["system.skills.list"] = keep;
@@ -403,35 +413,64 @@ export function stripAffixes(name, pre, post) {
   return result.trim();
 }
 
+const sleep = (ms) => new Promise((resolve) => setTimeout(resolve, ms));
+
+/**
+ * Czeka, aż system usunie przedmioty dodane przez szablon (robi to sam, równolegle z naszym hookiem).
+ * Każda zmiana aktora uruchamia w systemie niezależne sprawdzenie Przeciążenia; kilka naraz próbuje usunąć
+ * ten sam efekt i kończy się błędem „ActiveEffect … does not exist”. Dlatego nasze zmiany idą dopiero po nim.
+ */
+async function templateItemsGone(actor, templateId, timeout = 5000) {
+  const start = Date.now();
+  const pending = () => actor.items.some((other) => other.getFlag(game.system.id, "fromTemplate") === templateId);
+  while (pending() && Date.now() - start < timeout) await sleep(100);
+  await sleep(300);
+}
+
+/** Zmiany aktora cofające szablon: imię bez dopisków, rozwinięcia scalonych umiejętności i wartości cech stworzeń. */
+export function revertUpdate(actor, template, { translateName = translate } = {}) {
+  const update = {};
+  const { pre, post } = template.system.alterName;
+  const name = stripAffixes(actor.name, pre, post);
+  if (name !== actor.name) update.name = name;
+  const items = [];
+  for (const skill of actor.itemTypes.skill) {
+    const added = skill.getFlag(MODULE_ID, `merged.${template.id}`);
+    if (!added) continue;
+    items.push({
+      _id: skill.id,
+      system: { advances: { value: Math.max(0, skill.system.advances.value - added) } },
+      flags: { [MODULE_ID]: { merged: { [template.id]: 0 } } }
+    });
+  }
+  const additive = new Set(ADDITIVE_TRAITS.map(translateName));
+  for (const trait of actor.itemTypes.trait) {
+    const ratings = trait.getFlag(MODULE_ID, "traitRatings");
+    if (!ratings?.[template.id]) continue;
+    const others = Object.entries(ratings).filter(([id]) => id !== template.id).map(([, rating]) => rating);
+    items.push({
+      _id: trait.id,
+      system: { specification: { value: traitValue(trait.getFlag(MODULE_ID, "traitBase"), others, additive.has(trait.name)) } },
+      flags: { [MODULE_ID]: { traitRatings: { [template.id]: 0 } } }
+    });
+  }
+  if (items.length) update.items = items;
+  return update;
+}
+
+async function revertTemplate(template) {
+  const actor = template.parent;
+  await templateItemsGone(actor, template.id);
+  const update = revertUpdate(actor, template);
+  // Jedna aktualizacja zamiast kilku: system przelicza aktora tylko raz
+  if (Object.keys(update).length) await actor.update(update, templateUpdate());
+  scheduleWounds(actor, false);
+}
+
 /** Po usunięciu szablonu cofa dopiski w imieniu i rozwinięcia dodane do istniejących umiejętności. */
 function onDeleteTemplate(item, _options, userId) {
   if (!isManaged(item) || !item.parent || userId !== game.user.id) return;
-  scheduleWounds(item.parent, false);
-  const { pre, post } = item.system.alterName;
-  const name = stripAffixes(item.parent.name, pre, post);
-  if (name !== item.parent.name) item.parent.update({ name }).catch((error) => log.error(error));
-  const updates = [];
-  for (const skill of item.parent.itemTypes.skill) {
-    const added = skill.getFlag(MODULE_ID, `merged.${item.id}`);
-    if (!added) continue;
-    updates.push({
-      _id: skill.id,
-      "system.advances.value": Math.max(0, skill.system.advances.value - added),
-      [`flags.${MODULE_ID}.merged.${item.id}`]: 0
-    });
-  }
-  const additive = new Set(ADDITIVE_TRAITS.map(translate));
-  for (const trait of item.parent.itemTypes.trait) {
-    const ratings = trait.getFlag(MODULE_ID, "traitRatings");
-    if (!ratings?.[item.id]) continue;
-    const others = Object.entries(ratings).filter(([id]) => id !== item.id).map(([, rating]) => rating);
-    updates.push({
-      _id: trait.id,
-      "system.specification.value": traitValue(trait.getFlag(MODULE_ID, "traitBase"), others, additive.has(trait.name)),
-      [`flags.${MODULE_ID}.traitRatings.${item.id}`]: 0
-    });
-  }
-  if (updates.length) item.parent.updateEmbeddedDocuments("Item", updates, templateUpdate()).catch((error) => log.error(error));
+  revertTemplate(item).catch((error) => log.error(error));
 }
 
 export function installApplyHooks() {
@@ -441,7 +480,6 @@ export function installApplyHooks() {
   Hooks.on("createItem", onCreateTemplate);
   Hooks.on("deleteItem", onDeleteTemplate);
   Hooks.on("createItem", (item, options, userId) => onTemplateItem(item, options, userId, true));
-  Hooks.on("deleteItem", (item, options, userId) => onTemplateItem(item, options, userId, false));
 }
 
 /** Sprawdza, czy każda nazwa i każdy przedmiot z zestawu istnieją w tym świecie; zwraca listę braków. */

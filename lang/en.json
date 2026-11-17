@@ -68,6 +68,61 @@
     },
     "Notifications": {
       "Skipped": "{template}: not available in your active compendiums, so not added: {items}"
+    },
+    "Forge": {
+      "Title": "Enemy Forge",
+      "HudButton": "Enemy Forge: templates",
+      "Search": "Search templates…",
+      "Tier": "Tier",
+      "Remove": "Remove this template",
+      "Targets": "Targets ({count}): {names}",
+      "NoTargets": "Select a token first.",
+      "Shared": "{count} selected tokens share an actor with another one, so they all change together.",
+      "Stack": "Templates on {name}",
+      "StackOthers": "(changes also apply to the other targets: {count})",
+      "StackEmpty": "No templates from this module yet.",
+      "NoResults": "No templates match.",
+      "Applied": "{template}: applied to {count}.",
+      "BadgeTitle": "Templates (GM only)",
+      "Category": {
+        "all": "All",
+        "roles": "Roles",
+        "tiers": "Threat",
+        "traits": "Traits",
+        "people": "People"
+      },
+      "ApplyQuick": "Apply now to the targets",
+      "Preview": {
+        "Show": "Show the preview",
+        "Empty": "Click a template to see what it gives.",
+        "Characteristics": "Characteristics",
+        "Skills": "Skills",
+        "Talents": "Talents",
+        "Traits": "Creature traits",
+        "Magic": "Magic",
+        "Spells": "Fixed spells and prayers",
+        "Trappings": "Trappings",
+        "Name": "Name",
+        "OneOf": "one of: {options}",
+        "Petty": "{count} Petty spells to choose",
+        "CollegeLore": "{count} spells of one College Lore, chosen when applied",
+        "AnyLore": "{count} spells of any Lore with spells in your compendiums, chosen when applied",
+        "NamedLore": "{count} spells: {lore}",
+        "Pre": "Title before the name: {title}",
+        "Post": "After the name: {title}",
+        "Apply": "Apply to the targets ({count})",
+        "LoreNote": "Channelling and the magic talent follow the Lore chosen when applying.",
+        "ChosenDeity": "chosen deity"
+      }
+    },
+    "Settings": {
+      "NameAffixes": {
+        "Name": "Titles in actor names",
+        "Hint": "What templates add to the actor's name. Roles in brackets tell the players who the enemy is, so by default only titles such as Sergeant are added. The GM sees every template on the token badge.",
+        "Titles": "Titles only (Sergeant Hans)",
+        "None": "Nothing",
+        "All": "Titles and roles (Hans (Shaman))"
+      }
     }
   }
 }

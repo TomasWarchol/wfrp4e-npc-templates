@@ -41,6 +41,10 @@ Każdy stopień zawiera już niższe, więc nakładaj na aktora jeden stopień.
 
 ## Jak używać
 
+**Kuźnia przeciwnika (MG).** Zaznacz jeden albo kilka tokenów, otwórz HUD tokena i kliknij młotek. Panel pokazuje wszystkie szablony z wyszukiwarką, kategoriami i filtrem tierów. Kliknięcie szablonu pokazuje podgląd tego, co daje: cechy, umiejętności, talenty, cechy stworzeń, magię, wyposażenie i wybory. Przycisk pod podglądem albo + przy wierszu nakłada go na wszystkie zaznaczone tokeny, a × przy nałożonym zdejmuje go ze wszystkich. Tokeny połączone z tym samym aktorem zmieniają się razem i panel o tym ostrzega.
+
+**Odznaka widoczna tylko dla MG.** Token z szablonami ma małą odznakę z najwyższym tierem, np. „IV ·2” dla dwóch szablonów. Po najechaniu na token widać ich listę. Rysuje ją tylko ekran MG, więc gracze jej nie widzą. Domyślnie do imienia trafiają tylko tytuły, np. „Sierżant”, a nie role w nawiasie; zmienia to ustawienie **Dopiski w imieniu aktora**.
+
 Przeciągnij szablon na postać, NPC albo stwora. Szablon zmienia cechy oraz dodaje umiejętności, talenty i wyposażenie. Niektóre stopnie proszą o wybór talentu lub broni, czarodzieje wybierają czary, a część stopni dopisuje do imienia tytuł, np. „Sierżant”.
 
 Szablony korzystają z systemowego typu Template, więc widać je w sekcji **Applied Templates** na zakładce notatek. Usunięcie szablonu cofa jego działanie. Umiejętność, którą aktor już ma, dostaje dodatkowe rozwinięcia zamiast pojawić się drugi raz. Cecha, którą aktor już ma, rośnie do wyższej wartości, a Pancerz się sumuje. Po usunięciu szablonu wszystko wraca do stanu poprzedniego.
