@@ -131,7 +131,7 @@ function buildItem({ key, en, icon, folder, sort, data, description, pre, post, 
       trappings: buildTrappings(data.gear, coreItems, key)
     },
     effects: [],
-    flags: { [MODULE_ID]: { managed: true, spells: buildSpellLinks(data.sp ?? [], coreItems, key), optional: [...new Set([...data.t, ...data.tc.flat()])].filter((name) => addonTalents.has(name)) } }
+    flags: { [MODULE_ID]: { managed: true, spells: buildSpellLinks(data.sp ?? [], coreItems, key), ...(data.lc ? { loreChoice: data.lc } : {}), optional: [...new Set([...data.t, ...data.tc.flat()])].filter((name) => addonTalents.has(name)) } }
   };
 }
 
@@ -175,7 +175,7 @@ export function buildAll({ archetypes, humanGroups = [], roleGroups = [], tierGr
     entries[en] = { name: source.pl + tierSuffix(tier), description: `<p>${source.d[1]}</p>`, ...(source.pre ? { pre: source.pre[1] } : {}), ...(source.post ? { post: source.post[1] } : {}) };
   };
 
-  const overlay = (item) => ({ c: item.c, s: item.s, t: item.t, sc: item.sc ?? [], tc: item.tc ?? [], l: item.l ?? {}, gear: item.gear ?? [], tr: item.tr ?? [], sp: item.sp ?? [] });
+  const overlay = (item) => ({ c: item.c, s: item.s, t: item.t, sc: item.sc ?? [], tc: item.tc ?? [], l: item.l ?? {}, gear: item.gear ?? [], tr: item.tr ?? [], sp: item.sp ?? [], lc: item.lc });
 
   const addCategory = (category, groups, sort) => {
     folders.push(buildFolder(category, sort));

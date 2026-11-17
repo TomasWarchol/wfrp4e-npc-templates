@@ -9,7 +9,7 @@ import { TIER_GROUPS } from "../content/tiers.mjs";
 import { TRAIT_GROUPS } from "../content/traits.mjs";
 import { accumulateRank, buildAll, buildSpellLinks, buildTraits, buildTrappings, stableId, tierSuffix } from "../tools/pack-builder.mjs";
 import { buildAvailability, buildNameMap, isAvailable, resolveName } from "../scripts/names.mjs";
-import { ARCANE_LORES, needsLoreChoice, withLore } from "../scripts/lore.mjs";
+import { ARCANE_LORES, arcaneOptions, loreOptions, loreProfile, loreSpecialisation, needsLoreChoice, withLore } from "../scripts/lore.mjs";
 import { grantedItemData, keepAvailable, localizedSystem, pruneChoices, splitOwnedSkills, splitOwnedTraits, stripAffixes, traitValue } from "../scripts/apply.mjs";
 
 const coreItems = JSON.parse(readFileSync(new URL("../content/core-items.json", import.meta.url), "utf8"));
@@ -17,6 +17,7 @@ const coreTraits = JSON.parse(readFileSync(new URL("../content/core-traits.json"
 const built = buildAll({ archetypes: ARCHETYPES, humanGroups: HUMAN_GROUPS, roleGroups: ROLE_GROUPS, tierGroups: TIER_GROUPS, traitGroups: TRAIT_GROUPS, powerTiers: POWER_TIERS, coreItems, coreTraits, addonTalents: ADDON_TALENTS });
 // Nazwy w kompendium mają dopisek tieru, np. "Boss (Tier IV)"; testy szukają po nazwie bazowej
 const baseName = (name) => name.replace(/ \(Tier [IV]+\)$/, "");
+const LABELS = { petty: "Magia Prosta", fire: "Ogień", heavens: "Niebiosa", metal: "Metal", beasts: "Bestie", life: "Życie", light: "Światło", death: "Śmierć", shadow: "Cień", necromancy: "Nekromancja", undivided: "Niepodzielony Chaos", greatMaw: "Wielka Paszcza", tzeentch: "Tzeentch" };
 const byName = (name) => built.items.find((item) => baseName(item.name) === name);
 
 describe("zestaw szablonów", () => {
@@ -295,19 +296,70 @@ describe("nazwy w aktywnym tłumaczeniu", () => {
   });
 
   it("jedna tradycja ustala Splatanie, Magię Tajemną, Nasycenie i czary", () => {
-    const system = withLore(byName("Wizard").system, "fire");
+    const system = withLore(byName("Wizard").system, loreProfile({ value: "fire", key: "fire" }));
     expect(system.skills.list.filter((s) => s.name.startsWith("Channelling"))).toEqual([{ name: "Channelling (Aqshy)", advances: 40, group: null }]);
     const talents = system.talents.list.filter((t) => /^(Arcane Magic|Suffuse)/.test(t.name));
     expect(talents).toEqual([{ name: "Arcane Magic (Fire)", advances: 1, group: null }, { name: "Suffuse with Aqshy", advances: 1, group: null }]);
     expect(system.talents.list.some((t) => t.group)).toBe(false);
     expect(system.lores.list).toEqual([{ name: "petty", number: 3 }, { name: "fire", number: 7 }]);
     expect(needsLoreChoice(system)).toBe(false);
-    expect(withLore(byName("Master Wizard").system, "death").lores.list.find((l) => l.name === "death").number).toBe(13);
+    expect(withLore(byName("Master Wizard").system, loreProfile({ value: "death", key: "death" })).lores.list.find((l) => l.name === "death").number).toBe(13);
   });
 
   it("zna Wiatr każdej z ośmiu tradycji", () => {
     const winds = byName("Wizard").system.skills.list.filter((s) => s.group).map((s) => s.name).sort();
     expect(Object.values(ARCANE_LORES).map((l) => `Channelling (${l.wind})`).sort()).toEqual(winds);
+  });
+
+  it("Czarownik wybiera z każdej tradycji, magowie Kolegiów z ośmiu", () => {
+    expect(byName("Sorcerer").flags["wfrp4e-npc-templates"].loreChoice).toBe("any");
+    expect(byName("Wizard").flags["wfrp4e-npc-templates"].loreChoice).toBeUndefined();
+    expect(arcaneOptions(LABELS).map((o) => o.key)).toEqual(Object.keys(ARCANE_LORES));
+  });
+
+  it("buduje listę tradycji z czarów w aktywnych kompendiach", () => {
+    const counts = new Map([["petty", 40], ["death", 57], ["fire", 56], ["necromancy", 29], ["greatMaw", 7], ["Undivided", 9],
+      ["Lil' Waaagh!", 7], ["big-waaagh", 1], ["Any Lore", 4], ["Death, Life, Shadows", 1], ["High Magic", 5], ["", 40]]);
+    const options = loreOptions(counts, LABELS);
+    expect(options.map((o) => o.value)).toEqual(["fire", "death", "High Magic", "Lil' Waaagh!", "necromancy", "Undivided", "greatMaw"]);
+    expect(options.find((o) => o.value === "Undivided")).toEqual({ value: "Undivided", key: "undivided", label: "Niepodzielony Chaos" });
+    // Zapis klucza ma pierwszeństwo, gdy obie wersje mają czary
+    expect(loreOptions(new Map([["Undivided", 9], ["undivided", 3]]), LABELS).map((o) => o.value)).toEqual(["undivided"]);
+    expect(loreOptions(new Map([["undivided", 3], ["Undivided", 9]]), LABELS).map((o) => o.value)).toEqual(["undivided"]);
+  });
+
+  it("z tradycji wynika Splatanie i talent magii", () => {
+    const profile = (value, key = null) => loreProfile({ value, key });
+    expect(profile("necromancy", "necromancy")).toEqual({ lore: "necromancy", channelling: "Channelling (Dhar)", talent: "Arcane Magic (Necromancy)", suffuse: null });
+    expect(profile("tzeentch", "tzeentch").talent).toBe("Chaos Magic (Tzeentch)");
+    expect(profile("Undivided", "undivided")).toMatchObject({ lore: "Undivided", talent: "Chaos Magic (Undivided)", channelling: "Channelling (Dhar)" });
+    expect(profile("greatMaw", "greatMaw")).toMatchObject({ channelling: "Channelling (Great Maw)", talent: "Arcane Magic (Great Maw)" });
+    expect(profile("hedgecraft", "hedgecraft")).toMatchObject({ channelling: "Channelling", talent: "Arcane Magic (Hedgecraft)" });
+    expect(profile("Lil' Waaagh!")).toMatchObject({ channelling: "Channelling (Lil' Waaagh!)", talent: "Arcane Magic (Lil' Waaagh!)" });
+    expect(profile("High Magic")).toMatchObject({ channelling: "Channelling", talent: "High Magic", suffuse: null });
+  });
+
+  it("Czarownik z tradycją spoza Kolegiów nie dostaje Nasycenia ani okien wyboru", () => {
+    const system = withLore(byName("Sorcerer").system, loreProfile({ value: "necromancy", key: "necromancy" }));
+    expect(system.skills.list.filter((s) => s.name.startsWith("Channelling"))).toEqual([{ name: "Channelling (Dhar)", advances: 20, group: null }]);
+    expect(system.talents.list.map((t) => t.name)).toEqual(["Petty Magic", "Instinctive Diction", "Arcane Magic (Necromancy)"]);
+    expect(system.lores.list).toEqual([{ name: "petty", number: 3 }, { name: "necromancy", number: 5 }]);
+    expect([...system.skills.list, ...system.talents.list].some((e) => e.group)).toBe(false);
+  });
+
+  it("zna angielską nazwę tradycji dla etykiety zastępczej", () => {
+    expect(loreSpecialisation("dark")).toBe("Dark");
+    expect(loreSpecialisation("greatMaw")).toBe("Great Maw");
+    expect(loreSpecialisation("fire")).toBe("Fire");
+    expect(loreSpecialisation("unknownKey")).toBe("unknownKey");
+  });
+
+  it("ma polskie nazwy specjalizacji nowych tradycji", () => {
+    const pl = JSON.parse(readFileSync(new URL("../lang/pl.json", import.meta.url), "utf8")).WFRP4E_TEMPLATES.Specialisations;
+    for (const key of ["necromancy", "daemonology", "hedgecraft", "witchcraft", "undivided", "dark", "greatMaw", "ruin", "plague", "stealth"]) {
+      const spec = loreProfile({ value: key, key }).talent.match(/\((.*)\)/)[1];
+      expect(pl[spec], spec).toBeTruthy();
+    }
   });
 
   it("usuwa dopisek szablonu z imienia, także ze środka", () => {

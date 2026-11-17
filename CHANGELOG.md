@@ -1,5 +1,10 @@
 # Changelog
 
+## 0.4.2
+- **The Sorcerer can use any Lore of Magic.** The list shows every Lore that has spells in your active compendiums, including those from add-ons: Necromancy, Daemonology, the Chaos gods, Hedgecraft, Witchcraft, the Great Maw, the Skaven Lores, Dark Magic, High Magic and the Waaagh. The choice sets the matching Channelling (a Wind, Dhar or the Lore's own) and talent (Arcane Magic, Chaos Magic or High Magic). Suffuse is added only for the eight Lores of the Colleges. This fixes 0.4.1, which limited the Sorcerer to those eight.
+- Journeyman Wizard, Wizard and Master Wizard stay with the eight Lores of the Colleges of Magic.
+- Lores that an add-on registers with an untranslated name, such as Dark Magic and the Great Maw, show a readable name in the choice.
+
 ## 0.4.1
 - Wizard templates (Journeyman Wizard, Wizard, Master Wizard, Sorcerer) ask for the Lore of Magic once. That one choice sets Channelling, Arcane Magic, the Suffuse talent and the Lore of the spells. Before, each of the four was a separate question.
 - Removing a template removes its title from the actor's name, wherever it is. Before, with several templates, only a title at the very start or end was removed, so "Goblin (Shield Bearer) (Drummer)" kept "(Shield Bearer)".

@@ -2,7 +2,7 @@
  * Przygotowuje szablony modułu w chwili dodania do aktora i scala umiejętności, które aktor już ma.
  */
 import { MODULE_ID, I18N, log, t } from "./constants.mjs";
-import { ARCANE_LORES, needsLoreChoice, withLore } from "./lore.mjs";
+import { arcaneOptions, loreOptions, loreProfile, loreSpecialisation, needsLoreChoice, withLore } from "./lore.mjs";
 import { buildAvailability, buildNameMap, isAvailable, resolveName } from "./names.mjs";
 
 const ITEM_TYPES = ["skill", "talent", "trait", "weapon", "armour", "trapping", "ammunition", "container"];
@@ -139,27 +139,54 @@ function removeUnavailable(update, source, name, optionalNames) {
   if (skipped.length) ui.notifications.warn(t("Notifications.Skipped", { template: name, items: skipped.join(", ") }));
 }
 
-/** Okno z jednym wyborem tradycji tajemnej; zwraca klucz tradycji albo null po zamknięciu. */
-async function promptLore(title) {
-  const lores = game.wfrp4e.config.magicLores;
-  const options = Object.keys(ARCANE_LORES)
-    .filter((key) => lores[key])
-    .map((key) => `<option value="${key}">${foundry.utils.escapeHTML(game.i18n.localize(lores[key]))}</option>`)
-    .join("");
-  return foundry.applications.api.DialogV2.prompt({
+/**
+ * Etykieta tradycji do okna wyboru. Część dodatków rejestruje tradycję kluczem tłumaczenia,
+ * którego nie ma w pliku językowym (np. "WFRP4E.MagicLores.dark"); wtedy bierzemy nazwę z naszego pliku.
+ */
+function loreLabel(key, label) {
+  const localized = game.i18n.localize(label);
+  if (!/^WFRP4E\.MagicLores\./.test(localized)) return localized;
+  return specialisation(loreSpecialisation(key));
+}
+
+/** Liczba czarów każdej tradycji w aktywnych kompendiach i w świecie (tam szuka czarów system). */
+async function spellLoreCounts() {
+  const counts = new Map();
+  const add = (value) => value && counts.set(value, (counts.get(value) ?? 0) + 1);
+  for (const pack of game.packs) {
+    if (pack.documentName !== "Item") continue;
+    const index = await pack.getIndex({ fields: ["system.lore.value"] });
+    for (const entry of index) if (entry.type === "spell") add(entry.system?.lore?.value);
+  }
+  for (const item of game.items) if (item.type === "spell") add(item.system.lore.value);
+  return counts;
+}
+
+/** Okno z jednym wyborem tradycji; zwraca wybraną pozycję albo null po zamknięciu. */
+async function promptLore(title, choices) {
+  const options = choices.map((choice, index) => `<option value="${index}">${foundry.utils.escapeHTML(choice.label)}</option>`).join("");
+  const index = await foundry.applications.api.DialogV2.prompt({
     window: { title },
     content: `<p>${t("LoreChoice.Hint")}</p><div class="form-group"><label>${t("LoreChoice.Label")}</label><select name="lore">${options}</select></div>`,
     ok: { label: t("LoreChoice.Confirm"), callback: (_event, button) => button.form.elements.lore.value },
     rejectClose: false
   });
+  return choices[index] ?? null;
 }
 
 /** Pyta o tradycję raz, a potem tworzy szablon ponownie, już z ustaloną tradycją. */
 async function createWithLore(parent, source, options) {
-  const lore = await promptLore(source.name);
-  if (!ARCANE_LORES[lore]) return;
+  const labels = Object.fromEntries(Object.entries(game.wfrp4e.config.magicLores).map(([key, label]) => [key, loreLabel(key, label)]));
+  const mode = source.flags[MODULE_ID]?.loreChoice ?? "arcane";
+  const choices = mode === "any" ? loreOptions(await spellLoreCounts(), labels) : arcaneOptions(labels);
+  if (!choices.length) {
+    ui.notifications.warn(t("LoreChoice.None", { template: source.name }));
+    return;
+  }
+  const choice = await promptLore(source.name, choices);
+  if (!choice) return;
   const { keepId, render, renderSheet } = options;
-  await parent.createEmbeddedDocuments("Item", [source], { keepId, render, renderSheet, [MODULE_ID]: { lore } });
+  await parent.createEmbeddedDocuments("Item", [source], { keepId, render, renderSheet, [MODULE_ID]: { lore: loreProfile(choice) } });
 }
 
 function onPreCreateTemplate(item, _data, options) {
