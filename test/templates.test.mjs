@@ -9,7 +9,8 @@ import { TIER_GROUPS } from "../content/tiers.mjs";
 import { TRAIT_GROUPS } from "../content/traits.mjs";
 import { accumulateRank, buildAll, buildSpellLinks, buildTraits, buildTrappings, stableId, tierSuffix } from "../tools/pack-builder.mjs";
 import { buildAvailability, buildNameMap, isAvailable, resolveName } from "../scripts/names.mjs";
-import { grantedItemData, keepAvailable, localizedSystem, pruneChoices, splitOwnedSkills, splitOwnedTraits, traitValue } from "../scripts/apply.mjs";
+import { ARCANE_LORES, needsLoreChoice, withLore } from "../scripts/lore.mjs";
+import { grantedItemData, keepAvailable, localizedSystem, pruneChoices, splitOwnedSkills, splitOwnedTraits, stripAffixes, traitValue } from "../scripts/apply.mjs";
 
 const coreItems = JSON.parse(readFileSync(new URL("../content/core-items.json", import.meta.url), "utf8"));
 const coreTraits = JSON.parse(readFileSync(new URL("../content/core-traits.json", import.meta.url), "utf8"));
@@ -286,5 +287,36 @@ describe("nazwy w aktywnym tłumaczeniu", () => {
     expect(result["system.talents.list"][0].group).toBe(2);
     expect(result["system.lores.list"].map((l) => l.name)).toEqual(["Magia Prosta", "*"]);
     expect(result["system.trappings.options"][0].id).toBe("x");
+  });
+
+  it("pyta o tradycję raz tylko tam, gdzie wybór się powtarza", () => {
+    for (const name of ["Journeyman Wizard", "Wizard", "Master Wizard", "Sorcerer"]) expect(needsLoreChoice(byName(name).system), name).toBe(true);
+    for (const name of ["Wizard's Apprentice", "Shaman", "Hedge Witch", "Priest", "Recruit"]) expect(needsLoreChoice(byName(name).system), name).toBe(false);
+  });
+
+  it("jedna tradycja ustala Splatanie, Magię Tajemną, Nasycenie i czary", () => {
+    const system = withLore(byName("Wizard").system, "fire");
+    expect(system.skills.list.filter((s) => s.name.startsWith("Channelling"))).toEqual([{ name: "Channelling (Aqshy)", advances: 40, group: null }]);
+    const talents = system.talents.list.filter((t) => /^(Arcane Magic|Suffuse)/.test(t.name));
+    expect(talents).toEqual([{ name: "Arcane Magic (Fire)", advances: 1, group: null }, { name: "Suffuse with Aqshy", advances: 1, group: null }]);
+    expect(system.talents.list.some((t) => t.group)).toBe(false);
+    expect(system.lores.list).toEqual([{ name: "petty", number: 3 }, { name: "fire", number: 7 }]);
+    expect(needsLoreChoice(system)).toBe(false);
+    expect(withLore(byName("Master Wizard").system, "death").lores.list.find((l) => l.name === "death").number).toBe(13);
+  });
+
+  it("zna Wiatr każdej z ośmiu tradycji", () => {
+    const winds = byName("Wizard").system.skills.list.filter((s) => s.group).map((s) => s.name).sort();
+    expect(Object.values(ARCANE_LORES).map((l) => `Channelling (${l.wind})`).sort()).toEqual(winds);
+  });
+
+  it("usuwa dopisek szablonu z imienia, także ze środka", () => {
+    expect(stripAffixes("Goblin (Tarczownik) (Dobosz)", "", "(Tarczownik)")).toBe("Goblin (Dobosz)");
+    expect(stripAffixes("Goblin (Tarczownik) (Dobosz)", "", "(Dobosz)")).toBe("Goblin (Tarczownik)");
+    expect(stripAffixes("Kapitan Sierżant Hans", "Sierżant", "")).toBe("Kapitan Hans");
+    expect(stripAffixes("Mistrz Hans (Szaman)", "Mistrz", "(Szaman)")).toBe("Hans");
+    expect(stripAffixes("Goblin (Szaman) (Szaman)", "", "(Szaman)")).toBe("Goblin (Szaman)");
+    expect(stripAffixes("Goblin", "", "(Szaman)")).toBe("Goblin");
+    expect(stripAffixes("Goblin (Szamanka)", "", "(Szaman)")).toBe("Goblin (Szamanka)");
   });
 });

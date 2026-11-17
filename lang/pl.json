@@ -42,6 +42,11 @@
       "Wizards": "Czarodzieje",
       "Woodlands": "Lasy"
     },
+    "LoreChoice": {
+      "Hint": "Wybierz jedną tradycję. Ustala ona Splatanie, Magię Tajemną, talent Nasycenia i czary do wyboru.",
+      "Label": "Tradycja magii",
+      "Confirm": "Wybierz"
+    },
     "Notifications": {
       "Skipped": "{template}: tych pozycji nie ma w aktywnych kompendiach, więc nie zostały dodane: {items}"
     }

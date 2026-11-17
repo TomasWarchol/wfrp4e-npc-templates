@@ -1,5 +1,9 @@
 # Changelog
 
+## 0.4.1
+- Wizard templates (Journeyman Wizard, Wizard, Master Wizard, Sorcerer) ask for the Lore of Magic once. That one choice sets Channelling, Arcane Magic, the Suffuse talent and the Lore of the spells. Before, each of the four was a separate question.
+- Removing a template removes its title from the actor's name, wherever it is. Before, with several templates, only a title at the very start or end was removed, so "Goblin (Shield Bearer) (Drummer)" kept "(Shield Bearer)".
+
 ## 0.4.0
 - **New layout for quick enemies.** Four folders: Roles, Threat Level, Traits and People. Any template works on any race: Goblin plus Shaman makes a goblin shaman.
 - **30 roles**, such as Chieftain, Warlord, Standard Bearer, Shaman, Necromancer, Shield Bearer, Assassin, Healer and Beastmaster. A role adds itself to the name, for example "Goblin (Shaman)".

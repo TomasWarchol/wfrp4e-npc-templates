@@ -2,6 +2,7 @@
  * Przygotowuje szablony modułu w chwili dodania do aktora i scala umiejętności, które aktor już ma.
  */
 import { MODULE_ID, I18N, log, t } from "./constants.mjs";
+import { ARCANE_LORES, needsLoreChoice, withLore } from "./lore.mjs";
 import { buildAvailability, buildNameMap, isAvailable, resolveName } from "./names.mjs";
 
 const ITEM_TYPES = ["skill", "talent", "trait", "weapon", "armour", "trapping", "ammunition", "container"];
@@ -138,14 +139,45 @@ function removeUnavailable(update, source, name, optionalNames) {
   if (skipped.length) ui.notifications.warn(t("Notifications.Skipped", { template: name, items: skipped.join(", ") }));
 }
 
-function onPreCreateTemplate(item) {
+/** Okno z jednym wyborem tradycji tajemnej; zwraca klucz tradycji albo null po zamknięciu. */
+async function promptLore(title) {
+  const lores = game.wfrp4e.config.magicLores;
+  const options = Object.keys(ARCANE_LORES)
+    .filter((key) => lores[key])
+    .map((key) => `<option value="${key}">${foundry.utils.escapeHTML(game.i18n.localize(lores[key]))}</option>`)
+    .join("");
+  return foundry.applications.api.DialogV2.prompt({
+    window: { title },
+    content: `<p>${t("LoreChoice.Hint")}</p><div class="form-group"><label>${t("LoreChoice.Label")}</label><select name="lore">${options}</select></div>`,
+    ok: { label: t("LoreChoice.Confirm"), callback: (_event, button) => button.form.elements.lore.value },
+    rejectClose: false
+  });
+}
+
+/** Pyta o tradycję raz, a potem tworzy szablon ponownie, już z ustaloną tradycją. */
+async function createWithLore(parent, source, options) {
+  const lore = await promptLore(source.name);
+  if (!ARCANE_LORES[lore]) return;
+  const { keepId, render, renderSheet } = options;
+  await parent.createEmbeddedDocuments("Item", [source], { keepId, render, renderSheet, [MODULE_ID]: { lore } });
+}
+
+function onPreCreateTemplate(item, _data, options) {
   if (!isManaged(item) || !item.parent) return;
-  const update = localizedSystem(item.toObject().system, translate, (key) => game.wfrp4e.config.magicLores[key] ?? key, specificationValue);
+  const source = item.toObject();
+  const lore = options[MODULE_ID]?.lore;
+  // Hook przed utworzeniem jest synchroniczny, więc okno otwiera się po wstrzymaniu tego tworzenia
+  if (!lore && needsLoreChoice(source.system)) {
+    createWithLore(item.parent, source, options).catch((error) => log.error(error));
+    return false;
+  }
+  const system = lore ? withLore(source.system, lore) : source.system;
+  const update = localizedSystem(system, translate, (key) => game.wfrp4e.config.magicLores[key] ?? key, specificationValue);
   const owned = new Set(item.parent.itemTypes.skill.map((skill) => skill.name));
   const { keep, merge } = splitOwnedSkills(update["system.skills.list"], owned);
   update["system.skills.list"] = keep;
   update[`flags.${MODULE_ID}.pendingSkills`] = merge.map(({ name, advances }) => ({ name, advances }));
-  removeUnavailable(update, item.toObject().system, item.name, item.flags[MODULE_ID].optional ?? []);
+  removeUnavailable(update, system, item.name, item.flags[MODULE_ID].optional ?? []);
   const ownedTraits = item.parent.itemTypes.trait.map((trait) => ({ name: trait.name, value: trait.system.specification.value }));
   const { keep: newTraits, raise } = splitOwnedTraits(update["system.traits.list"], ownedTraits);
   update["system.traits.list"] = newTraits;
@@ -207,9 +239,30 @@ function onCreateTemplate(item, _options, userId) {
   if (updates.length) item.parent.updateEmbeddedDocuments("Item", updates).catch((error) => log.error(error));
 }
 
-/** Po usunięciu szablonu cofa rozwinięcia dodane do istniejących umiejętności. */
+/**
+ * Imię bez dopisków szablonu. System zdejmuje je tylko z samego początku i końca imienia,
+ * więc przy kilku szablonach dopisek ze środka zostawał. Tu znika ostatnie wystąpienie dopisku
+ * i pierwsze wystąpienie przedrostka, gdziekolwiek stoją.
+ */
+export function stripAffixes(name, pre, post) {
+  let result = ` ${name} `;
+  if (post) {
+    const at = result.lastIndexOf(` ${post} `);
+    if (at >= 0) result = result.slice(0, at) + result.slice(at + post.length + 1);
+  }
+  if (pre) {
+    const at = result.indexOf(` ${pre} `);
+    if (at >= 0) result = result.slice(0, at) + result.slice(at + pre.length + 1);
+  }
+  return result.trim();
+}
+
+/** Po usunięciu szablonu cofa dopiski w imieniu i rozwinięcia dodane do istniejących umiejętności. */
 function onDeleteTemplate(item, _options, userId) {
   if (!isManaged(item) || !item.parent || userId !== game.user.id) return;
+  const { pre, post } = item.system.alterName;
+  const name = stripAffixes(item.parent.name, pre, post);
+  if (name !== item.parent.name) item.parent.update({ name }).catch((error) => log.error(error));
   const updates = [];
   for (const skill of item.parent.itemTypes.skill) {
     const added = skill.getFlag(MODULE_ID, `merged.${item.id}`);

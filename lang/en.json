@@ -42,6 +42,11 @@
       "Wizards": "Wizards",
       "Woodlands": "Woodlands"
     },
+    "LoreChoice": {
+      "Hint": "Choose one Lore. It sets Channelling, Arcane Magic, the Suffuse talent and the spells to choose from.",
+      "Label": "Lore of Magic",
+      "Confirm": "Choose"
+    },
     "Notifications": {
       "Skipped": "{template}: not available in your active compendiums, so not added: {items}"
     }
