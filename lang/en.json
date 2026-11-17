@@ -61,6 +61,11 @@
       "Confirm": "Choose",
       "None": "{template}: no Lore of Magic has spells in your active compendiums, so the template was not added."
     },
+    "DeityChoice": {
+      "Hint": "Choose one deity. It sets every Bless and Invoke talent of the template.",
+      "Label": "Deity",
+      "Confirm": "Choose"
+    },
     "Notifications": {
       "Skipped": "{template}: not available in your active compendiums, so not added: {items}"
     }

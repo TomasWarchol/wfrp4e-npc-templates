@@ -2,6 +2,7 @@
  * Przygotowuje szablony modułu w chwili dodania do aktora i scala umiejętności, które aktor już ma.
  */
 import { MODULE_ID, I18N, log, t } from "./constants.mjs";
+import { blessingsFor, deityInName, deityOptions, needsDeityChoice, withDeity, withoutBlessScript } from "./deity.mjs";
 import { arcaneOptions, loreOptions, loreProfile, loreSpecialisation, needsLoreChoice, withLore } from "./lore.mjs";
 import { buildAvailability, buildNameMap, isAvailable, resolveName } from "./names.mjs";
 
@@ -12,6 +13,15 @@ const ADDITIVE_TRAITS = ["Armour"];
 const CORRUPTION_STRENGTH = { minor: "CORRUPTION.Minor", moderate: "CORRUPTION.Moderate", major: "CORRUPTION.Major" };
 let nameMap = { names: new Map(), bases: new Map() };
 let availability = {};
+
+/**
+ * Opcje aktualizacji z szablonu. Bez skipExperienceChecks system traktuje każde podniesienie rozwinięć
+ * postaci gracza jak rozwój za PD i pyta o koszt („Advancement Cost”). Zawsze nowy obiekt, bo Foundry
+ * dopisuje do opcji dane operacji, a te psułyby kolejną aktualizację.
+ */
+export function templateUpdate() {
+  return { skipExperienceChecks: true };
+}
 
 const isManaged = (item) => item?.type === "template" && item.flags?.[MODULE_ID]?.managed === true;
 
@@ -162,43 +172,64 @@ async function spellLoreCounts() {
   return counts;
 }
 
-/** Okno z jednym wyborem tradycji; zwraca wybraną pozycję albo null po zamknięciu. */
-async function promptLore(title, choices) {
+/** Okno z jednym wyborem z listy; zwraca wybraną pozycję albo null po zamknięciu. */
+async function promptChoice(title, choices, texts) {
   const options = choices.map((choice, index) => `<option value="${index}">${foundry.utils.escapeHTML(choice.label)}</option>`).join("");
   const index = await foundry.applications.api.DialogV2.prompt({
     window: { title },
-    content: `<p>${t("LoreChoice.Hint")}</p><div class="form-group"><label>${t("LoreChoice.Label")}</label><select name="lore">${options}</select></div>`,
-    ok: { label: t("LoreChoice.Confirm"), callback: (_event, button) => button.form.elements.lore.value },
+    content: `<p>${t(`${texts}.Hint`)}</p><div class="form-group"><label>${t(`${texts}.Label`)}</label><select name="choice">${options}</select></div>`,
+    ok: { label: t(`${texts}.Confirm`), callback: (_event, button) => button.form.elements.choice.value },
     rejectClose: false
   });
   return choices[index] ?? null;
 }
 
-/** Pyta o tradycję raz, a potem tworzy szablon ponownie, już z ustaloną tradycją. */
-async function createWithLore(parent, source, options) {
+/** Jeden wybór tradycji; zwraca profil tradycji, null po zamknięciu okna albo false, gdy nie ma z czego wybierać. */
+async function chooseLore(source) {
   const labels = Object.fromEntries(Object.entries(game.wfrp4e.config.magicLores).map(([key, label]) => [key, loreLabel(key, label)]));
   const mode = source.flags[MODULE_ID]?.loreChoice ?? "arcane";
   const choices = mode === "any" ? loreOptions(await spellLoreCounts(), labels) : arcaneOptions(labels);
   if (!choices.length) {
     ui.notifications.warn(t("LoreChoice.None", { template: source.name }));
-    return;
+    return false;
   }
-  const choice = await promptLore(source.name, choices);
-  if (!choice) return;
+  const choice = await promptChoice(source.name, choices, "LoreChoice");
+  return choice && loreProfile(choice);
+}
+
+/** Jeden wybór bóstwa; zwraca angielską nazwę boga albo null po zamknięciu okna. */
+async function chooseDeity(source) {
+  const choices = deityOptions(source.system).map((god) => ({ god, label: specialisation(god) }));
+  return (await promptChoice(source.name, choices, "DeityChoice"))?.god ?? null;
+}
+
+/** Pyta raz o tradycję i bóstwo, a potem tworzy szablon ponownie, już z ustalonymi wyborami. */
+async function createWithChoices(parent, source, options) {
+  const chosen = { done: true };
+  if (needsLoreChoice(source.system)) {
+    chosen.lore = await chooseLore(source);
+    if (!chosen.lore) return;
+  }
+  if (needsDeityChoice(source.system)) {
+    chosen.deity = await chooseDeity(source);
+    if (!chosen.deity) return;
+  }
   const { keepId, render, renderSheet } = options;
-  await parent.createEmbeddedDocuments("Item", [source], { keepId, render, renderSheet, [MODULE_ID]: { lore: loreProfile(choice) } });
+  await parent.createEmbeddedDocuments("Item", [source], { keepId, render, renderSheet, [MODULE_ID]: chosen });
 }
 
 function onPreCreateTemplate(item, _data, options) {
   if (!isManaged(item) || !item.parent) return;
   const source = item.toObject();
-  const lore = options[MODULE_ID]?.lore;
-  // Hook przed utworzeniem jest synchroniczny, więc okno otwiera się po wstrzymaniu tego tworzenia
-  if (!lore && needsLoreChoice(source.system)) {
-    createWithLore(item.parent, source, options).catch((error) => log.error(error));
+  const chosen = options[MODULE_ID];
+  // Hook przed utworzeniem jest synchroniczny, więc okna otwierają się po wstrzymaniu tego tworzenia
+  if (!chosen?.done && (needsLoreChoice(source.system) || needsDeityChoice(source.system))) {
+    createWithChoices(item.parent, source, options).catch((error) => log.error(error));
     return false;
   }
-  const system = lore ? withLore(source.system, lore) : source.system;
+  let system = source.system;
+  if (chosen?.lore) system = withLore(system, chosen.lore);
+  if (chosen?.deity) system = withDeity(system, chosen.deity);
   const update = localizedSystem(system, translate, (key) => game.wfrp4e.config.magicLores[key] ?? key, specificationValue);
   const owned = new Set(item.parent.itemTypes.skill.map((skill) => skill.name));
   const { keep, merge } = splitOwnedSkills(update["system.skills.list"], owned);
@@ -235,9 +266,97 @@ async function grantSpells(item) {
   await item.parent.createEmbeddedDocuments("Item", grantedItemData(documents.map((doc) => doc.toObject()), item.id), { fromTemplate: item.id, skipExperienceChecks: true });
 }
 
+/** Angielska nazwa specjalizacji z przetłumaczonej (odwrotność specialisation). */
+function englishSpecialisation(text) {
+  const table = game.i18n.translations?.[I18N]?.Specialisations ?? {};
+  return Object.keys(table).find((key) => table[key] === text) ?? text;
+}
+
+/** Przed utworzeniem talentu z szablonu modułu usuwa skrypt Błogosławieństwa, który pytałby o bóstwo. */
+function onPreCreateTemplateTalent(item, _data, options) {
+  if (item.type !== "talent" || !item.parent || !options.fromTemplate) return;
+  if (!isManaged(item.parent.items.get(options.fromTemplate))) return;
+  const effects = item._source.effects ?? [];
+  const kept = withoutBlessScript(effects);
+  if (kept.length === effects.length) return;
+  // "==" wymienia całą tablicę; zwykłe updateSource scaliłoby efekty i skrypt by został
+  item.updateSource({ "==effects": kept, [`flags.${MODULE_ID}.blessFrom`]: options.fromTemplate });
+}
+
+/** To samo, co robi skrypt Błogosławieństwa, ale bez pytania: błogosławieństwa boga z nazwy talentu i bóstwo postaci. */
+async function grantBlessings(talent) {
+  const templateId = talent.getFlag(MODULE_ID, "blessFrom");
+  const actor = talent.parent;
+  // Skrypt systemu działa tylko na postaciach graczy
+  if (!templateId || actor?.type !== "character") return;
+  const spec = deityInName(talent.name);
+  if (!spec) return;
+  const god = englishSpecialisation(spec);
+  const prayers = await warhammer.utility.findAllItems("prayer", "", true, ["system.type.value", "system.god.value"]);
+  const uuids = new Set([
+    ...blessingsFor(prayers, [spec, god, specialisation(god)]).map((prayer) => prayer.uuid),
+    ...(game.wfrp4e.config.godBlessings?.[god.toLowerCase()] ?? [])
+  ]);
+  const owned = new Set(actor.itemTypes.prayer.map((prayer) => prayer.name));
+  const documents = [];
+  for (const document of await Promise.all([...uuids].map((uuid) => fromUuid(uuid)))) {
+    if (!document || owned.has(document.name)) continue;
+    owned.add(document.name);
+    documents.push(document.toObject());
+  }
+  if (documents.length) await actor.createEmbeddedDocuments("Item", grantedItemData(documents, templateId), { fromTemplate: templateId, ...templateUpdate() });
+  await actor.update({ "system.details.god.value": specialisation(god) }, templateUpdate());
+}
+
+function onCreateTemplateTalent(item, _options, userId) {
+  if (item.type !== "talent" || userId !== game.user.id || !item.getFlag(MODULE_ID, "blessFrom")) return;
+  grantBlessings(item).catch((error) => log.error(error));
+}
+
+/**
+ * Żywotność po zmianie szablonów: po nałożeniu pełna (nowe maksimum), po usunięciu nie wyższa niż maksimum.
+ * @param {{value: number, max: number}} wounds
+ * @param {boolean} fill
+ */
+export function woundsAfterTemplate({ value, max }, fill) {
+  return fill ? max : Math.min(value, max);
+}
+
+const woundTimers = new Map();
+
+/**
+ * System dodaje przedmioty szablonu w kilku partiach (część po oknach wyboru), a maksimum Żywotności
+ * liczy się od nowa po każdej. Dlatego Żywotność ustawiamy chwilę po ostatniej zmianie.
+ */
+function scheduleWounds(actor, fill) {
+  if (!actor) return;
+  const key = actor.uuid;
+  const pending = woundTimers.get(key);
+  clearTimeout(pending?.timer);
+  const fillNow = fill || pending?.fill === true;
+  const timer = setTimeout(() => {
+    woundTimers.delete(key);
+    const wounds = actor.system.status?.wounds;
+    if (!wounds || !Number.isFinite(wounds.max)) return;
+    const value = woundsAfterTemplate(wounds, fillNow);
+    if (value !== wounds.value) actor.update({ "system.status.wounds.value": value }, templateUpdate()).catch((error) => log.error(error));
+  }, 500);
+  woundTimers.set(key, { timer, fill: fillNow });
+}
+
+/** Przedmiot dodany albo usunięty przez szablon modułu odświeża Żywotność aktora. */
+function onTemplateItem(item, options, userId, fill) {
+  if (userId !== game.user.id || !item.parent) return;
+  const templateId = options.fromTemplate ?? item.getFlag?.(game.system.id, "fromTemplate");
+  if (!templateId) return;
+  const template = item.parent.items.get(templateId);
+  if (template ? isManaged(template) : !fill) scheduleWounds(item.parent, fill);
+}
+
 /** Podnosi rozwinięcia umiejętności, które aktor już ma, i zapamiętuje, ile dodał ten szablon. */
 function onCreateTemplate(item, _options, userId) {
   if (!isManaged(item) || !item.parent || userId !== game.user.id) return;
+  scheduleWounds(item.parent, true);
   grantSpells(item).catch((error) => log.error(error));
   const skills = item.parent.itemTypes.skill;
   const updates = [];
@@ -263,7 +382,7 @@ function onCreateTemplate(item, _options, userId) {
       [`flags.${MODULE_ID}.traitRatings.${item.id}`]: rating
     });
   }
-  if (updates.length) item.parent.updateEmbeddedDocuments("Item", updates).catch((error) => log.error(error));
+  if (updates.length) item.parent.updateEmbeddedDocuments("Item", updates, templateUpdate()).catch((error) => log.error(error));
 }
 
 /**
@@ -287,6 +406,7 @@ export function stripAffixes(name, pre, post) {
 /** Po usunięciu szablonu cofa dopiski w imieniu i rozwinięcia dodane do istniejących umiejętności. */
 function onDeleteTemplate(item, _options, userId) {
   if (!isManaged(item) || !item.parent || userId !== game.user.id) return;
+  scheduleWounds(item.parent, false);
   const { pre, post } = item.system.alterName;
   const name = stripAffixes(item.parent.name, pre, post);
   if (name !== item.parent.name) item.parent.update({ name }).catch((error) => log.error(error));
@@ -311,13 +431,17 @@ function onDeleteTemplate(item, _options, userId) {
       [`flags.${MODULE_ID}.traitRatings.${item.id}`]: 0
     });
   }
-  if (updates.length) item.parent.updateEmbeddedDocuments("Item", updates).catch((error) => log.error(error));
+  if (updates.length) item.parent.updateEmbeddedDocuments("Item", updates, templateUpdate()).catch((error) => log.error(error));
 }
 
 export function installApplyHooks() {
   Hooks.on("preCreateItem", onPreCreateTemplate);
+  Hooks.on("preCreateItem", onPreCreateTemplateTalent);
+  Hooks.on("createItem", onCreateTemplateTalent);
   Hooks.on("createItem", onCreateTemplate);
   Hooks.on("deleteItem", onDeleteTemplate);
+  Hooks.on("createItem", (item, options, userId) => onTemplateItem(item, options, userId, true));
+  Hooks.on("deleteItem", (item, options, userId) => onTemplateItem(item, options, userId, false));
 }
 
 /** Sprawdza, czy każda nazwa i każdy przedmiot z zestawu istnieją w tym świecie; zwraca listę braków. */

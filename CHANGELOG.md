@@ -1,5 +1,11 @@
 # Changelog
 
+## 0.4.3
+- **No more "Advancement Cost" on player characters.** A template that raises a skill the character already has no longer asks for the experience cost. Removing it no longer asks either.
+- **Full Wounds after a template.** After a template is applied, current Wounds are set to the new maximum. After one is removed, Wounds are kept within the new maximum.
+- **The deity is asked once.** Warrior Priest and High Priest ask for one deity, which sets both Bless and Invoke. Only gods with an Invoke option are offered.
+- On player characters, the Bless talent from a template no longer asks "Enter a Deity" and no longer adds the god to its name twice. The module adds that god's Blessings from your active compendiums and sets the character's deity, as the talent itself would.
+
 ## 0.4.2
 - **The Sorcerer can use any Lore of Magic.** The list shows every Lore that has spells in your active compendiums, including those from add-ons: Necromancy, Daemonology, the Chaos gods, Hedgecraft, Witchcraft, the Great Maw, the Skaven Lores, Dark Magic, High Magic and the Waaagh. The choice sets the matching Channelling (a Wind, Dhar or the Lore's own) and talent (Arcane Magic, Chaos Magic or High Magic). Suffuse is added only for the eight Lores of the Colleges. This fixes 0.4.1, which limited the Sorcerer to those eight.
 - Journeyman Wizard, Wizard and Master Wizard stay with the eight Lores of the Colleges of Magic.

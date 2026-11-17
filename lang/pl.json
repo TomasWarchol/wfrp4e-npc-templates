@@ -61,6 +61,11 @@
       "Confirm": "Wybierz",
       "None": "{template}: żadna tradycja magii nie ma czarów w aktywnych kompendiach, więc szablon nie został dodany."
     },
+    "DeityChoice": {
+      "Hint": "Wybierz jedno bóstwo. Ustala ono wszystkie talenty Błogosławieństwa i Inwokacji z szablonu.",
+      "Label": "Bóstwo",
+      "Confirm": "Wybierz"
+    },
     "Notifications": {
       "Skipped": "{template}: tych pozycji nie ma w aktywnych kompendiach, więc nie zostały dodane: {items}"
     }

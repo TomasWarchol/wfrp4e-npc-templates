@@ -9,8 +9,9 @@ import { TIER_GROUPS } from "../content/tiers.mjs";
 import { TRAIT_GROUPS } from "../content/traits.mjs";
 import { accumulateRank, buildAll, buildSpellLinks, buildTraits, buildTrappings, stableId, tierSuffix } from "../tools/pack-builder.mjs";
 import { buildAvailability, buildNameMap, isAvailable, resolveName } from "../scripts/names.mjs";
+import { BLESS_SCRIPT, blessingsFor, deityInName, deityOptions, needsDeityChoice, withDeity, withoutBlessScript } from "../scripts/deity.mjs";
 import { ARCANE_LORES, arcaneOptions, loreOptions, loreProfile, loreSpecialisation, needsLoreChoice, withLore } from "../scripts/lore.mjs";
-import { grantedItemData, keepAvailable, localizedSystem, pruneChoices, splitOwnedSkills, splitOwnedTraits, stripAffixes, traitValue } from "../scripts/apply.mjs";
+import { grantedItemData, keepAvailable, localizedSystem, pruneChoices, splitOwnedSkills, splitOwnedTraits, stripAffixes, templateUpdate, traitValue, woundsAfterTemplate } from "../scripts/apply.mjs";
 
 const coreItems = JSON.parse(readFileSync(new URL("../content/core-items.json", import.meta.url), "utf8"));
 const coreTraits = JSON.parse(readFileSync(new URL("../content/core-traits.json", import.meta.url), "utf8"));
@@ -359,6 +360,57 @@ describe("nazwy w aktywnym tłumaczeniu", () => {
     for (const key of ["necromancy", "daemonology", "hedgecraft", "witchcraft", "undivided", "dark", "greatMaw", "ruin", "plague", "stealth"]) {
       const spec = loreProfile({ value: key, key }).talent.match(/\((.*)\)/)[1];
       expect(pl[spec], spec).toBeTruthy();
+    }
+  });
+
+  it("zmienia rozwinięcia bez pytania o koszt w PD", () => {
+    expect(templateUpdate()).toEqual({ skipExperienceChecks: true });
+    // Foundry dopisuje dane operacji do opcji, więc każda aktualizacja dostaje nowy obiekt
+    expect(templateUpdate()).not.toBe(templateUpdate());
+    const source = readFileSync(new URL("../scripts/apply.mjs", import.meta.url), "utf8");
+    expect(source.match(/updateEmbeddedDocuments\("Item", updates\)/g)).toBeNull();
+  });
+
+  it("pyta o bóstwo raz tylko tam, gdzie wybór się powtarza", () => {
+    for (const name of ["Warrior Priest", "High Priest"]) expect(needsDeityChoice(byName(name).system), name).toBe(true);
+    for (const name of ["Priest", "Novice", "Prophet", "Wizard"]) expect(needsDeityChoice(byName(name).system), name).toBe(false);
+    expect(deityOptions(byName("Warrior Priest").system)).toEqual(["Sigmar", "Ulric", "Morr", "Myrmidia", "Taal", "Manann"]);
+  });
+
+  it("jedno bóstwo ustala Błogosławieństwo i Inwokację", () => {
+    const system = withDeity(byName("High Priest").system, "Ulric");
+    const deity = system.talents.list.filter((t) => /^(Bless|Invoke) /.test(t.name));
+    expect(deity).toEqual([{ name: "Bless (Ulric)", advances: 1, group: null }, { name: "Invoke (Ulric)", advances: 1, group: null }]);
+    expect(system.talents.list.some((t) => t.group)).toBe(false);
+    expect(needsDeityChoice(system)).toBe(false);
+  });
+
+  it("usuwa z talentu skrypt Błogosławieństwa i rozpoznaje boga z nazwy", () => {
+    const bless = { name: "Bless", system: { scriptData: [{ script: `[${BLESS_SCRIPT}]`, trigger: "addItems" }] } };
+    const other = { name: "Other", system: { scriptData: [{ script: "[Script.abc]" }] } };
+    expect(withoutBlessScript([bless, other])).toEqual([other]);
+    expect(withoutBlessScript()).toEqual([]);
+    expect(deityInName("Bless (Ulric)")).toBe("Ulric");
+    expect(deityInName("Błogosławieństwo (Ulryk)")).toBe("Ulryk");
+    expect(deityInName("Bless")).toBeNull();
+  });
+
+  it("wybiera błogosławieństwa danego boga", () => {
+    const prayer = (name, type, god) => ({ name, uuid: name, system: { type: { value: type }, god: { value: god } } });
+    const prayers = [prayer("A", "blessing", "Ulric"), prayer("B", "blessing", "Sigmar, Ulric"), prayer("C", "miracle", "Ulric"), prayer("D", "blessing", "Sigmar"), prayer("E", "blessing", "Ulryk")];
+    expect(blessingsFor(prayers, ["Ulric", "Ulryk"]).map((p) => p.name)).toEqual(["A", "B", "E"]);
+  });
+
+  it("po nałożeniu szablonu Żywotność jest pełna, a po usunięciu nie wyższa niż maksimum", () => {
+    expect(woundsAfterTemplate({ value: 8, max: 14 }, true)).toBe(14);
+    expect(woundsAfterTemplate({ value: 14, max: 10 }, false)).toBe(10);
+    expect(woundsAfterTemplate({ value: 6, max: 10 }, false)).toBe(6);
+  });
+
+  it("ma teksty okna bóstwa w obu językach", () => {
+    for (const code of ["en", "pl"]) {
+      const lang = JSON.parse(readFileSync(new URL(`../lang/${code}.json`, import.meta.url), "utf8")).WFRP4E_TEMPLATES;
+      for (const key of ["Hint", "Label", "Confirm"]) expect(lang.DeityChoice[key], `${code} ${key}`).toBeTruthy();
     }
   });
 
