@@ -3,6 +3,7 @@
  */
 import { MODULE_ID, I18N, log, t } from "./constants.mjs";
 import { affixesFor } from "./forge-model.mjs";
+import { addRating, combineCharacteristics, missingTalents, readStack, removeRating, stackedValue, talentsToRestore } from "./stacking.mjs";
 import { blessingsFor, deityInName, deityOptions, needsDeityChoice, withDeity, withoutBlessScript } from "./deity.mjs";
 import { arcaneOptions, loreOptions, loreProfile, loreSpecialisation, needsLoreChoice, withLore } from "./lore.mjs";
 import { buildAvailability, buildNameMap, isAvailable, resolveName } from "./names.mjs";
@@ -25,6 +26,15 @@ export function templateUpdate() {
 }
 
 const isManaged = (item) => item?.type === "template" && item.flags?.[MODULE_ID]?.managed === true;
+
+/** Tryb łączenia szablonów z ustawienia: "sum" albo "max". Przed rejestracją ustawień (np. przy wczytywaniu) – "sum". */
+export function stackingMode() {
+  try {
+    return game.settings.get(MODULE_ID, "stacking") === "max" ? "max" : "sum";
+  } catch {
+    return "sum";
+  }
+}
 
 function specialisation(text) {
   const key = `${I18N}.Specialisations.${text}`;
@@ -107,7 +117,10 @@ export function traitValue(base, ratings, additive) {
   return String(additive ? active.reduce((sum, rating) => sum + rating, base) : Math.max(base, ...active));
 }
 
-/** Dzieli cechy na nowe i te, które aktor już ma. Dla posiadanych z wartością liczbową zwraca ocenę z szablonu. */
+/**
+ * Dzieli cechy na nowe i te, które aktor już ma. Dla posiadanych zwraca ocenę z szablonu
+ * (null, gdy cecha nie ma wartości liczbowej – wtedy liczy się tylko to, że szablon jej potrzebuje).
+ */
 export function splitOwnedTraits(list, owned) {
   const keep = [];
   const raise = [];
@@ -118,7 +131,8 @@ export function splitOwnedTraits(list, owned) {
       continue;
     }
     const rating = parseInt(trait.diff?.system?.specification?.value);
-    if (!Number.isNaN(rating) && !Number.isNaN(parseInt(current.value))) raise.push({ name: trait.name, rating });
+    const numeric = !Number.isNaN(rating) && !Number.isNaN(parseInt(current.value));
+    raise.push({ name: trait.name, rating: numeric ? rating : null });
   }
   return { keep, raise };
 }
@@ -246,6 +260,15 @@ function onPreCreateTemplate(item, _data, options) {
   update["system.skills.list"] = keep;
   update[`flags.${MODULE_ID}.pendingSkills`] = merge.map(({ name, advances }) => ({ name, advances }));
   removeUnavailable(update, system, item.name, item.flags[MODULE_ID].optional ?? []);
+  // Wymagania talentów zapamiętujemy zawsze: w trybie "max" po zdjęciu innego szablonu trzeba je odtworzyć
+  const needs = {};
+  for (const { name, advances, group } of update["system.talents.list"]) if (!group) needs[name] = Math.max(needs[name] ?? 0, advances);
+  update[`flags.${MODULE_ID}.talentNeeds`] = needs;
+  if (stackingMode() === "max") {
+    const owned = new Map();
+    for (const talent of item.parent.itemTypes.talent) owned.set(talent.name, (owned.get(talent.name) ?? 0) + 1);
+    update["system.talents.list"] = missingTalents(update["system.talents.list"], owned);
+  }
   const ownedTraits = item.parent.itemTypes.trait.map((trait) => ({ name: trait.name, value: trait.system.specification.value }));
   const { keep: newTraits, raise } = splitOwnedTraits(update["system.traits.list"], ownedTraits);
   update["system.traits.list"] = newTraits;
@@ -363,34 +386,49 @@ function onTemplateItem(item, options, userId, fill) {
   if (template ? isManaged(template) : !fill) scheduleWounds(item.parent, fill);
 }
 
-/** Podnosi rozwinięcia umiejętności, które aktor już ma, i zapamiętuje, ile dodał ten szablon. */
+/** Szablon modułu, który utworzył przedmiot (inny niż podany), albo null. */
+function ownerTemplate(item, exceptId) {
+  const owner = item.getFlag(game.system.id, "fromTemplate");
+  return owner && owner !== exceptId && isManaged(item.parent?.items.get(owner)) ? owner : null;
+}
+
+/**
+ * Zmiana przedmiotu po dodaniu wkładu szablonu: nowa wartość, zapis stanu łączenia,
+ * a przy przejęciu – zdjęcie znacznika szablonu, który go utworzył (system usunąłby go razem z tamtym szablonem).
+ */
+export function stackUpdate(item, { kind, value, templateId, rating, owner, mode, additive = false, systemId = "wfrp4e" }) {
+  const flags = item.flags?.[MODULE_ID] ?? {};
+  const current = readStack({ kind, value, flags });
+  const stack = addRating(current, { templateId, rating: rating ?? 1, value, ownerTemplate: current ? null : owner });
+  const update = { _id: item.id, flags: { [MODULE_ID]: { stack } } };
+  if (current?.legacy) update.flags[MODULE_ID]["-=merged"] = null;
+  if (!current && owner) update.flags[systemId] = { fromTemplate: null };
+  if (kind === "skill") update.system = { advances: { value: stackedValue(stack.base, stack.ratings, { mode, kind }) } };
+  else if (rating !== null) update.system = { specification: { value: String(stackedValue(stack.base, stack.ratings, { mode, kind, additive })) } };
+  return update;
+}
+
+/** Podnosi umiejętności i cechy stworzeń, które aktor już ma, według trybu łączenia. */
 function onCreateTemplate(item, _options, userId) {
   if (!isManaged(item) || !item.parent || userId !== game.user.id) return;
   scheduleWounds(item.parent, true);
   grantSpells(item).catch((error) => log.error(error));
-  const skills = item.parent.itemTypes.skill;
+  const mode = stackingMode();
+  const systemId = game.system.id;
   const updates = [];
   for (const { name, advances } of item.getFlag(MODULE_ID, "pendingSkills") ?? []) {
-    const skill = skills.find((other) => other.name === name);
+    const skill = item.parent.itemTypes.skill.find((other) => other.name === name);
     if (!skill) continue;
-    updates.push({
-      _id: skill.id,
-      "system.advances.value": skill.system.advances.value + advances,
-      [`flags.${MODULE_ID}.merged.${item.id}`]: advances
-    });
+    updates.push(stackUpdate(skill, { kind: "skill", value: skill.system.advances.value, templateId: item.id, rating: advances, owner: ownerTemplate(skill, item.id), mode, systemId }));
   }
   const additive = new Set(ADDITIVE_TRAITS.map(translate));
   for (const { name, rating } of item.getFlag(MODULE_ID, "pendingTraits") ?? []) {
     const trait = item.parent.itemTypes.trait.find((other) => other.name === name);
     if (!trait) continue;
-    const base = trait.getFlag(MODULE_ID, "traitBase") ?? parseInt(trait.system.specification.value);
-    const ratings = [...Object.values(trait.getFlag(MODULE_ID, "traitRatings") ?? {}), rating];
-    updates.push({
-      _id: trait.id,
-      "system.specification.value": traitValue(base, ratings, additive.has(name)),
-      [`flags.${MODULE_ID}.traitBase`]: base,
-      [`flags.${MODULE_ID}.traitRatings.${item.id}`]: rating
-    });
+    const value = parseInt(trait.system.specification.value);
+    updates.push(stackUpdate(trait, {
+      kind: "trait", value: Number.isNaN(value) ? 1 : value, templateId: item.id, rating, owner: ownerTemplate(trait, item.id), mode, additive: additive.has(name), systemId
+    }));
   }
   if (updates.length) item.parent.updateEmbeddedDocuments("Item", updates, templateUpdate()).catch((error) => log.error(error));
 }
@@ -427,43 +465,69 @@ async function templateItemsGone(actor, templateId, timeout = 5000) {
   await sleep(300);
 }
 
-/** Zmiany aktora cofające szablon: imię bez dopisków, rozwinięcia scalonych umiejętności i wartości cech stworzeń. */
-export function revertUpdate(actor, template, { translateName = translate } = {}) {
+/**
+ * Zmiany aktora cofające szablon: imię bez dopisków oraz wartości umiejętności i cech stworzeń przeliczone
+ * bez wkładu tego szablonu. Zwraca też przejęte przedmioty, których nie potrzebuje już żaden szablon.
+ */
+export function revertUpdate(actor, template, { translateName = translate, mode = stackingMode() } = {}) {
   const update = {};
   const { pre, post } = template.system.alterName;
   const name = stripAffixes(actor.name, pre, post);
   if (name !== actor.name) update.name = name;
   const items = [];
-  for (const skill of actor.itemTypes.skill) {
-    const added = skill.getFlag(MODULE_ID, `merged.${template.id}`);
-    if (!added) continue;
-    items.push({
-      _id: skill.id,
-      system: { advances: { value: Math.max(0, skill.system.advances.value - added) } },
-      flags: { [MODULE_ID]: { merged: { [template.id]: 0 } } }
-    });
-  }
+  const deletes = [];
   const additive = new Set(ADDITIVE_TRAITS.map(translateName));
+  const revert = (item, kind, value, numeric) => {
+    const stack = readStack({ kind, value, flags: item.flags?.[MODULE_ID] ?? {} });
+    if (!stack?.ratings?.[template.id]) return;
+    const { stack: next, remove } = removeRating(stack, template.id);
+    if (remove) {
+      deletes.push(item.id);
+      return;
+    }
+    // Foundry scala obiekty przy aktualizacji, więc wkład zdjętego szablonu trzeba usunąć jawnie ("-=")
+    const stored = item.flags?.[MODULE_ID]?.stack ? { ...next, ratings: { [`-=${template.id}`]: null } } : next;
+    const entry = { _id: item.id, flags: { [MODULE_ID]: { stack: stored } } };
+    if (stack.legacy) entry.flags[MODULE_ID]["-=merged"] = null;
+    const result = stackedValue(next.base, next.ratings, { mode, kind, additive: additive.has(item.name) });
+    if (kind === "skill") entry.system = { advances: { value: result } };
+    else if (numeric) entry.system = { specification: { value: String(result) } };
+    items.push(entry);
+  };
+  for (const skill of actor.itemTypes.skill) revert(skill, "skill", skill.system.advances.value, true);
   for (const trait of actor.itemTypes.trait) {
-    const ratings = trait.getFlag(MODULE_ID, "traitRatings");
-    if (!ratings?.[template.id]) continue;
-    const others = Object.entries(ratings).filter(([id]) => id !== template.id).map(([, rating]) => rating);
-    items.push({
-      _id: trait.id,
-      system: { specification: { value: traitValue(trait.getFlag(MODULE_ID, "traitBase"), others, additive.has(trait.name)) } },
-      flags: { [MODULE_ID]: { traitRatings: { [template.id]: 0 } } }
-    });
+    const value = parseInt(trait.system.specification.value);
+    revert(trait, "trait", Number.isNaN(value) ? 1 : value, !Number.isNaN(value));
   }
   if (items.length) update.items = items;
-  return update;
+  return { update, deletes };
+}
+
+/** W trybie "max" pozostałe szablony dostają z powrotem talenty, które zdjęty szablon dzielił z nimi. */
+async function restoreTalents(actor) {
+  const owned = new Map();
+  for (const talent of actor.itemTypes.talent) owned.set(talent.name, (owned.get(talent.name) ?? 0) + 1);
+  const templates = actor.itemTypes.template.filter(isManaged).map((template) => ({ id: template.id, needs: template.getFlag(MODULE_ID, "talentNeeds") }));
+  for (const { templateId, name, count } of talentsToRestore(templates, owned)) {
+    let talent = null;
+    try {
+      talent = await game.wfrp4e.utility.findTalent(name);
+    } catch {
+      continue;
+    }
+    const data = Array.from({ length: count }, () => talent.toObject());
+    await actor.createEmbeddedDocuments("Item", data, { fromTemplate: templateId, ...templateUpdate() });
+  }
 }
 
 async function revertTemplate(template) {
   const actor = template.parent;
   await templateItemsGone(actor, template.id);
-  const update = revertUpdate(actor, template);
+  const { update, deletes } = revertUpdate(actor, template);
   // Jedna aktualizacja zamiast kilku: system przelicza aktora tylko raz
   if (Object.keys(update).length) await actor.update(update, templateUpdate());
+  if (deletes.length) await actor.deleteEmbeddedDocuments("Item", deletes, templateUpdate());
+  if (stackingMode() === "max") await restoreTalents(actor);
   scheduleWounds(actor, false);
 }
 
@@ -471,6 +535,34 @@ async function revertTemplate(template) {
 function onDeleteTemplate(item, _options, userId) {
   if (!isManaged(item) || !item.parent || userId !== game.user.id) return;
   revertTemplate(item).catch((error) => log.error(error));
+}
+
+/**
+ * System dodaje modyfikatory cech wszystkich szablonów (computeTemplates). W trybie "max" szablony modułu
+ * liczą się jak w combineCharacteristics; pozostałe szablony dalej się sumują.
+ */
+export function installCharacteristicStacking() {
+  let proto = null;
+  for (const model of Object.values(CONFIG.Actor.dataModels ?? {})) {
+    for (let current = model?.prototype; current && !proto; current = Object.getPrototypeOf(current)) {
+      if (Object.hasOwn(current, "computeTemplates")) proto = current;
+    }
+    if (proto) break;
+  }
+  if (!proto) {
+    log.warn("nie znaleziono computeTemplates – tryb najwyższej wartości nie obejmie cech");
+    return;
+  }
+  const original = proto.computeTemplates;
+  proto.computeTemplates = function computeTemplates(...args) {
+    if (stackingMode() !== "max") return original.apply(this, args);
+    const templates = this.parent.itemTypes.template;
+    for (const template of templates.filter((other) => !isManaged(other))) {
+      for (const key in this.characteristics) this.characteristics[key].modifier += template.system.characteristics[key] ?? 0;
+    }
+    const combined = combineCharacteristics(templates.filter(isManaged).map((template) => template.system.characteristics), "max");
+    for (const key in this.characteristics) this.characteristics[key].modifier += combined[key] ?? 0;
+  };
 }
 
 export function installApplyHooks() {

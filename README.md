@@ -45,6 +45,10 @@ Each rank already includes the lower ones, so give an actor one rank.
 
 **GM-only badge.** A token with templates shows a small badge with its highest tier, for example "IV ·2" for two templates. Hovering over the token lists them. Only the GM's screen draws this, so players never see it. By default the name gets only titles such as "Sergeant", not roles in brackets; the **Titles in actor names** setting changes that.
 
+**Current values.** The right side of the Forge shows the selected token's characteristics (with the part that comes from templates), Wounds, skill advances, talents and creature traits. With several targets, pick which one to show. When you preview a template, characteristics and skills also show the value after applying it.
+
+**Stacking templates.** The **Stacking templates** setting decides how several templates on one actor combine: they add up (Boss WS +10 and Legendary WS +20 give WS +30), or the highest value counts (WS +20), and the same goes for skill advances, talent ranks and creature traits. The strongest penalty from a weakness still applies. A skill or creature trait that two templates need stays until the last of them is removed.
+
 Drag a template onto a character, NPC or creature. It changes the characteristics and adds skills, talents and gear. Some ranks ask you to pick a talent or a weapon, wizards choose their spells, and a few ranks add a title such as "Sergeant" to the name.
 
 Templates use the system's own Template item, so they appear under **Applied Templates** on the Notes tab. Deleting one there undoes it. A skill the actor already has gains the extra advances instead of being listed twice. A trait the actor already has is raised to the higher rating, and Armour adds up. All of this is removed with the template.

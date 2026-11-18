@@ -1,5 +1,10 @@
 # Changelog
 
+## 0.6.0
+- **Stacking templates** setting. Templates can add up, as before, or take the highest value: characteristics, skill advances, talent ranks and creature traits. The strongest penalty from a weakness still applies. Characteristics follow the setting at once; skills and talents follow it when templates are added or removed. The default stays "Add up".
+- **Current values in the Enemy Forge.** The right side shows the selected token's characteristics (and how much comes from templates), Wounds, skill advances, talents and creature traits. Previewing a template also shows characteristics and skills after applying it, in the chosen stacking mode.
+- **Fix:** a skill or creature trait created by one template and also given by another was lost when the first template was removed. The module now keeps it until the last template that needs it is gone. Actors from 0.4 and 0.5 keep working.
+
 ## 0.5.0
 - **Enemy Forge.** A hammer button on the token HUD (GM only) opens a panel with every template: search, categories and a tier filter. A click on a template shows a preview: description, characteristics, skills, talents, creature traits, magic, spells, trappings, choices and the title it adds. The preview's button, or + on a row, applies the template to all selected tokens, and × removes it from all of them. Clicking an applied template opens its preview too. The panel warns when tokens share one actor.
 - **GM-only token badge.** Tokens with templates show their highest tier and the number of templates, and hovering lists them. Only the GM's screen draws it, so players never see it.

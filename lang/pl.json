@@ -113,6 +113,15 @@
         "Apply": "Nałóż na cele ({count})",
         "LoreNote": "Splatanie i talent magii zgodne z tradycją wybraną przy nakładaniu.",
         "ChosenDeity": "wybrane bóstwo"
+      },
+      "Current": {
+        "Title": "Obecne wartości",
+        "Wounds": "Żywotność",
+        "Skills": "Rozwinięcia umiejętności",
+        "Talents": "Talenty",
+        "Traits": "Cechy stworzeń",
+        "ModeSum": "szablony się sumują",
+        "ModeMax": "szablony biorą najwyższą wartość"
       }
     },
     "Settings": {
@@ -122,6 +131,12 @@
         "Titles": "Tylko tytuły (Sierżant Hans)",
         "None": "Nic",
         "All": "Tytuły i role (Hans (Szaman))"
+      },
+      "Stacking": {
+        "Name": "Łączenie szablonów",
+        "Hint": "Jak łączy się kilka szablonów na jednym aktorze. Sumowanie: Boss z WW +10 i Legenda z WW +20 dają WW +30. Najwyższa wartość: dają WW +20; tak samo rozwinięcia umiejętności, wykupienia talentów i cechy stworzeń, a najsilniejsza kara ze słabości nadal działa. Cechy zmieniają się od razu, a umiejętności i talenty według trybu przy nakładaniu i zdejmowaniu szablonów.",
+        "Sum": "Sumowanie",
+        "Max": "Najwyższa wartość"
       }
     }
   }

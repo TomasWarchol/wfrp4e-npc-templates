@@ -3,8 +3,8 @@
  * i pokazuje szablony, które aktor już ma.
  */
 import { MODULE_ID, PACK_ID, t } from "./constants.mjs";
-import { displayName, displaySpecification } from "./apply.mjs";
-import { CATEGORIES, describeTemplate, filterTemplates, romanTier, stripTier, summarizeStack, uniqueTargets } from "./forge-model.mjs";
+import { displayName, displaySpecification, stackingMode } from "./apply.mjs";
+import { CATEGORIES, describeTemplate, filterTemplates, projectCharacteristics, projectSkills, romanTier, stripTier, summarizeStack, uniqueTargets } from "./forge-model.mjs";
 
 const { ApplicationV2 } = foundry.applications.api;
 const escape = (text) => foundry.utils.escapeHTML(String(text ?? ""));
@@ -66,6 +66,8 @@ export class TemplateForge extends ApplicationV2 {
   category = "all";
   tiers = new Set();
   selected = null;
+  /** Aktor, którego wartości pokazuje panel (uuid); domyślnie pierwszy cel. */
+  focus = null;
   #entries = null;
   #preview = null;
 
@@ -88,7 +90,9 @@ export class TemplateForge extends ApplicationV2 {
     const { actors, shared } = uniqueTargets(tokens);
     const root = document.createElement("div");
     root.className = "forge";
-    root.innerHTML = `<div class="forge-browse">${this.#targetsHTML(tokens, actors, shared)}${this.#stackHTML(actors[0], actors.length - 1)}${this.#filtersHTML()}${this.#listHTML()}</div>${this.#previewHTML(actors.length)}`;
+    const focused = actors.find((actor) => actor.uuid === this.focus) ?? actors[0];
+    root.innerHTML = `<div class="forge-browse">${this.#targetsHTML(tokens, actors, shared)}${this.#stackHTML(actors[0], actors.length - 1)}${this.#filtersHTML()}${this.#listHTML()}</div>
+      <div class="forge-side">${this.#currentHTML(focused, actors)}${this.#previewHTML(actors.length)}</div>`;
     return root;
   }
 
@@ -106,6 +110,48 @@ export class TemplateForge extends ApplicationV2 {
       input.focus();
       input.setSelectionRange(input.value.length, input.value.length);
     }
+    content.querySelector("select[name=forge-focus]")?.addEventListener("change", (event) => {
+      this.focus = event.target.value;
+      this.render();
+    });
+  }
+
+  /**
+   * Obecne wartości wybranego celu: cechy (z częścią z szablonów), Żywotność, rozwinięte umiejętności,
+   * talenty i cechy stworzeń. Gdy wybrano szablon, cechy i umiejętności pokazują też wartość po nałożeniu.
+   */
+  #currentHTML(actor, actors) {
+    if (!actor) return "";
+    const mode = stackingMode();
+    const preview = this.#preview;
+    const picker = actors.length > 1
+      ? `<select name="forge-focus">${actors.map((other) => `<option value="${other.uuid}" ${other === actor ? "selected" : ""}>${escape(other.name)}</option>`).join("")}</select>`
+      : `<span>${escape(actor.name)}</span>`;
+    const abbrev = game.wfrp4e.config.characteristicsAbbrev ?? {};
+    const values = Object.fromEntries(Object.entries(actor.system.characteristics ?? {}).map(([key, data]) => [key, data.value]));
+    const applied = managedTemplates(actor).map((item) => item.system.characteristics);
+    const stats = projectCharacteristics(values, applied, preview?.system.characteristics ?? null, mode).map(({ key, value, fromTemplates, projected }) => {
+      const part = fromTemplates ? `<small>${fromTemplates > 0 ? "+" : ""}${fromTemplates}</small>` : "";
+      const next = projected === null ? "" : `<em class="${projected > value ? "up" : "down"}">→ ${projected}</em>`;
+      return `<span class="forge-stat"><b>${escape(game.i18n.localize(abbrev[key] ?? key))}</b> ${value}${part}${next}</span>`;
+    }).join("");
+    const wounds = actor.system.status?.wounds;
+    const added = (preview?.system.skills.list ?? []).filter((entry) => !entry.group).map(({ name, advances }) => ({ name: displayName(name), advances }));
+    const skills = projectSkills(actor.itemTypes.skill.map((skill) => ({ name: skill.name, advances: skill.system.advances.value })), added, mode)
+      .map(({ name, advances, projected }) => `<li>${escape(name)} <span>${advances ?? "–"}${projected === null ? "" : ` <em class="up">→ ${projected}</em>`}</span></li>`).join("");
+    const counts = new Map();
+    for (const talent of actor.itemTypes.talent) counts.set(talent.name, (counts.get(talent.name) ?? 0) + 1);
+    const talents = [...counts].sort(([a], [b]) => a.localeCompare(b)).map(([name, count]) => escape(count > 1 ? `${name} ×${count}` : name)).join(", ");
+    const traits = actor.itemTypes.trait.map((trait) => escape(trait.system.specification?.value ? `${trait.name} ${trait.system.specification.value}` : trait.name)).join(", ");
+    const modeNote = t(mode === "max" ? "Forge.Current.ModeMax" : "Forge.Current.ModeSum");
+    return `<section class="forge-current">
+      <header><h4>${t("Forge.Current.Title")}</h4>${picker}</header>
+      <div class="forge-stat-grid">${stats}</div>
+      <p class="forge-current-line">${wounds ? `<b>${t("Forge.Current.Wounds")}</b> ${wounds.value}/${wounds.max} · ` : ""}<small>${modeNote}</small></p>
+      ${skills ? `<h5>${t("Forge.Current.Skills")}</h5><ul class="forge-skill-list">${skills}</ul>` : ""}
+      ${talents ? `<h5>${t("Forge.Current.Talents")}</h5><p class="forge-current-line">${talents}</p>` : ""}
+      ${traits ? `<h5>${t("Forge.Current.Traits")}</h5><p class="forge-current-line">${traits}</p>` : ""}
+    </section>`;
   }
 
   #targetsHTML(tokens, actors, shared) {

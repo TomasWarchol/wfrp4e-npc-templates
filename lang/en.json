@@ -113,6 +113,15 @@
         "Apply": "Apply to the targets ({count})",
         "LoreNote": "Channelling and the magic talent follow the Lore chosen when applying.",
         "ChosenDeity": "chosen deity"
+      },
+      "Current": {
+        "Title": "Current values",
+        "Wounds": "Wounds",
+        "Skills": "Skill advances",
+        "Talents": "Talents",
+        "Traits": "Creature traits",
+        "ModeSum": "templates add up",
+        "ModeMax": "templates take the highest value"
       }
     },
     "Settings": {
@@ -122,6 +131,12 @@
         "Titles": "Titles only (Sergeant Hans)",
         "None": "Nothing",
         "All": "Titles and roles (Hans (Shaman))"
+      },
+      "Stacking": {
+        "Name": "Stacking templates",
+        "Hint": "How several templates on one actor combine. Add up: Boss with WS +10 and Legendary with WS +20 give WS +30. Highest value: they give WS +20, and the same goes for skill advances, talent ranks and creature traits; the strongest penalty from a weakness still applies. Characteristics change at once; skills and talents follow the mode when templates are added or removed.",
+        "Sum": "Add up",
+        "Max": "Highest value"
       }
     }
   }

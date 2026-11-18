@@ -45,6 +45,10 @@ Każdy stopień zawiera już niższe, więc nakładaj na aktora jeden stopień.
 
 **Odznaka widoczna tylko dla MG.** Token z szablonami ma małą odznakę z najwyższym tierem, np. „IV ·2” dla dwóch szablonów. Po najechaniu na token widać ich listę. Rysuje ją tylko ekran MG, więc gracze jej nie widzą. Domyślnie do imienia trafiają tylko tytuły, np. „Sierżant”, a nie role w nawiasie; zmienia to ustawienie **Dopiski w imieniu aktora**.
 
+**Obecne wartości.** Prawa strona Kuźni pokazuje cechy wybranego tokena (z częścią pochodzącą z szablonów), Żywotność, rozwinięcia umiejętności, talenty i cechy stworzeń. Przy kilku celach wybierasz, który pokazać. Przy podglądzie szablonu cechy i umiejętności pokazują też wartość po jego nałożeniu.
+
+**Łączenie szablonów.** Ustawienie **Łączenie szablonów** decyduje, jak łączy się kilka szablonów na jednym aktorze: sumują się (Boss z WW +10 i Legenda z WW +20 dają WW +30) albo liczy się najwyższa wartość (WW +20); tak samo rozwinięcia umiejętności, wykupienia talentów i cechy stworzeń. Najsilniejsza kara ze słabości nadal działa. Umiejętność albo cecha stworzenia, której potrzebują dwa szablony, zostaje do zdjęcia ostatniego z nich.
+
 Przeciągnij szablon na postać, NPC albo stwora. Szablon zmienia cechy oraz dodaje umiejętności, talenty i wyposażenie. Niektóre stopnie proszą o wybór talentu lub broni, czarodzieje wybierają czary, a część stopni dopisuje do imienia tytuł, np. „Sierżant”.
 
 Szablony korzystają z systemowego typu Template, więc widać je w sekcji **Applied Templates** na zakładce notatek. Usunięcie szablonu cofa jego działanie. Umiejętność, którą aktor już ma, dostaje dodatkowe rozwinięcia zamiast pojawić się drugi raz. Cecha, którą aktor już ma, rośnie do wyższej wartości, a Pancerz się sumuje. Po usunięciu szablonu wszystko wraca do stanu poprzedniego.

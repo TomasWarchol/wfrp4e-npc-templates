@@ -9,10 +9,11 @@ import { TIER_GROUPS } from "../content/tiers.mjs";
 import { TRAIT_GROUPS } from "../content/traits.mjs";
 import { accumulateRank, buildAll, buildSpellLinks, buildTraits, buildTrappings, stableId, tierSuffix } from "../tools/pack-builder.mjs";
 import { buildAvailability, buildNameMap, isAvailable, resolveName } from "../scripts/names.mjs";
-import { affixesFor, describeTemplate, filterTemplates, romanTier, stripTier, summarizeStack, uniqueTargets } from "../scripts/forge-model.mjs";
+import { affixesFor, describeTemplate, filterTemplates, projectCharacteristics, projectSkills, romanTier, stripTier, summarizeStack, uniqueTargets } from "../scripts/forge-model.mjs";
 import { BLESS_SCRIPT, blessingsFor, deityInName, deityOptions, needsDeityChoice, withDeity, withoutBlessScript } from "../scripts/deity.mjs";
 import { ARCANE_LORES, arcaneOptions, loreOptions, loreProfile, loreSpecialisation, needsLoreChoice, withLore } from "../scripts/lore.mjs";
-import { grantedItemData, keepAvailable, localizedSystem, pruneChoices, splitOwnedSkills, revertUpdate, splitOwnedTraits, stripAffixes, templateUpdate, traitValue, woundsAfterTemplate } from "../scripts/apply.mjs";
+import { grantedItemData, keepAvailable, localizedSystem, pruneChoices, splitOwnedSkills, revertUpdate, splitOwnedTraits, stackUpdate, stripAffixes, templateUpdate, traitValue, woundsAfterTemplate } from "../scripts/apply.mjs";
+import { addRating, combineCharacteristics, missingTalents, readStack, removeRating, stackedValue, talentsToRestore } from "../scripts/stacking.mjs";
 
 const coreItems = JSON.parse(readFileSync(new URL("../content/core-items.json", import.meta.url), "utf8"));
 const coreTraits = JSON.parse(readFileSync(new URL("../content/core-traits.json", import.meta.url), "utf8"));
@@ -247,7 +248,8 @@ describe("nazwy w aktywnym tłumaczeniu", () => {
     const owned = [{ name: "Pancerz", value: "3" }, { name: "Strach", value: "2" }, { name: "Groza", value: "1" }, { name: "Szał", value: "" }];
     const { keep, raise } = splitOwnedTraits(list, owned);
     expect(keep.map((t) => t.name)).toEqual(["Nowa"]);
-    expect(raise).toEqual([{ name: "Pancerz", rating: 2 }, { name: "Strach", rating: 1 }, { name: "Groza", rating: 3 }]);
+    // Cecha bez wartości liczbowej też trafia do łączenia, żeby było wiadomo, który szablon jej potrzebuje
+    expect(raise).toEqual([{ name: "Pancerz", rating: 2 }, { name: "Strach", rating: 1 }, { name: "Groza", rating: 3 }, { name: "Szał", rating: null }]);
   });
 
   it("rozpoznaje dostępne nazwy po typie i podstawie", () => {
@@ -499,23 +501,98 @@ describe("nazwy w aktywnym tłumaczeniu", () => {
     expect(shared).toBe(1);
   });
 
-  it("cofa szablon jedną aktualizacją aktora", () => {
-    const flagged = (data, flags) => ({ ...data, getFlag: (_scope, key) => key.split(".").reduce((o, k) => o?.[k], flags) });
+  it("cofa szablon jedną aktualizacją aktora, także ze starymi flagami z 0.4–0.5", () => {
+    const M = "wfrp4e-npc-templates";
     const actor = {
       name: "Sierżant Hans",
       itemTypes: {
-        skill: [flagged({ id: "s1", system: { advances: { value: 25 } } }, { merged: { T1: 20 } }), flagged({ id: "s2", system: { advances: { value: 5 } } }, {})],
-        trait: [flagged({ id: "f1", name: "Armour", system: { specification: { value: "5" } } }, { traitBase: 2, traitRatings: { T1: 3 } })]
+        skill: [
+          { id: "s1", name: "Dodge", system: { advances: { value: 25 } }, flags: { [M]: { merged: { T1: 20 } } } },
+          { id: "s2", name: "Cool", system: { advances: { value: 5 } }, flags: {} },
+          { id: "s3", name: "Intimidate", system: { advances: { value: 30 } }, flags: { [M]: { stack: { base: 0, ratings: { T1: 30 }, adopted: true } } } },
+          { id: "s4", name: "Melee", system: { advances: { value: 20 } }, flags: { [M]: { stack: { base: 0, ratings: { T1: 20, T2: 15 }, adopted: true } } } }
+        ],
+        trait: [{ id: "f1", name: "Armour", system: { specification: { value: "5" } }, flags: { [M]: { traitBase: 2, traitRatings: { T1: 3 } } } }]
       }
     };
     const template = { id: "T1", system: { alterName: { pre: "Sierżant", post: "" } } };
-    const update = revertUpdate(actor, template, { translateName: (n) => n });
+    const { update, deletes } = revertUpdate(actor, template, { translateName: (n) => n, mode: "sum" });
     expect(update.name).toBe("Hans");
     expect(update.items).toEqual([
-      { _id: "s1", system: { advances: { value: 5 } }, flags: { "wfrp4e-npc-templates": { merged: { T1: 0 } } } },
-      { _id: "f1", system: { specification: { value: "2" } }, flags: { "wfrp4e-npc-templates": { traitRatings: { T1: 0 } } } }
+      { _id: "s1", system: { advances: { value: 5 } }, flags: { [M]: { stack: { base: 5, ratings: {}, adopted: false }, "-=merged": null } } },
+      { _id: "s4", system: { advances: { value: 15 } }, flags: { [M]: { stack: { base: 0, ratings: { "-=T1": null }, adopted: true } } } },
+      { _id: "f1", system: { specification: { value: "2" } }, flags: { [M]: { stack: { base: 2, ratings: {}, adopted: false } } } }
     ]);
-    expect(revertUpdate({ name: "Hans", itemTypes: { skill: [], trait: [] } }, { id: "T2", system: { alterName: { pre: "", post: "" } } })).toEqual({});
+    // Przejęty przedmiot, którego nie potrzebuje już żaden szablon, znika
+    expect(deletes).toEqual(["s3"]);
+    expect(revertUpdate({ name: "Hans", itemTypes: { skill: [], trait: [] } }, { id: "T2", system: { alterName: { pre: "", post: "" } } }, { mode: "sum" })).toEqual({ update: {}, deletes: [] });
+  });
+
+  it("dodaje wkład szablonu i przejmuje przedmiot innego szablonu", () => {
+    const M = "wfrp4e-npc-templates";
+    const own = { id: "a", flags: {} };
+    expect(stackUpdate(own, { kind: "skill", value: 10, templateId: "T2", rating: 20, owner: null, mode: "sum" }))
+      .toEqual({ _id: "a", flags: { [M]: { stack: { base: 10, ratings: { T2: 20 }, adopted: false } } }, system: { advances: { value: 30 } } });
+    expect(stackUpdate(own, { kind: "skill", value: 10, templateId: "T2", rating: 20, owner: null, mode: "max" }).system.advances.value).toBe(20);
+    const fromOther = { id: "b", flags: {} };
+    expect(stackUpdate(fromOther, { kind: "skill", value: 15, templateId: "T2", rating: 10, owner: "T1", mode: "max", systemId: "wfrp4e" }))
+      .toEqual({ _id: "b", flags: { [M]: { stack: { base: 0, ratings: { T1: 15, T2: 10 }, adopted: true } }, wfrp4e: { fromTemplate: null } }, system: { advances: { value: 15 } } });
+    // Cecha bez wartości liczbowej: zapamiętany szablon, wartość bez zmian
+    const hardy = stackUpdate({ id: "c", flags: {} }, { kind: "trait", value: 1, templateId: "T2", rating: null, owner: "T1", mode: "sum" });
+    expect(hardy.system).toBeUndefined();
+    expect(hardy.flags[M].stack.ratings).toEqual({ T1: 1, T2: 1 });
+  });
+
+  it("łączy cechy szablonów sumą albo najwyższą wartością", () => {
+    const boss = { ws: 10, wp: 10 };
+    const legend = { ws: 20, s: 15, wp: 20 };
+    const wounded = { ws: -5, s: -5 };
+    expect(combineCharacteristics([boss, legend], "sum")).toMatchObject({ ws: 30, s: 15, wp: 30, t: 0 });
+    expect(combineCharacteristics([boss, legend], "max")).toMatchObject({ ws: 20, s: 15, wp: 20 });
+    // Najsilniejsza kara nie znika pod premią
+    expect(combineCharacteristics([legend, wounded], "max")).toMatchObject({ ws: 15, s: 10 });
+    expect(combineCharacteristics([wounded, { ws: -10 }], "max")).toMatchObject({ ws: -10 });
+  });
+
+  it("liczy wartość z bazy i wkładów szablonów", () => {
+    expect(stackedValue(10, { A: 20, B: 15 }, { mode: "sum", kind: "skill" })).toBe(45);
+    expect(stackedValue(10, { A: 20, B: 15 }, { mode: "max", kind: "skill" })).toBe(20);
+    expect(stackedValue(30, { A: 20 }, { mode: "max", kind: "skill" })).toBe(30);
+    expect(stackedValue(2, { A: 3, B: 1 }, { mode: "sum", kind: "trait" })).toBe(3);
+    expect(stackedValue(2, { A: 3, B: 1 }, { mode: "sum", kind: "trait", additive: true })).toBe(6);
+    expect(stackedValue(2, { A: 3, B: 1 }, { mode: "max", kind: "trait", additive: true })).toBe(3);
+    expect(readStack({ kind: "skill", value: 25, flags: { merged: { T1: 20, T2: 0 } } })).toEqual({ base: 5, ratings: { T1: 20 }, adopted: false, legacy: true });
+    expect(removeRating({ base: 0, ratings: { A: 1 }, adopted: true }, "A")).toEqual({ stack: { base: 0, ratings: {}, adopted: true }, remove: true });
+    expect(addRating(null, { templateId: "B", rating: 5, value: 12, ownerTemplate: null })).toEqual({ base: 12, ratings: { B: 5 }, adopted: false });
+  });
+
+  it("w trybie najwyższej wartości dodaje tylko brakujące talenty i odtwarza je po zdjęciu szablonu", () => {
+    const owned = new Map([["Strike Mighty Blow", 2], ["Combat Reflexes", 1]]);
+    const list = [{ name: "Strike Mighty Blow", advances: 1, group: null }, { name: "Combat Reflexes", advances: 2, group: null },
+      { name: "Iron Will", advances: 1, group: null }, { name: "Riposte", advances: 1, group: 1 }];
+    expect(missingTalents(list, owned)).toEqual([{ name: "Combat Reflexes", advances: 1, group: null }, { name: "Iron Will", advances: 1, group: null }, { name: "Riposte", advances: 1, group: 1 }]);
+    const templates = [{ id: "B", needs: { "Strike Mighty Blow": 1, "Iron Will": 1 } }, { id: "L", needs: { "Strike Mighty Blow": 2 } }];
+    expect(talentsToRestore(templates, new Map([["Strike Mighty Blow", 1], ["Iron Will", 1]]))).toEqual([{ templateId: "L", name: "Strike Mighty Blow", count: 1 }]);
+    expect(talentsToRestore(templates, new Map([["Strike Mighty Blow", 2], ["Iron Will", 1]]))).toEqual([]);
+  });
+
+  it("pokazuje w Kuźni wartości teraz i po nałożeniu szablonu", () => {
+    const values = { ws: 40, s: 30, t: 35 };
+    const sum = projectCharacteristics(values, [{ ws: 10 }], { ws: 20, t: 5 }, "sum");
+    expect(sum.find((c) => c.key === "ws")).toEqual({ key: "ws", value: 40, fromTemplates: 10, projected: 60 });
+    expect(sum.find((c) => c.key === "s").projected).toBeNull();
+    const max = projectCharacteristics(values, [{ ws: 10 }], { ws: 20, t: 5 }, "max");
+    expect(max.find((c) => c.key === "ws").projected).toBe(50);
+    expect(projectCharacteristics(values, [], null).every((c) => c.projected === null)).toBe(true);
+    const skills = projectSkills([{ name: "Cool", advances: 10 }, { name: "Dodge", advances: 0 }, { name: "Melee", advances: 25 }],
+      [{ name: "Cool", advances: 20 }, { name: "Dodge", advances: 5 }, { name: "Melee", advances: 15 }, { name: "Intimidate", advances: 15 }], "max");
+    expect(skills).toEqual([
+      { name: "Cool", advances: 10, projected: 20 },
+      { name: "Dodge", advances: 0, projected: 5 },
+      { name: "Intimidate", advances: null, projected: 15 },
+      { name: "Melee", advances: 25, projected: null }
+    ]);
+    expect(projectSkills([{ name: "Melee", advances: 25 }], [{ name: "Melee", advances: 15 }], "sum")).toEqual([{ name: "Melee", advances: 25, projected: 40 }]);
   });
 
   it("usuwa dopisek szablonu z imienia, także ze środka", () => {

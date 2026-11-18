@@ -3,6 +3,7 @@
  */
 import { needsDeityChoice, withDeity } from "./deity.mjs";
 import { needsLoreChoice, withLore } from "./lore.mjs";
+import { combineCharacteristics, projectSkill } from "./stacking.mjs";
 
 export const ROMAN = ["I", "II", "III", "IV", "V"];
 
@@ -141,4 +142,40 @@ export function describeTemplate(source, flags = {}, { translate = (name) => nam
   const spells = (flags.spells ?? []).map(spellName);
   const { pre, post } = affixesFor(affixMode, system.alterName ?? {});
   return { characteristics, skills, talents, traits, trappings, lores, spells, pre, post, loreChoice: flags.loreChoice ?? null, chooseLore, chooseDeity };
+}
+
+/**
+ * Cechy aktora teraz i po nałożeniu podglądanego szablonu, według trybu łączenia.
+ * @param {Object<string, number>} values – obecne wartości cech aktora (z modyfikatorami szablonów)
+ * @param {Object<string, number>[]} applied – modyfikatory szablonów modułu nałożonych na aktora
+ * @param {Object<string, number>|null} preview – modyfikatory podglądanego szablonu
+ * @returns {{key: string, value: number, fromTemplates: number, projected: number|null}[]}
+ */
+export function projectCharacteristics(values, applied, preview, mode = "sum") {
+  const current = combineCharacteristics(applied, mode);
+  const next = preview ? combineCharacteristics([...applied, preview], mode) : current;
+  return CHARACTERISTICS.map((key) => {
+    const value = Number(values?.[key]) || 0;
+    const projected = preview ? value - current[key] + next[key] : null;
+    return { key, value, fromTemplates: current[key], projected: projected === value ? null : projected };
+  });
+}
+
+/**
+ * Umiejętności z rozwinięciami teraz i po nałożeniu podglądanego szablonu. Pokazuje rozwinięte umiejętności aktora
+ * i wszystkie, które doda szablon (wybory „jedno z” pomija, bo zależą od decyzji przy nakładaniu).
+ * @param {{name: string, advances: number}[]} owned – umiejętności aktora (nazwy w aktywnym tłumaczeniu)
+ * @param {{name: string, advances: number}[]} added – umiejętności szablonu bez grup wyboru (nazwy w aktywnym tłumaczeniu)
+ */
+export function projectSkills(owned, added = [], mode = "sum") {
+  const rows = new Map();
+  for (const { name, advances } of owned) if (advances > 0) rows.set(name, { name, advances, projected: null });
+  for (const { name, advances } of added) {
+    const current = owned.find((skill) => skill.name === name);
+    const before = current ? current.advances : null;
+    const projected = projectSkill(before, advances, mode);
+    if (projected === before) continue;
+    rows.set(name, { name, advances: before, projected });
+  }
+  return [...rows.values()].sort((a, b) => a.name.localeCompare(b.name));
 }
