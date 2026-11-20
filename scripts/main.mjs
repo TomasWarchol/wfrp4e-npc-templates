@@ -34,8 +34,9 @@ Hooks.once("init", () => {
     scope: "world",
     config: true,
     type: String,
-    default: "sum",
+    default: "layers",
     choices: {
+      layers: `${I18N}.Settings.Stacking.Layers`,
       sum: `${I18N}.Settings.Stacking.Sum`,
       max: `${I18N}.Settings.Stacking.Max`
     },

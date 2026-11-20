@@ -149,11 +149,12 @@ export function describeTemplate(source, flags = {}, { translate = (name) => nam
  * @param {Object<string, number>} values – obecne wartości cech aktora (z modyfikatorami szablonów)
  * @param {Object<string, number>[]} applied – modyfikatory szablonów modułu nałożonych na aktora
  * @param {Object<string, number>|null} preview – modyfikatory podglądanego szablonu
+ * @param {{layers?: string[], previewLayer?: string}} [options] – warstwy nałożonych szablonów (kolejność jak applied) i podglądanego
  * @returns {{key: string, value: number, fromTemplates: number, projected: number|null}[]}
  */
-export function projectCharacteristics(values, applied, preview, mode = "sum") {
-  const current = combineCharacteristics(applied, mode);
-  const next = preview ? combineCharacteristics([...applied, preview], mode) : current;
+export function projectCharacteristics(values, applied, preview, mode = "layers", { layers = [], previewLayer = "preview" } = {}) {
+  const current = combineCharacteristics(applied, mode, layers);
+  const next = preview ? combineCharacteristics([...applied, preview], mode, [...layers, previewLayer]) : current;
   return CHARACTERISTICS.map((key) => {
     const value = Number(values?.[key]) || 0;
     const projected = preview ? value - current[key] + next[key] : null;
@@ -164,16 +165,17 @@ export function projectCharacteristics(values, applied, preview, mode = "sum") {
 /**
  * Umiejętności z rozwinięciami teraz i po nałożeniu podglądanego szablonu. Pokazuje rozwinięte umiejętności aktora
  * i wszystkie, które doda szablon (wybory „jedno z” pomija, bo zależą od decyzji przy nakładaniu).
- * @param {{name: string, advances: number}[]} owned – umiejętności aktora (nazwy w aktywnym tłumaczeniu)
+ * @param {{name: string, advances: number, stack?: object|null}[]} owned – umiejętności aktora (nazwy w aktywnym tłumaczeniu) ze stanem łączenia
  * @param {{name: string, advances: number}[]} added – umiejętności szablonu bez grup wyboru (nazwy w aktywnym tłumaczeniu)
+ * @param {{layers?: Object<string,string>, layer?: string}} [context] – warstwy nałożonych szablonów i warstwa podglądanego
  */
-export function projectSkills(owned, added = [], mode = "sum") {
+export function projectSkills(owned, added = [], mode = "layers", { layers = {}, layer = "preview" } = {}) {
   const rows = new Map();
   for (const { name, advances } of owned) if (advances > 0) rows.set(name, { name, advances, projected: null });
   for (const { name, advances } of added) {
     const current = owned.find((skill) => skill.name === name);
     const before = current ? current.advances : null;
-    const projected = projectSkill(before, advances, mode);
+    const projected = projectSkill(before, advances, mode, { stack: current?.stack ?? null, layers, layer });
     if (projected === before) continue;
     rows.set(name, { name, advances: before, projected });
   }

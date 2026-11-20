@@ -1,5 +1,12 @@
 # Changelog
 
+## 0.7.0
+- **Layers, the new default way of stacking templates.** A role, a threat level, a rank, each group of traits and each background add up, but two templates from the same layer take the highest value. Warlord and Boss still make a stronger leader; Boss and Legendary no longer double up. Penalties always add up. "Add up" and "Highest value" stay as options. Actors with several templates from one layer get lower values after updating; choose "Add up" to keep the old numbers.
+- **GM hints.** Every template has a short GM note, in English and Polish, on what it is for and what it pairs with. It shows in the Enemy Forge preview and in the template's GM description.
+- Clearer names: "Cunning" is now "Slippery / Śliski" (it was easy to confuse with "Sly", which gives the Cunning trait). In Polish, "Grizzled" is "Stary wyga" and "Bandit Chief" is "Herszt bandy", so no two templates share a name.
+- Dark Priest and Acolyte channel Dhar, which matches their daemonic and witchcraft spells. Plague-Ridden no longer gives Endurance.
+- Reworded descriptions for Hedge Witch, Rider, Shield Bearer, Highwayman and Doom Incarnate, so they match what the template does and suit any race.
+
 ## 0.6.0
 - **Stacking templates** setting. Templates can add up, as before, or take the highest value: characteristics, skill advances, talent ranks and creature traits. The strongest penalty from a weakness still applies. Characteristics follow the setting at once; skills and talents follow it when templates are added or removed. The default stays "Add up".
 - **Current values in the Enemy Forge.** The right side shows the selected token's characteristics (and how much comes from templates), Wounds, skill advances, talents and creature traits. Previewing a template also shows characteristics and skills after applying it, in the chosen stacking mode.

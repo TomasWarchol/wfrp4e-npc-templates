@@ -3,7 +3,8 @@
  * i pokazuje szablony, które aktor już ma.
  */
 import { MODULE_ID, PACK_ID, t } from "./constants.mjs";
-import { displayName, displaySpecification, stackingMode } from "./apply.mjs";
+import { displayName, displaySpecification, stackingMode, templateLayer, templateLayers } from "./apply.mjs";
+import { readStack } from "./stacking.mjs";
 import { CATEGORIES, describeTemplate, filterTemplates, projectCharacteristics, projectSkills, romanTier, stripTier, summarizeStack, uniqueTargets } from "./forge-model.mjs";
 
 const { ApplicationV2 } = foundry.applications.api;
@@ -129,21 +130,29 @@ export class TemplateForge extends ApplicationV2 {
       : `<span>${escape(actor.name)}</span>`;
     const abbrev = game.wfrp4e.config.characteristicsAbbrev ?? {};
     const values = Object.fromEntries(Object.entries(actor.system.characteristics ?? {}).map(([key, data]) => [key, data.value]));
-    const applied = managedTemplates(actor).map((item) => item.system.characteristics);
-    const stats = projectCharacteristics(values, applied, preview?.system.characteristics ?? null, mode).map(({ key, value, fromTemplates, projected }) => {
+    const appliedTemplates = managedTemplates(actor);
+    const applied = appliedTemplates.map((item) => item.system.characteristics);
+    const previewLayer = preview ? templateLayer(preview) : "preview";
+    const stats = projectCharacteristics(values, applied, preview?.system.characteristics ?? null, mode,
+      { layers: appliedTemplates.map(templateLayer), previewLayer }).map(({ key, value, fromTemplates, projected }) => {
       const part = fromTemplates ? `<small>${fromTemplates > 0 ? "+" : ""}${fromTemplates}</small>` : "";
       const next = projected === null ? "" : `<em class="${projected > value ? "up" : "down"}">→ ${projected}</em>`;
       return `<span class="forge-stat"><b>${escape(game.i18n.localize(abbrev[key] ?? key))}</b> ${value}${part}${next}</span>`;
     }).join("");
     const wounds = actor.system.status?.wounds;
     const added = (preview?.system.skills.list ?? []).filter((entry) => !entry.group).map(({ name, advances }) => ({ name: displayName(name), advances }));
-    const skills = projectSkills(actor.itemTypes.skill.map((skill) => ({ name: skill.name, advances: skill.system.advances.value })), added, mode)
+    const owned = actor.itemTypes.skill.map((skill) => ({
+      name: skill.name,
+      advances: skill.system.advances.value,
+      stack: readStack({ kind: "skill", value: skill.system.advances.value, flags: skill.flags?.[MODULE_ID] ?? {} })
+    }));
+    const skills = projectSkills(owned, added, mode, { layers: templateLayers(actor), layer: previewLayer })
       .map(({ name, advances, projected }) => `<li>${escape(name)} <span>${advances ?? "–"}${projected === null ? "" : ` <em class="up">→ ${projected}</em>`}</span></li>`).join("");
     const counts = new Map();
     for (const talent of actor.itemTypes.talent) counts.set(talent.name, (counts.get(talent.name) ?? 0) + 1);
     const talents = [...counts].sort(([a], [b]) => a.localeCompare(b)).map(([name, count]) => escape(count > 1 ? `${name} ×${count}` : name)).join(", ");
     const traits = actor.itemTypes.trait.map((trait) => escape(trait.system.specification?.value ? `${trait.name} ${trait.system.specification.value}` : trait.name)).join(", ");
-    const modeNote = t(mode === "max" ? "Forge.Current.ModeMax" : "Forge.Current.ModeSum");
+    const modeNote = t({ max: "Forge.Current.ModeMax", sum: "Forge.Current.ModeSum" }[mode] ?? "Forge.Current.ModeLayers");
     return `<section class="forge-current">
       <header><h4>${t("Forge.Current.Title")}</h4>${picker}</header>
       <div class="forge-stat-grid">${stats}</div>
@@ -233,6 +242,7 @@ export class TemplateForge extends ApplicationV2 {
       <header><img src="${escape(template.img)}" alt=""><h3>${escape(stripTier(template.name))}</h3>${tierPill(tier)}</header>
       <div class="forge-preview-body">
         <div class="forge-description">${template.system.description?.value ?? ""}</div>
+        ${template.system.gmdescription?.value ? `<div class="forge-hint"><i class="fa-solid fa-lightbulb"></i> ${template.system.gmdescription.value}</div>` : ""}
         ${characteristics}${section("Skills", data.skills)}${section("Talents", data.talents)}${section("Traits", data.traits)}
         ${section("Magic", magic)}${section("Spells", data.spells)}${section("Trappings", data.trappings)}${section("Name", title)}
       </div>

@@ -1,5 +1,6 @@
 import { readFileSync } from "node:fs";
 import { describe, expect, it } from "vitest";
+import { HINTS } from "../content/hints.mjs";
 import { POWER_TIERS } from "../content/power-tiers.mjs";
 import { ARCHETYPES } from "../content/templates.mjs";
 import { ADDON_TALENTS } from "../content/addon-talents.mjs";
@@ -13,11 +14,11 @@ import { affixesFor, describeTemplate, filterTemplates, projectCharacteristics, 
 import { BLESS_SCRIPT, blessingsFor, deityInName, deityOptions, needsDeityChoice, withDeity, withoutBlessScript } from "../scripts/deity.mjs";
 import { ARCANE_LORES, arcaneOptions, loreOptions, loreProfile, loreSpecialisation, needsLoreChoice, withLore } from "../scripts/lore.mjs";
 import { grantedItemData, keepAvailable, localizedSystem, pruneChoices, splitOwnedSkills, revertUpdate, splitOwnedTraits, stackUpdate, stripAffixes, templateUpdate, traitValue, woundsAfterTemplate } from "../scripts/apply.mjs";
-import { addRating, combineCharacteristics, missingTalents, readStack, removeRating, stackedValue, talentsToRestore } from "../scripts/stacking.mjs";
+import { addRating, combineCharacteristics, combineValues, missingTalents, readStack, removeRating, stackedValue, talentRequirements, talentsToRestore } from "../scripts/stacking.mjs";
 
 const coreItems = JSON.parse(readFileSync(new URL("../content/core-items.json", import.meta.url), "utf8"));
 const coreTraits = JSON.parse(readFileSync(new URL("../content/core-traits.json", import.meta.url), "utf8"));
-const built = buildAll({ archetypes: ARCHETYPES, humanGroups: HUMAN_GROUPS, roleGroups: ROLE_GROUPS, tierGroups: TIER_GROUPS, traitGroups: TRAIT_GROUPS, powerTiers: POWER_TIERS, coreItems, coreTraits, addonTalents: ADDON_TALENTS });
+const built = buildAll({ archetypes: ARCHETYPES, humanGroups: HUMAN_GROUPS, roleGroups: ROLE_GROUPS, tierGroups: TIER_GROUPS, traitGroups: TRAIT_GROUPS, powerTiers: POWER_TIERS, hints: HINTS, coreItems, coreTraits, addonTalents: ADDON_TALENTS });
 // Nazwy w kompendium mają dopisek tieru, np. "Boss (Tier IV)"; testy szukają po nazwie bazowej
 const baseName = (name) => name.replace(/ \(Tier [IV]+\)$/, "");
 const LABELS = { petty: "Magia Prosta", fire: "Ogień", heavens: "Niebiosa", metal: "Metal", beasts: "Bestie", life: "Życie", light: "Światło", death: "Śmierć", shadow: "Cień", necromancy: "Nekromancja", undivided: "Niepodzielony Chaos", greatMaw: "Wielka Paszcza", tzeentch: "Tzeentch" };
@@ -37,7 +38,7 @@ describe("zestaw szablonów", () => {
   });
 
   it("odrzuca szablon bez tieru i tier bez szablonu", () => {
-    const base = { archetypes: ARCHETYPES, humanGroups: HUMAN_GROUPS, roleGroups: ROLE_GROUPS, tierGroups: TIER_GROUPS, traitGroups: TRAIT_GROUPS, coreItems, coreTraits };
+    const base = { archetypes: ARCHETYPES, humanGroups: HUMAN_GROUPS, roleGroups: ROLE_GROUPS, tierGroups: TIER_GROUPS, traitGroups: TRAIT_GROUPS, hints: HINTS, coreItems, coreTraits };
     const missing = { ...POWER_TIERS };
     delete missing["soldier/recruit"];
     expect(() => buildAll({ ...base, powerTiers: missing })).toThrow(/soldier\/recruit/);
@@ -593,6 +594,63 @@ describe("nazwy w aktywnym tłumaczeniu", () => {
       { name: "Melee", advances: 25, projected: null }
     ]);
     expect(projectSkills([{ name: "Melee", advances: 25 }], [{ name: "Melee", advances: 15 }], "sum")).toEqual([{ name: "Melee", advances: 25, projected: 40 }]);
+  });
+
+  it("łączy warstwami: najwyższa w warstwie, suma między warstwami, kary zawsze się sumują", () => {
+    const entries = [{ value: 10, layer: "roles" }, { value: 15, layer: "roles" }, { value: 10, layer: "tiers" }, { value: 20, layer: "tiers" }, { value: -5, layer: "traits/weakness" }, { value: -10, layer: "traits/weakness" }];
+    expect(combineValues(entries, "layers")).toBe(15 + 20 - 15);
+    expect(combineValues(entries, "sum")).toBe(40);
+    expect(combineValues(entries, "max")).toBe(20 - 10);
+    // Wódz + Boss (różne warstwy) się sumują, Boss + Legenda (ta sama warstwa) – nie
+    expect(combineCharacteristics([{ ws: 10 }, { ws: 10 }], "layers", ["roles", "tiers"]).ws).toBe(20);
+    expect(combineCharacteristics([{ ws: 10 }, { ws: 20 }], "layers", ["tiers", "tiers"]).ws).toBe(20);
+    expect(combineCharacteristics([{ ws: 10 }, { ws: 20 }], "layers").ws).toBe(30);
+    // Umiejętność: baza aktora + warstwy
+    expect(stackedValue(10, { A: 20, B: 15, C: 5 }, { mode: "layers", kind: "skill", layers: { A: "tiers", B: "tiers", C: "roles" } })).toBe(10 + 20 + 5);
+    // Cecha stworzenia bez sumowania bierze najwyższą wartość, Pancerz łączy się warstwami
+    expect(stackedValue(1, { A: 2, B: 3 }, { mode: "layers", kind: "trait", layers: { A: "x", B: "y" } })).toBe(3);
+    expect(stackedValue(1, { A: 2, B: 3 }, { mode: "layers", kind: "trait", additive: true, layers: { A: "x", B: "x" } })).toBe(4);
+  });
+
+  it("w trybie warstw wymaga talentów jak warstwy", () => {
+    const templates = [{ id: "B", needs: { "Strike Mighty Blow": 1 }, layer: "tiers" }, { id: "L", needs: { "Strike Mighty Blow": 2 }, layer: "tiers" }, { id: "W", needs: { "Strike Mighty Blow": 1 }, layer: "roles" }];
+    expect(talentRequirements(templates, "layers").get("Strike Mighty Blow")).toEqual({ count: 3, templateId: "L" });
+    expect(talentRequirements(templates, "max").get("Strike Mighty Blow").count).toBe(2);
+    const required = talentRequirements(templates, "layers");
+    expect(missingTalents([{ name: "Strike Mighty Blow", advances: 1, group: null }], new Map([["Strike Mighty Blow", 2]]), required)).toEqual([{ name: "Strike Mighty Blow", advances: 1, group: null }]);
+    expect(missingTalents([{ name: "Strike Mighty Blow", advances: 1, group: null }], new Map([["Strike Mighty Blow", 3]]), required)).toEqual([]);
+    expect(talentsToRestore(templates.slice(1), new Map([["Strike Mighty Blow", 1]]), "layers")).toEqual([{ templateId: "L", name: "Strike Mighty Blow", count: 2 }]);
+  });
+
+  it("zapisuje warstwę każdego szablonu", () => {
+    const layer = (name) => byName(name).flags["wfrp4e-npc-templates"].layer;
+    expect(layer("Boss")).toBe("tiers");
+    expect(layer("Nemesis")).toBe("tiers");
+    expect(layer("Warlord")).toBe("roles");
+    expect(layer("Captain")).toBe("people");
+    expect(layer("Reiklander")).toBe("people/origins");
+    expect(layer("Innkeeper")).toBe("people/trades");
+    expect(layer("Mighty")).toBe("traits/body");
+    expect(layer("Mark of Decay")).toBe("traits/taint");
+    expect(layer("Wounded")).toBe("traits/weakness");
+  });
+
+  it("ma podpowiedź dla MG w obu językach dla każdego szablonu", () => {
+    expect(Object.keys(HINTS)).toHaveLength(built.items.length);
+    for (const item of built.items) {
+      expect(item.system.gmdescription.value, item.name).toMatch(/^<p>.{20,}<\/p>$/);
+      expect(built.translation.entries[item.name].gmdescription, item.name).toMatch(/^<p>.{20,}<\/p>$/);
+    }
+    expect(built.translation.mapping.gmdescription).toBe("system.gmdescription.value");
+    const all = { archetypes: ARCHETYPES, humanGroups: HUMAN_GROUPS, roleGroups: ROLE_GROUPS, tierGroups: TIER_GROUPS, traitGroups: TRAIT_GROUPS, coreItems, coreTraits, powerTiers: POWER_TIERS };
+    expect(() => buildAll({ ...all, hints: { ...HINTS, "soldier/nope": ["a", "b"] } })).toThrow(/soldier\/nope/);
+  });
+
+  it("nie ma dwóch szablonów o tej samej nazwie po polsku ani po angielsku", () => {
+    const pl = Object.values(built.translation.entries).map((entry) => entry.name);
+    expect(new Set(pl).size).toBe(pl.length);
+    expect(byName("Slippery")).toBeTruthy();
+    expect(byName("Cunning")).toBeUndefined();
   });
 
   it("usuwa dopisek szablonu z imienia, także ze środka", () => {

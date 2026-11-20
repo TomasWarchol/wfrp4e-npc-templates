@@ -2,6 +2,7 @@
   "label": "Szablony NPC",
   "mapping": {
     "description": "system.description.value",
+    "gmdescription": "system.gmdescription.value",
     "pre": "system.alterName.pre",
     "post": "system.alterName.post"
   },
@@ -43,795 +44,983 @@
   "entries": {
     "Recruit (Tier II)": {
       "name": "Rekrut (Tier II)",
-      "description": "<p>Trzy tygodnie musztry i pożyczony hełm. Wie już, za który koniec trzymać włócznię.</p>"
+      "description": "<p>Trzy tygodnie musztry i pożyczony hełm. Wie już, za który koniec trzymać włócznię.</p>",
+      "gmdescription": "<p>Świeży żołnierz armii albo kompanii najemnej. Na oddziały; łącz z Tarczownikiem.</p>"
     },
     "Veteran (Tier III)": {
       "name": "Weteran (Tier III)",
-      "description": "<p>Przeżył tyle bitew, że przestał je liczyć, a blizny zastępują mu odznaczenia.</p>"
+      "description": "<p>Przeżył tyle bitew, że przestał je liczyć, a blizny zastępują mu odznaczenia.</p>",
+      "gmdescription": "<p>Doświadczony żołnierz, kręgosłup oddziału. Łącz ze Starym wygą albo Czempionem.</p>"
     },
     "Sergeant (Tier III)": {
       "name": "Sierżant (Tier III)",
       "description": "<p>Głos, którego wszyscy słuchają, gdy szereg zaczyna się chwiać. Budzi większy strach niż wróg.</p>",
+      "gmdescription": "<p>Prowadzi drużynę i trzyma ją w szyku. Jeden na oddział; łącz z Chorążym.</p>",
       "pre": "Sierżant"
     },
     "Captain (Tier IV)": {
       "name": "Kapitan (Tier IV)",
       "description": "<p>Dowodzi kompanią, stawia jej piwo i odpowiada za jej poległych.</p>",
+      "gmdescription": "<p>Oficer w pełnej płycie, który prowadzi kompanię. Z Bossem daje dowódcę na finałową bitwę.</p>",
       "pre": "Kapitan"
     },
     "Night Watchman (Tier I)": {
       "name": "Nocny stróż (Tier I)",
-      "description": "<p>Przemierza ulice z latarnią i pałką, marząc głównie o tym, by być gdzie indziej.</p>"
+      "description": "<p>Przemierza ulice z latarnią i pałką, marząc głównie o tym, by być gdzie indziej.</p>",
+      "gmdescription": "<p>Nocny patrol w mieście. Gdy drużyna łamie godzinę policyjną.</p>"
     },
     "Watchman (Tier II)": {
       "name": "Strażnik miejski (Tier II)",
-      "description": "<p>Zna każdą karczmę, każdego donosiciela i dokładną wysokość należnej łapówki.</p>"
+      "description": "<p>Zna każdą karczmę, każdego donosiciela i dokładną wysokość należnej łapówki.</p>",
+      "gmdescription": "<p>Strażnik miejski, który aresztuje, bierze łapówki i zna ulice. Po dwóch–trzech.</p>"
     },
     "Watch Sergeant (Tier III)": {
       "name": "Sierżant straży (Tier III)",
       "description": "<p>Utrzymuje spokój w dzielnicy, bo wie, kogo aresztować, a kogo najpierw ostrzec.</p>",
+      "gmdescription": "<p>Prowadzi patrol straży. Ktoś, z kim drużyna może się targować.</p>",
       "pre": "Sierżant"
     },
     "Watch Captain (Tier III)": {
       "name": "Kapitan straży (Tier III)",
       "description": "<p>Po części oficer, po części polityk. Każdy sędzia w mieście ma u niego dług albo się go boi.</p>",
+      "gmdescription": "<p>Szef straży w dzielnicy, po części polityk. Sojusznik albo przeszkoda w śledztwach.</p>",
       "pre": "Kapitan"
     },
     "Footpad (Tier I)": {
       "name": "Rabuś (Tier I)",
-      "description": "<p>Głodny, zdesperowany i czeka w rowie na kogoś, kto wygląda na słabszego.</p>"
+      "description": "<p>Głodny, zdesperowany i czeka w rowie na kogoś, kto wygląda na słabszego.</p>",
+      "gmdescription": "<p>Zdesperowany rabuś, który ucieka, gdy coś idzie źle. Do zasadzki na drodze.</p>"
     },
     "Bandit (Tier II)": {
       "name": "Bandyta (Tier II)",
-      "description": "<p>Członek bandy, która pobiera myto na gościńcu, w monecie albo we krwi.</p>"
+      "description": "<p>Członek bandy, która pobiera myto na gościńcu, w monecie albo we krwi.</p>",
+      "gmdescription": "<p>Członek bandy z łukiem. W grupach po cztery do ośmiu.</p>"
     },
     "Highwayman (Tier III)": {
       "name": "Rozbójnik (Tier III)",
-      "description": "<p>Efektowny, dobrze konny i sławny w karczmach, które sam okrada.</p>"
+      "description": "<p>Efektowny, dobrze konny i sławny w karczmach, które sam okrada.</p>",
+      "gmdescription": "<p>Konny, czarujący rozbójnik z pistoletem. Na zapamiętane spotkanie przy drodze.</p>"
     },
     "Bandit Chief (Tier IV)": {
-      "name": "Herszt (Tier IV)",
-      "description": "<p>Trzyma bandę w ryzach złotem, charyzmą i jednym publicznym przykładem na sezon.</p>"
+      "name": "Herszt bandy (Tier IV)",
+      "description": "<p>Trzyma bandę w ryzach złotem, charyzmą i jednym publicznym przykładem na sezon.</p>",
+      "gmdescription": "<p>Herszt bandy rozbójników. Z Hersztem albo Bossem na koniec polowania na bandę.</p>"
     },
     "Cult Initiate (Tier I)": {
       "name": "Adept kultu (Tier I)",
-      "description": "<p>Zwyczajny sąsiad z niebezpieczną tajemnicą i spotkaniem w każdy czwartek.</p>"
+      "description": "<p>Zwyczajny sąsiad z niebezpieczną tajemnicą i spotkaniem w każdy czwartek.</p>",
+      "gmdescription": "<p>Zwykły mieszczanin z sekretem. W większej liczbie przy rytuale.</p>"
     },
     "Cultist (Tier II)": {
       "name": "Kultysta (Tier II)",
-      "description": "<p>Widział już rytuał i pyta tylko, kiedy zostanie odprawiony ponownie.</p>"
+      "description": "<p>Widział już rytuał i pyta tylko, kiedy zostanie odprawiony ponownie.</p>",
+      "gmdescription": "<p>Oddany członek kultu. Łącz z Naznaczonym przez Chaos, Zaprzysiężonym krwi albo Pobłogosławionym zarazą.</p>"
     },
     "Cult Zealot (Tier III)": {
       "name": "Zelota kultu (Tier III)",
-      "description": "<p>Odwala krwawą robotę kultu z uśmiechem i śpiewem na ustach.</p>"
+      "description": "<p>Odwala krwawą robotę kultu z uśmiechem i śpiewem na ustach.</p>",
+      "gmdescription": "<p>Rozszalały egzekutor kultu. Łącz z Zaprzysiężonym krwi albo Fanatykiem.</p>"
     },
     "Cult Leader (Tier III)": {
       "name": "Przywódca kultu (Tier III)",
-      "description": "<p>Szanowany za dnia, czczony przy pochodniach. Nikt nie podejrzewa, póki nie jest za późno.</p>"
+      "description": "<p>Szanowany za dnia, czczony przy pochodniach. Nikt nie podejrzewa, póki nie jest za późno.</p>",
+      "gmdescription": "<p>Szanowany obywatel, który potajemnie prowadzi kult. Z Czarownikiem albo Mrocznym kapłanem na odkrycie prawdy.</p>"
     },
     "Trapper (Tier I)": {
       "name": "Traper (Tier I)",
-      "description": "<p>O świcie obchodzi te same leśne ścieżki i sprawdza każde sidła.</p>"
+      "description": "<p>O świcie obchodzi te same leśne ścieżki i sprawdza każde sidła.</p>",
+      "gmdescription": "<p>Leśny człowiek, który zastawia sidła. Przewodnik albo świadek w dziczy.</p>"
     },
     "Hunter (Tier II)": {
       "name": "Myśliwy (Tier II)",
-      "description": "<p>Cierpliwy strzelec, który ze złamanej gałązki odczyta wczorajszą pogodę.</p>"
+      "description": "<p>Cierpliwy strzelec, który ze złamanej gałązki odczyta wczorajszą pogodę.</p>",
+      "gmdescription": "<p>Zręczny łucznik z lasów. Z Czyhającym daje zasadzkę kłusowników.</p>"
     },
     "Road Warden (Tier III)": {
       "name": "Strażnik dróg (Tier III)",
-      "description": "<p>Samotny jeździec między samotnymi wsiami, gdzie pomoc jest o dwa dni drogi.</p>"
+      "description": "<p>Samotny jeździec między samotnymi wsiami, gdzie pomoc jest o dwa dni drogi.</p>",
+      "gmdescription": "<p>Konny patrol dróg z kuszą. Sojusznik albo podejrzliwy stróż prawa.</p>"
     },
     "Beast Slayer (Tier IV)": {
       "name": "Pogromca bestii (Tier IV)",
-      "description": "<p>Zbiera nagrody i kły. Wie dokładnie, gdzie skóra potwora jest najcieńsza.</p>"
+      "description": "<p>Zbiera nagrody i kły. Wie dokładnie, gdzie skóra potwora jest najcieńsza.</p>",
+      "gmdescription": "<p>Łowca potworów. Rywal, sojusznik albo najemnik przeciw Zgubie bohaterów.</p>"
     },
     "Deckhand (Tier I)": {
       "name": "Majtek (Tier I)",
-      "description": "<p>Ciągnie liny za grosze i śpiewa tak fatalnie, że płoszy rzeczne trolle.</p>"
+      "description": "<p>Ciągnie liny za grosze i śpiewa tak fatalnie, że płoszy rzeczne trolle.</p>",
+      "gmdescription": "<p>Załoga barki albo statku. W grupach do walki na pokładzie.</p>"
     },
     "Smuggler (Tier II)": {
       "name": "Przemytnik (Tier II)",
-      "description": "<p>Przewozi towar nocą i płaci dokładnie właściwemu celnikowi.</p>"
+      "description": "<p>Przewozi towar nocą i płaci dokładnie właściwemu celnikowi.</p>",
+      "gmdescription": "<p>Przewozi towar obok celników. Do intryg na rzece; łącz ze Skorumpowanym urzędnikiem.</p>"
     },
     "Reaver (Tier III)": {
       "name": "Łupieżca (Tier III)",
-      "description": "<p>Wchodzi na cudze statki i zostawia je lżejsze albo w płomieniach.</p>"
+      "description": "<p>Wchodzi na cudze statki i zostawia je lżejsze albo w płomieniach.</p>",
+      "gmdescription": "<p>Pirat abordażowy. W grupach; łącz z Zabijaką.</p>"
     },
     "Ship's Captain (Tier III)": {
       "name": "Szyper (Tier III)",
       "description": "<p>Zna każdą mieliznę i cenę każdego kapitana portu, a na pokładzie rządzi jak tyran.</p>",
+      "gmdescription": "<p>Kapitan statku. Pracodawca, rywal albo z Bossem kapitan piratów.</p>",
       "pre": "Kapitan"
     },
     "Scion (Tier I)": {
       "name": "Panicz (Tier I)",
-      "description": "<p>Młody, bogaty i przekonany, że świat urządzono dla jego rozrywki.</p>"
+      "description": "<p>Młody, bogaty i przekonany, że świat urządzono dla jego rozrywki.</p>",
+      "gmdescription": "<p>Młody szlachcic z pieniędzmi i bez rozsądku. Patron, rywal albo zakładnik.</p>"
     },
     "Courtier (Tier II)": {
       "name": "Dworzanin (Tier II)",
-      "description": "<p>Walczy szeptem, zaproszeniami i starannie wymierzonymi komplementami.</p>"
+      "description": "<p>Walczy szeptem, zaproszeniami i starannie wymierzonymi komplementami.</p>",
+      "gmdescription": "<p>Intrygant na dworze. Do przygód społecznych; łącz z Tkaczem intryg.</p>"
     },
     "Duellist (Tier III)": {
       "name": "Pojedynkowicz (Tier III)",
-      "description": "<p>Łatwo się obraża i zostawia eleganckie, bardzo małe dziury w tych, którzy to sprawili.</p>"
+      "description": "<p>Łatwo się obraża i zostawia eleganckie, bardzo małe dziury w tych, którzy to sprawili.</p>",
+      "gmdescription": "<p>Szlachcic, który zmywa zniewagi ostrzem. Na scenę pojedynku; łącz z Mistrzem fechtunku.</p>"
     },
     "Noble Lord (Tier III)": {
       "name": "Wielmoża (Tier III)",
       "description": "<p>Do niego należy ziemia, młyn i większość okolicznych sędziów.</p>",
+      "gmdescription": "<p>Miejscowy pan władający ziemią i prawem. Patron albo złoczyńca zza kulis.</p>",
       "pre": "Pan"
     },
     "Peddler (Tier I)": {
       "name": "Domokrążca (Tier I)",
-      "description": "<p>Wędruje od wsi do wsi ze wstążkami, plotkami i podejrzaną maścią.</p>"
+      "description": "<p>Wędruje od wsi do wsi ze wstążkami, plotkami i podejrzaną maścią.</p>",
+      "gmdescription": "<p>Wędrowny sprzedawca drobiazgów i plotek. Źródło pogłosek.</p>"
     },
     "Trader (Tier II)": {
       "name": "Handlarz (Tier II)",
-      "description": "<p>Liczy na liczydle, pamięta każdy dług i nigdy nie podaje najpierw prawdziwej ceny.</p>"
+      "description": "<p>Liczy na liczydle, pamięta każdy dług i nigdy nie podaje najpierw prawdziwej ceny.</p>",
+      "gmdescription": "<p>Sklepikarz albo handlarz, który się targuje. Do scen kupna i sprzedaży.</p>"
     },
     "Merchant (Tier II)": {
       "name": "Kupiec (Tier II)",
-      "description": "<p>Najmuje strażników, przekupuje poborców i ma o jeden magazyn za dużo.</p>"
+      "description": "<p>Najmuje strażników, przekupuje poborców i ma o jeden magazyn za dużo.</p>",
+      "gmdescription": "<p>Zamożny kupiec ze strażą. Patron albo cel; daj mu Ochroniarza.</p>"
     },
     "Guild Master (Tier II)": {
       "name": "Mistrz cechu (Tier II)",
       "description": "<p>Podpis złożony przy tym biurku otworzy bramy miasta albo zrujnuje rywala.</p>",
+      "gmdescription": "<p>Mistrz cechu z wpływami w mieście. Patron albo polityczna przeszkoda.</p>",
       "pre": "Mistrz"
     },
     "Urchin (Tier I)": {
       "name": "Ulicznik (Tier I)",
-      "description": "<p>Mały, szybki i niewidzialny dla każdego, kto powinien go zauważyć.</p>"
+      "description": "<p>Mały, szybki i niewidzialny dla każdego, kto powinien go zauważyć.</p>",
+      "gmdescription": "<p>Dziecko ulicy, które wszystko widzi. Donosiciel albo czujka kieszonkowca.</p>"
     },
     "Pickpocket (Tier II)": {
       "name": "Kieszonkowiec (Tier II)",
-      "description": "<p>Wpada na ciebie, serdecznie przeprasza i odchodzi z twoją sakiewką.</p>"
+      "description": "<p>Wpada na ciebie, serdecznie przeprasza i odchodzi z twoją sakiewką.</p>",
+      "gmdescription": "<p>Kradnie sakiewki w tłumie. Do scen na targu; łącz z Ulicznikiem.</p>"
     },
     "Burglar (Tier II)": {
       "name": "Włamywacz (Tier II)",
-      "description": "<p>Woli puste domy i ciche zamki. Ma wyrobione zdanie o zasuwach okiennych.</p>"
+      "description": "<p>Woli puste domy i ciche zamki. Ma wyrobione zdanie o zasuwach okiennych.</p>",
+      "gmdescription": "<p>Włamuje się nocą do domów. Do skoków, jako sojusznik albo rywal.</p>"
     },
     "Gang Boss (Tier III)": {
       "name": "Szef gangu (Tier III)",
-      "description": "<p>Rządzi dokami z zaplecza karczmy. Nikt nie pamięta głosowania.</p>"
+      "description": "<p>Rządzi dokami z zaplecza karczmy. Nikt nie pamięta głosowania.</p>",
+      "gmdescription": "<p>Rządzi gangiem z zaplecza. Ze Zabijakami jako strażą; dodaj Bossa na rozprawę.</p>"
     },
     "Herbalist (Tier I)": {
       "name": "Zielarz (Tier I)",
-      "description": "<p>Wie, który korzeń leczy, a który zabija, i jak niewielka to różnica w dawce.</p>"
+      "description": "<p>Wie, który korzeń leczy, a który zabija, i jak niewielka to różnica w dawce.</p>",
+      "gmdescription": "<p>Wiejska zielarka albo zielarz. Leczy drużynę albo zna miejscowe trucizny.</p>"
     },
     "Barber-Surgeon (Tier II)": {
       "name": "Cyrulik (Tier II)",
-      "description": "<p>W dni targowe goli, w pozostałe amputuje, tą samą brzytwą.</p>"
+      "description": "<p>W dni targowe goli, w pozostałe amputuje, tą samą brzytwą.</p>",
+      "gmdescription": "<p>Miejski cyrulik. Opatruje rany za opłatą.</p>"
     },
     "Physician (Tier II)": {
       "name": "Medyk (Tier II)",
-      "description": "<p>Wykształcony na uniwersytecie, drogi i tylko czasem śmiertelny.</p>"
+      "description": "<p>Wykształcony na uniwersytecie, drogi i tylko czasem śmiertelny.</p>",
+      "gmdescription": "<p>Wykształcony lekarz. Do zadżumionych miast i szlacheckich domów.</p>"
     },
     "Master Physician (Tier II)": {
       "name": "Doktor medycyny (Tier II)",
       "description": "<p>Wzywany do łoża hrabiów i pierwszy, którego się radzi, gdy nadchodzi zaraza.</p>",
+      "gmdescription": "<p>Słynny lekarz. Patron albo kluczowa postać w wątku zarazy.</p>",
       "pre": "Doktor"
     },
     "Wizard's Apprentice (Tier II)": {
       "name": "Uczeń maga (Tier II)",
-      "description": "<p>Nosi księgi, szoruje osmalenia i zdążył już przypalić obie brwi.</p>"
+      "description": "<p>Nosi księgi, szoruje osmalenia i zdążył już przypalić obie brwi.</p>",
+      "gmdescription": "<p>Uczeń maga z magią prostą. Zwykle w towarzystwie mistrza.</p>"
     },
     "Journeyman Wizard (Tier III)": {
       "name": "Czeladnik magii (Tier III)",
-      "description": "<p>Wreszcie z licencją, wysyłany tam, gdzie Kolegium samo nie chce się pojawiać.</p>"
+      "description": "<p>Wreszcie z licencją, wysyłany tam, gdzie Kolegium samo nie chce się pojawiać.</p>",
+      "gmdescription": "<p>Mag z licencją Kolegium, z wybraną tradycją. Sojusznik, rywal albo wynajęty ekspert.</p>"
     },
     "Wizard (Tier IV)": {
       "name": "Czarodziej (Tier IV)",
-      "description": "<p>Chłopi się go boją, kapłani podejrzewają, a rywale zazdroszczą.</p>"
+      "description": "<p>Chłopi się go boją, kapłani podejrzewają, a rywale zazdroszczą.</p>",
+      "gmdescription": "<p>Pełnoprawny mag Kolegium. Silny sojusznik albo złoczyńca-renegat; łącz z Ochroniarzem.</p>"
     },
     "Master Wizard (Tier IV)": {
       "name": "Mistrz magii (Tier IV)",
       "description": "<p>W obecności tej osoby rzeczywistość uprzejmie się ugina, a rada miejska tym bardziej.</p>",
+      "gmdescription": "<p>Magister wielkiej mocy. Patron albo z Bossem złoczyńca kampanii.</p>",
       "pre": "Magister"
     },
     "Novice (Tier I)": {
       "name": "Nowicjusz (Tier I)",
-      "description": "<p>Zamiata świątynię i uczy się litanii na pamięć, po setce naraz.</p>"
+      "description": "<p>Zamiata świątynię i uczy się litanii na pamięć, po setce naraz.</p>",
+      "gmdescription": "<p>Młody sługa świątyni. Tło do scen w świątyni.</p>"
     },
     "Priest (Tier II)": {
       "name": "Kapłan (Tier II)",
-      "description": "<p>Błogosławi plony, grzebie zmarłych i zna wszystkie sekrety parafii.</p>"
+      "description": "<p>Błogosławi plony, grzebie zmarłych i zna wszystkie sekrety parafii.</p>",
+      "gmdescription": "<p>Kapłan parafii z błogosławieństwami boga. Sojusznik, spowiednik albo źródło plotek.</p>"
     },
     "Warrior Priest (Tier IV)": {
       "name": "Kapłan wojownik (Tier IV)",
-      "description": "<p>Naucza z otwartą księgą w jednej ręce i rozłupaną czaszką w drugiej.</p>"
+      "description": "<p>Naucza z otwartą księgą w jednej ręce i rozłupaną czaszką w drugiej.</p>",
+      "gmdescription": "<p>Kapłan walczący w pierwszym szeregu z cudami. Silny sojusznik przeciw Chaosowi albo umarłym.</p>"
     },
     "High Priest (Tier IV)": {
       "name": "Arcykapłan (Tier IV)",
       "description": "<p>Zarządza wielką świątynią, jej skarbcem i sporą częścią jej wrogów.</p>",
+      "gmdescription": "<p>Zwierzchnik wielkiej świątyni. Patron, sędzia albo siła polityczna.</p>",
       "pre": "Czcigodny"
     },
     "Chieftain (Tier II)": {
       "name": "Herszt (Tier II)",
       "description": "<p>Pozostali najpierw patrzą na niego, a potem zawsze za nim idą.</p>",
+      "gmdescription": "<p>Przywódca małej bandy dowolnej rasy. Dodaj Elitę albo Bossa, gdy ma też najlepiej walczyć.</p>",
       "post": "(Herszt)"
     },
     "Warlord (Tier IV)": {
       "name": "Wódz (Tier IV)",
       "description": "<p>Cała armia złych pomysłów, a wszystkie działają.</p>",
+      "gmdescription": "<p>Przywódca armii albo dużej bandy, sam groźny w walce. Jeden na bitwę. Łącz z Bossem albo Znamieniem na finałowe starcie.</p>",
       "post": "(Wódz)"
     },
     "Standard Bearer (Tier II)": {
       "name": "Chorąży (Tier II)",
       "description": "<p>Póki sztandar stoi, nikomu innemu nie wolno uciekać.</p>",
+      "gmdescription": "<p>Trzyma oddział w kupie i nie pozwala mu uciec. Łącz ze Starym wygą albo Tarczownikiem.</p>",
       "post": "(Chorąży)"
     },
     "Drummer (Tier I)": {
       "name": "Dobosz (Tier I)",
       "description": "<p>Trzyma tempo, nerwy i zwykle rytm.</p>",
+      "gmdescription": "<p>Muzyk oddziału albo bandy; wspiera, nie walczy. Jeden na większą grupę.</p>",
       "post": "(Dobosz)"
     },
     "Agitator (Tier I)": {
       "name": "Podżegacz (Tier I)",
       "description": "<p>Sam nie walczy. Tłumaczy, dlaczego ty powinieneś.</p>",
+      "gmdescription": "<p>Mąciciel, demagog albo głos kultu w scenie społecznej. Łącz z Przywódcą kultu albo Prorokiem.</p>",
       "post": "(Podżegacz)"
     },
     "Tactician (Tier II)": {
       "name": "Taktyk (Tier II)",
       "description": "<p>Już zdecydował, gdzie będziesz stać, gdy to się skończy.</p>",
+      "gmdescription": "<p>Mózg zasadzki albo oblężenia, zwykle z dala od walki wręcz. Łącz ze Śliskim albo Tkaczem intryg.</p>",
       "post": "(Taktyk)"
     },
     "Shaman (Tier III)": {
       "name": "Szaman (Tier III)",
       "description": "<p>Stare kości, smród i duchy, które odpowiadają.</p>",
+      "gmdescription": "<p>Plemienny czarownik ze stałymi czarami natury: gobliny, zwierzoludzie, dzicy ludzie. Z Hersztem daje szamana-wodza.</p>",
       "post": "(Szaman)"
     },
     "Sorcerer (Tier IV)": {
       "name": "Czarownik (Tier IV)",
       "description": "<p>Szepcze w języku, który boli, a powietrze słucha.</p>",
+      "gmdescription": "<p>Czarownik dowolnej tradycji z czarami w kompendiach, wybieranej przy nakładaniu. Ze Znamieniem daje czarownika Chaosu.</p>",
       "post": "(Czarownik)"
     },
     "Acolyte (Tier II)": {
       "name": "Akolita (Tier II)",
       "description": "<p>Zna trzy słowa mocy, z czego dwa wymawia źle.</p>",
+      "gmdescription": "<p>Uczeń guślarza albo kultu z kilkoma drobnymi czarami. Łącz z Adeptem kultu albo Kultystą.</p>",
       "post": "(Akolita)"
     },
     "Necromancer (Tier III)": {
       "name": "Nekromanta (Tier III)",
       "description": "<p>Nie pozwala swoim sługom przestać pracować, nawet po śmierci.</p>",
+      "gmdescription": "<p>Ożywia i prowadzi umarłych; stałe czary Nekromancji. Otocz Ożywionymi sługami, dodaj Bossa dla głównego złoczyńcy.</p>",
       "post": "(Nekromanta)"
     },
     "Dark Priest (Tier III)": {
       "name": "Mroczny kapłan (Tier III)",
       "description": "<p>Głosi ewangelię, w której jest o wiele za dużo zębów.</p>",
+      "gmdescription": "<p>Kapłan demonicznego kultu, który przyzwie pomniejszego demona. Łącz z Przywódcą kultu albo Znamieniem.</p>",
       "post": "(Mroczny kapłan)"
     },
     "Prophet (Tier II)": {
       "name": "Prorok (Tier II)",
       "description": "<p>Dokładnie wie, jak skończy się świat i kto jest temu winien.</p>",
+      "gmdescription": "<p>Kaznodzieja ze stałymi błogosławieństwami, który porywa tłum. Dobry do biczowników i motłochu; łącz z Fanatykiem.</p>",
       "post": "(Prorok)"
     },
     "Thug (Tier III)": {
       "name": "Osiłek (Tier III)",
       "description": "<p>Rozwiązuje problemy, napierając na nie, aż przestaną.</p>",
+      "gmdescription": "<p>Silny osiłek, który mocno bije i mało myśli. Z Brutalnym albo Silnym daje ciężkiego zabijakę.</p>",
       "post": "(Osiłek)"
     },
     "Shield Bearer (Tier II)": {
       "name": "Tarczownik (Tier II)",
       "description": "<p>Wyszkolony, by trzymać szereg i osłaniać bok sąsiada.</p>",
+      "gmdescription": "<p>Piechota liniowa, która trzyma pozycję. Na całe oddziały; łącz z Rekrutem albo Starym wygą.</p>",
       "post": "(Tarczownik)"
     },
     "Berserker (Tier III)": {
       "name": "Berserker (Tier III)",
       "description": "<p>Przestaje myśleć przy pierwszej krwi, a czuć zaraz potem.</p>",
+      "gmdescription": "<p>Szaleniec walki wręcz, którego nic nie zatrzyma. Łącz z Fanatykiem, Zaprzysiężonym krwi albo Znamieniem Boga Krwi.</p>",
       "post": "(Berserker)"
     },
     "Champion (Tier III)": {
       "name": "Czempion (Tier III)",
       "description": "<p>Walczy za honor swojego rodzaju i jeszcze nie przegrał.</p>",
+      "gmdescription": "<p>Najlepszy wojownik grupy, który kontratakuje przy parowaniu. Jeden na grupę; łącz z Elitą albo Bossem.</p>",
       "post": "(Czempion)"
     },
     "Bodyguard (Tier II)": {
       "name": "Ochroniarz (Tier II)",
       "description": "<p>Patrzy na ręce i wyjścia. Rozmowa rzadko go interesuje.</p>",
+      "gmdescription": "<p>Chroni przywódcę albo maga i osłania go w walce. Stawiaj obok Wodza albo Czarownika.</p>",
       "post": "(Ochroniarz)"
     },
     "Duelling Master (Tier III)": {
       "name": "Mistrz fechtunku (Tier III)",
       "description": "<p>Uczy sztuki za pieniądze, a ćwiczy ją bez ostrzeżenia i za darmo.</p>",
+      "gmdescription": "<p>Mistrz szermierki do pojedynku albo wytwornego złoczyńcy. Łącz z Pojedynkowiczem albo Wielmożą.</p>",
       "post": "(Mistrz fechtunku)"
     },
     "Brawler (Tier II)": {
       "name": "Zabijaka (Tier II)",
       "description": "<p>Walczyć uczył się w zaułkach, gdzie pierwsza zasada mówi, że zasad nie ma.</p>",
+      "gmdescription": "<p>Uliczny zabijaka do karczemnych bójek i gangów. Łącz z Szefem gangu albo Ulicznikiem.</p>",
       "post": "(Zabijaka)"
     },
     "Sharpshooter (Tier III)": {
       "name": "Strzelec (Tier III)",
       "description": "<p>Wstrzymuje oddech, liczy uderzenie serca i kończy spór z daleka.</p>",
+      "gmdescription": "<p>Strzelec, który zabija z ukrycia. Daj łuk albo kuszę; łącz z Czyhającym albo Zwiadowcą.</p>",
       "post": "(Strzelec)"
     },
     "Skirmisher (Tier II)": {
       "name": "Harcownik (Tier II)",
       "description": "<p>Uderza ze skraju walki i znika, zanim padnie odpowiedź.</p>",
+      "gmdescription": "<p>Ruchliwy harcownik, który nęka i ucieka. Dobry do lekkiej jazdy i jeźdźców wilków; łącz z Szybkim.</p>",
       "post": "(Harcownik)"
     },
     "Assassin (Tier III)": {
       "name": "Zabójca (Tier III)",
       "description": "<p>Przyjmuje zlecenie, nie zostawia świadków i wystawia rachunek przez pośrednika.</p>",
+      "gmdescription": "<p>Zabójca uderzający z cienia w mieście. Łącz ze Szpiegiem, Poszukiwanym albo stopniami Półświatka.</p>",
       "post": "(Zabójca)"
     },
     "Scout (Tier II)": {
       "name": "Zwiadowca (Tier II)",
       "description": "<p>Zobaczył cię godzinę temu i zdążył już powiedzieć pozostałym.</p>",
+      "gmdescription": "<p>Czujka, która pierwsza wypatrzy drużynę i ostrzeże resztę. Łącz z Czyhającym albo Tropicielem.</p>",
       "post": "(Zwiadowca)"
     },
     "Pathfinder (Tier I)": {
       "name": "Tropiciel (Tier I)",
       "description": "<p>Trzy dni za tobą i wciąż skraca dystans.</p>",
+      "gmdescription": "<p>Tropiciel idący po śladach drużyny przez dzicz. Z Ludojadem albo Szczytowym drapieżnikiem daje polowanie.</p>",
       "post": "(Tropiciel)"
     },
     "Healer (Tier I)": {
       "name": "Znachor (Tier I)",
       "description": "<p>Trzyma pozostałych na nogach i później każe sobie za to płacić.</p>",
+      "gmdescription": "<p>Polowy medyk, który trzyma innych na nogach. Jeden w większej grupie przedłuża walkę.</p>",
       "post": "(Znachor)"
     },
     "Poisoner (Tier II)": {
       "name": "Truciciel (Tier II)",
       "description": "<p>Każde ostrze jest mokre, a nikt tu nie pije bez patrzenia.</p>",
+      "gmdescription": "<p>Truciciel z zatrutymi ostrzami; daje Jad. Łącz z Zabójcą albo Przywódcą kultu.</p>",
       "post": "(Truciciel)"
     },
     "Saboteur (Tier I)": {
       "name": "Sabotażysta (Tier I)",
       "description": "<p>Wczoraj most był w porządku. Tamten poprzedni też.</p>",
+      "gmdescription": "<p>Zastawia pułapki i niszczy mosty, wozy albo bramy przed walką. Łącz ze Zwiadowcą albo Przemytnikiem.</p>",
       "post": "(Sabotażysta)"
     },
     "Beastmaster (Tier I)": {
       "name": "Poganiacz bestii (Tier I)",
       "description": "<p>Trzyma łańcuch, a to, co jest na jego końcu, jest bardzo głodne.</p>",
+      "gmdescription": "<p>Prowadzi bestie bojowe albo psy. Stawiaj obok bestii ze Wściekłym albo Terytorialnym.</p>",
       "post": "(Poganiacz bestii)"
     },
     "Rider (Tier II)": {
       "name": "Jeździec (Tier II)",
-      "description": "<p>Połowa szarży to koń, a druga połowa to odwaga.</p>",
+      "description": "<p>Połowa szarży to wierzchowiec, a druga połowa to odwaga.</p>",
+      "gmdescription": "<p>Wojownik konny. Umiejętność to Jeździectwo (Koń); dla wilków albo dzików zmień rodzaj wierzchowca.</p>",
       "post": "(Jeździec)"
     },
     "Torturer (Tier II)": {
       "name": "Oprawca (Tier II)",
       "description": "<p>Nigdy nie podnosi głosu. Nigdy nie musi.</p>",
+      "gmdescription": "<p>Śledczy z lochów, piwnic kultu i gróźb w scenach społecznych. Łącz z Zelotą kultu albo Strażnikiem miejskim.</p>",
       "post": "(Oprawca)"
     },
     "Cannon Fodder (Tier I)": {
       "name": "Mięso armatnie (Tier I)",
-      "description": "<p>Jest ich więcej tam, skąd przyszedł, i nikt ich nie liczy.</p>"
+      "description": "<p>Jest ich więcej tam, skąd przyszedł, i nikt ich nie liczy.</p>",
+      "gmdescription": "<p>Słaby statysta, który szybko pada. Na tłumy, przez które drużyna ma się przebić.</p>"
     },
     "Grizzled (Tier II)": {
-      "name": "Weteran (Tier II)",
-      "description": "<p>Wolniejszy niż dawniej, ale nie sposób go zaskoczyć.</p>"
+      "name": "Stary wyga (Tier II)",
+      "description": "<p>Wolniejszy niż dawniej, ale nie sposób go zaskoczyć.</p>",
+      "gmdescription": "<p>Doświadczony wyga, trudny do zaskoczenia. Jeden w grupie Mięsa armatniego albo Rekrutów.</p>"
     },
     "Elite (Tier III)": {
       "name": "Elita (Tier III)",
-      "description": "<p>Najlepszy w oddziale i doskonale zdaje sobie z tego sprawę.</p>"
+      "description": "<p>Najlepszy w oddziale i doskonale zdaje sobie z tego sprawę.</p>",
+      "gmdescription": "<p>Najlepszy w oddziale. Jeden na grupę wyraźnie podnosi zagrożenie; łącz z Czempionem.</p>"
     },
     "Boss (Tier IV)": {
       "name": "Boss (Tier IV)",
-      "description": "<p>Wszystko inne w tej komnacie tylko stało na drodze.</p>"
+      "description": "<p>Wszystko inne w tej komnacie tylko stało na drodze.</p>",
+      "gmdescription": "<p>Główny przeciwnik sceny, który przetrwa długą walkę. Łącz z rolą: Wódz, Czarownik, Nekromanta.</p>"
     },
     "Legendary (Tier V)": {
       "name": "Legenda (Tier V)",
-      "description": "<p>Bardowie spierają się o szczegóły. Ocaleni nie spierają się o nic.</p>"
+      "description": "<p>Bardowie spierają się o szczegóły. Ocaleni nie spierają się o nic.</p>",
+      "gmdescription": "<p>Przeciwnik na miarę opowieści dla doświadczonej drużyny. Zwykle sam albo z Elitą jako strażą.</p>"
     },
     "Apex Predator (Tier IV)": {
       "name": "Szczytowy drapieżnik (Tier IV)",
-      "description": "<p>Nic w tej okolicy na niego nie poluje. Nic, co przeżyło.</p>"
+      "description": "<p>Nic w tej okolicy na niego nie poluje. Nic, co przeżyło.</p>",
+      "gmdescription": "<p>Potwór, który poluje na drużynę przez całą sesję. Łącz z Czyhającym albo Skrzydlatym.</p>"
     },
     "Nemesis (Tier V)": {
       "name": "Nemezis (Tier V)",
-      "description": "<p>Pamięta drużynę i przez cały ten czas się przygotowywał.</p>"
+      "description": "<p>Pamięta drużynę i przez cały ten czas się przygotowywał.</p>",
+      "gmdescription": "<p>Powracający złoczyńca, który przygotował się na drużynę i ucieknie, by wrócić. Dodaj Bossa i rolę.</p>"
     },
     "Unkillable (Tier V)": {
       "name": "Nie do zabicia (Tier V)",
-      "description": "<p>Mówili, że zginął przy moście. Mówili też, że zginął w zeszłym tygodniu.</p>"
+      "description": "<p>Mówili, że zginął przy moście. Mówili też, że zginął w zeszłym tygodniu.</p>",
+      "gmdescription": "<p>Przeciwnik do pokonania planem, nie samymi obrażeniami. Daj drużynie ogień albo magię.</p>"
     },
     "Scourge of the Province (Tier V)": {
       "name": "Plaga prowincji (Tier V)",
-      "description": "<p>Na samą plotkę o nim ludzie porzucają wsie.</p>"
+      "description": "<p>Na samą plotkę o nim ludzie porzucają wsie.</p>",
+      "gmdescription": "<p>Ogromny potwór, który pustoszy okolicę. Najlepiej sam, na całą przygodę.</p>"
     },
     "Bane of Wizards (Tier IV)": {
       "name": "Zmora magów (Tier IV)",
-      "description": "<p>Poluje na tych, od których czuć Wiatry, i właśnie ich zwietrzył.</p>"
+      "description": "<p>Poluje na tych, od których czuć Wiatry, i właśnie ich zwietrzył.</p>",
+      "gmdescription": "<p>Odpowiedź na drużyny polegające na magii. Używaj oszczędnie; wyłącza maga.</p>"
     },
     "Doom Incarnate (Tier V)": {
       "name": "Wcielona zagłada (Tier V)",
-      "description": "<p>Dla stołu, który przestał się bać. Kończy kampanie.</p>"
+      "description": "<p>Tam, gdzie przejdzie, mapy trzeba rysować od nowa.</p>",
+      "gmdescription": "<p>Dla stołu, który przestał się bać walk; może zakończyć kampanię. Tylko z ostrzeżeniem.</p>"
     },
     "Mighty (Tier II)": {
       "name": "Silny (Tier II)",
-      "description": "<p>Każdy cios spada jak walący się strop.</p>"
+      "description": "<p>Każdy cios spada jak walący się strop.</p>",
+      "gmdescription": "<p>Bije dużo mocniej. Do osiłków, ogrów i dużych bestii; łącz z Osiłkiem.</p>"
     },
     "Hulking (Tier II)": {
       "name": "Olbrzymi (Tier II)",
-      "description": "<p>O wiele większy, niż powinien być ktokolwiek z jego gatunku.</p>"
+      "description": "<p>O wiele większy, niż powinien być ktokolwiek z jego gatunku.</p>",
+      "gmdescription": "<p>Większy i twardszy niż jego gatunek. Tani sposób na zastępcę ze zwykłego stworzenia.</p>"
     },
     "Brutish (Tier II)": {
       "name": "Brutalny (Tier II)",
-      "description": "<p>Powolny, ciężki i bardzo trudno się z nim spierać.</p>"
+      "description": "<p>Powolny, ciężki i bardzo trudno się z nim spierać.</p>",
+      "gmdescription": "<p>Silny i twardy, ale powolny. Do osiłków; pomiń przy zwinnych przeciwnikach.</p>"
     },
     "Swift (Tier II)": {
       "name": "Szybki (Tier II)",
-      "description": "<p>Przebiega komnatę, zanim krzyk zdąży ucichnąć.</p>"
+      "description": "<p>Przebiega komnatę, zanim krzyk zdąży ucichnąć.</p>",
+      "gmdescription": "<p>Szybko dobiega do drużyny. Do wilków, najeźdźców i harcowników.</p>"
     },
     "Hardened (Tier II)": {
       "name": "Zahartowany (Tier II)",
-      "description": "<p>Otrząsał się już po gorszych od ciebie, i to niedawno.</p>"
+      "description": "<p>Otrząsał się już po gorszych od ciebie, i to niedawno.</p>",
+      "gmdescription": "<p>Wytrzymuje więcej, nie zmieniając sposobu walki. Do twardych żołnierzy i bestii.</p>"
     },
     "Ancient (Tier IV)": {
       "name": "Prastary (Tier IV)",
-      "description": "<p>Starszy niż najbliższe miasto i dużo trudniej go spalić.</p>"
+      "description": "<p>Starszy niż najbliższe miasto i dużo trudniej go spalić.</p>",
+      "gmdescription": "<p>Stara, potężna istota. Budzi strach; łącz z Panem Kurhanu albo Zgubą bohaterów.</p>"
     },
     "Venomous (Tier II)": {
       "name": "Jadowity (Tier II)",
-      "description": "<p>Wystarczy zadrapanie, a o zadrapanie mu chodzi.</p>"
+      "description": "<p>Wystarczy zadrapanie, a o zadrapanie mu chodzi.</p>",
+      "gmdescription": "<p>Zatruwa każdą raną. Do pająków, węży i ostrzy skavenów.</p>"
     },
     "Thick-Hided (Tier II)": {
       "name": "Gruboskóry (Tier II)",
-      "description": "<p>Strzały wbijają się w skórę i niewiele więcej.</p>"
+      "description": "<p>Strzały wbijają się w skórę i niewiele więcej.</p>",
+      "gmdescription": "<p>Naturalny pancerz. Do bestii i potworów bez noszonego pancerza.</p>"
     },
     "Iron-Hided (Tier III)": {
       "name": "Żelaznoskóry (Tier III)",
-      "description": "<p>Płyty z kości i łusek, które odbijają dobrą stal.</p>"
+      "description": "<p>Płyty z kości i łusek, które odbijają dobrą stal.</p>",
+      "gmdescription": "<p>Ciężki naturalny pancerz, który zatrzymuje większość ciosów. Do smoków i dużych potworów; lekko spowalnia.</p>"
     },
     "Horned (Tier I)": {
       "name": "Rogaty (Tier I)",
-      "description": "<p>Opuszcza łeb i to jedyne ostrzeżenie, jakie dostaniesz.</p>"
+      "description": "<p>Opuszcza łeb i to jedyne ostrzeżenie, jakie dostaniesz.</p>",
+      "gmdescription": "<p>Dodatkowy atak rogami. Do zwierzoludzi, byków i kozich potworów.</p>"
     },
     "Lashing Tail (Tier II)": {
       "name": "Biczujący ogon (Tier II)",
-      "description": "<p>Ten, kto stoi za nim, wcale nie jest tak bezpieczny, jak myślał.</p>"
+      "description": "<p>Ten, kto stoi za nim, wcale nie jest tak bezpieczny, jak myślał.</p>",
+      "gmdescription": "<p>Dodatkowy atak ogonem na tych z tyłu. Do jaszczurów, smoków i skavenów.</p>"
     },
     "Winged (Tier II)": {
       "name": "Skrzydlaty (Tier II)",
-      "description": "<p>Cień przelatuje nad głową chwilę przed szponami.</p>"
+      "description": "<p>Cień przelatuje nad głową chwilę przed szponami.</p>",
+      "gmdescription": "<p>Lot. Do harpii, nietoperzy i smoków; walka przenosi się w powietrze.</p>"
     },
     "Wall-Crawler (Tier I)": {
       "name": "Pełzacz po ścianach (Tier I)",
-      "description": "<p>Sprawdź sufit. Potem sprawdź go jeszcze raz.</p>"
+      "description": "<p>Sprawdź sufit. Potem sprawdź go jeszcze raz.</p>",
+      "gmdescription": "<p>Chodzi po ścianach i suficie. Do pająków i jaskiniowych potworności; dobre do zasadzek z góry.</p>"
     },
     "Sly (Tier I)": {
       "name": "Przebiegły (Tier I)",
-      "description": "<p>Tę zasadzkę przygotował specjalnie dla ciebie.</p>"
+      "description": "<p>Tę zasadzkę przygotował specjalnie dla ciebie.</p>",
+      "gmdescription": "<p>Sprytna istota, która zastawia zasadzki. Do wilków, goblinów i myślących bestii.</p>"
     },
-    "Cunning (Tier I)": {
-      "name": "Spryciarz (Tier I)",
-      "description": "<p>Zawsze ma drugie wyjście i kogoś innego do obwinienia.</p>"
+    "Slippery (Tier I)": {
+      "name": "Śliski (Tier I)",
+      "description": "<p>Zawsze ma drugie wyjście i kogoś innego do obwinienia.</p>",
+      "gmdescription": "<p>Śliski intrygant, który ucieka, gdy coś idzie źle. Do donosicieli, pasarów i drobnych złoczyńców.</p>"
     },
     "Fanatic (Tier II)": {
       "name": "Fanatyk (Tier II)",
-      "description": "<p>Wierzy bez reszty w coś, o co pożałujesz, że zapytałeś.</p>"
+      "description": "<p>Wierzy bez reszty w coś, o co pożałujesz, że zapytałeś.</p>",
+      "gmdescription": "<p>Wierzący bez reszty, który się nie złamie. Do kultystów, biczowników i zelotów.</p>"
     },
     "Rabid (Tier II)": {
       "name": "Wściekły (Tier II)",
-      "description": "<p>Piana na pysku i zero chęci, by przestać.</p>"
+      "description": "<p>Piana na pysku i zero chęci, by przestać.</p>",
+      "gmdescription": "<p>Chora, rozszalała bestia. Do wściekłych psów, szczurów i stworów zarazy.</p>"
     },
     "Lurker (Tier I)": {
       "name": "Czyhający (Tier I)",
-      "description": "<p>Czeka bez ruchu tak długo, jak trzeba.</p>"
+      "description": "<p>Czeka bez ruchu tak długo, jak trzeba.</p>",
+      "gmdescription": "<p>Czeka w ukryciu i uderza pierwszy. Do drapieżników z zasadzki; łącz ze Strzelcem albo Szczytowym drapieżnikiem.</p>"
     },
     "Marsh-Dweller (Tier I)": {
       "name": "Bagienny (Tier I)",
-      "description": "<p>Błoto spowalnia ciebie. Jemu tylko dodaje wygody.</p>"
+      "description": "<p>Błoto spowalnia ciebie. Jemu tylko dodaje wygody.</p>",
+      "gmdescription": "<p>Jak u siebie w bagnach i wodzie. Do spotkań nad rzeką i na moczarach.</p>"
     },
     "Man-Eater (Tier I)": {
       "name": "Ludojad (Tier I)",
-      "description": "<p>Nabrał smaku i wraca na tę samą drogę.</p>"
+      "description": "<p>Nabrał smaku i wraca na tę samą drogę.</p>",
+      "gmdescription": "<p>Bestia, która celowo poluje na ludzi. Na potwora nękającego wieś; łącz z Tropicielem.</p>"
     },
     "Territorial (Tier I)": {
       "name": "Terytorialny (Tier I)",
-      "description": "<p>Przekroczyłeś granicę, której nie widziałeś.</p>"
+      "description": "<p>Przekroczyłeś granicę, której nie widziałeś.</p>",
+      "gmdescription": "<p>Zaciekle broni swojego terenu. Do legowisk i strażników; nie goni daleko.</p>"
     },
     "Fire-Breather (Tier III)": {
       "name": "Ziejący ogniem (Tier III)",
-      "description": "<p>Głęboki wdech to znak, że trzeba uciekać.</p>"
+      "description": "<p>Głęboki wdech to znak, że trzeba uciekać.</p>",
+      "gmdescription": "<p>Ognisty oddech. Do smoków i ognistych bestii; pali całą grupę, więc uważaj na liczebność drużyny.</p>"
     },
     "Frost-Breather (Tier III)": {
       "name": "Ziejący mrozem (Tier III)",
-      "description": "<p>Zostawia posągi z tego, co przed nim stało.</p>"
+      "description": "<p>Zostawia posągi z tego, co przed nim stało.</p>",
+      "gmdescription": "<p>Mroźny oddech. Do lodowych smoków i potworów z północy.</p>"
     },
     "Poison-Breather (Tier III)": {
       "name": "Ziejący trucizną (Tier III)",
-      "description": "<p>Zielona mgła toczy się naprzód, a ptaki milkną.</p>"
+      "description": "<p>Zielona mgła toczy się naprzód, a ptaki milkną.</p>",
+      "gmdescription": "<p>Trujący oddech. Do stworów Nurgla, bagiennych potworów i broni skavenów.</p>"
     },
     "Storm-Breather (Tier III)": {
       "name": "Ziejący burzą (Tier III)",
-      "description": "<p>Powietrze smakuje miedzią na sekundę przed uderzeniem.</p>"
+      "description": "<p>Powietrze smakuje miedzią na sekundę przed uderzeniem.</p>",
+      "gmdescription": "<p>Oddech błyskawic. Do burzowych bestii i istot Azyru.</p>"
     },
     "Aethyric Ward (Tier II)": {
       "name": "Eteryczna osłona (Tier II)",
-      "description": "<p>Ciosy odbijają się od niczego, migocząc po drodze.</p>"
+      "description": "<p>Ciosy odbijają się od niczego, migocząc po drodze.</p>",
+      "gmdescription": "<p>Magiczna osłona, która odbija część ciosów. Do strażników magów i zaczarowanych istot.</p>"
     },
     "Spell-Eater (Tier II)": {
       "name": "Pożeracz czarów (Tier II)",
-      "description": "<p>Czary rozpadają się przy nim, a magowi leci krew z nosa.</p>"
+      "description": "<p>Czary rozpadają się przy nim, a magowi leci krew z nosa.</p>",
+      "gmdescription": "<p>Dobrze opiera się magii. Do sprzymierzeńców łowców czarownic i bestii przeciw magii.</p>"
     },
     "Stone-Gazer (Tier III)": {
       "name": "Spojrzenie Kamienia (Tier III)",
-      "description": "<p>Ogród był pełen bardzo realistycznych posągów.</p>"
+      "description": "<p>Ogród był pełen bardzo realistycznych posągów.</p>",
+      "gmdescription": "<p>Zamienia cele w kamień spojrzeniem. Do bazyliszków i meduz; łącz z Czyhającym.</p>"
     },
     "Chaos-Marked (Tier II)": {
       "name": "Naznaczony przez Chaos (Tier II)",
-      "description": "<p>Coś zza zasłony zauważyło to stworzenie i wprowadziło drobną poprawkę.</p>"
+      "description": "<p>Coś zza zasłony zauważyło to stworzenie i wprowadziło drobną poprawkę.</p>",
+      "gmdescription": "<p>Lekko zmutowany sługa Chaosu. Na kultystów i zwierzoludzi; daje Skażenie.</p>"
     },
     "Mark of the Blood God (Tier IV)": {
       "name": "Znamię Boga Krwi (Tier IV)",
-      "description": "<p>Nie zatrzyma się, póki ktokolwiek stoi, wliczając jego samego.</p>"
+      "description": "<p>Nie zatrzyma się, póki ktokolwiek stoi, wliczając jego samego.</p>",
+      "gmdescription": "<p>Wybraniec Boga Krwi: rozszalały zabójca. Łącz z Berserkerem albo Czempionem, nie z magami.</p>"
     },
     "Mark of Decay (Tier IV)": {
       "name": "Znamię Rozkładu (Tier IV)",
-      "description": "<p>Rozdęty, cierpliwy i niemożliwy do porządnego zabicia.</p>"
+      "description": "<p>Rozdęty, cierpliwy i niemożliwy do porządnego zabicia.</p>",
+      "gmdescription": "<p>Wybraniec Boga Zarazy: trudny do zabicia, roznosi choroby. Łącz z Pobłogosławionym zarazą albo Bossem.</p>"
     },
     "Mark of Excess (Tier III)": {
       "name": "Znamię Rozkoszy (Tier III)",
-      "description": "<p>Na przemian piękny i odrażający, a oderwać od niego wzrok bardzo trudno.</p>"
+      "description": "<p>Na przemian piękny i odrażający, a oderwać od niego wzrok bardzo trudno.</p>",
+      "gmdescription": "<p>Wybraniec Mrocznego Księcia: szybki, uwodzicielski i rozpraszający. Łącz z Mistrzem fechtunku albo Rozpustnikiem.</p>"
     },
     "Mark of Change (Tier III)": {
       "name": "Znamię Przemiany (Tier III)",
-      "description": "<p>Jego kształt to raczej propozycja, a powietrze wokół wibruje.</p>"
+      "description": "<p>Jego kształt to raczej propozycja, a powietrze wokół wibruje.</p>",
+      "gmdescription": "<p>Wybraniec Zmieniającego Drogi: magia i mutacje. Z Czarownikiem daje czarownika Chaosu.</p>"
     },
     "Warpstone-Gorged (Tier II)": {
       "name": "Obżarty spaczeniem (Tier II)",
-      "description": "<p>Lekko świeci. Nie powinien był przeżyć tego posiłku.</p>"
+      "description": "<p>Lekko świeci. Nie powinien był przeżyć tego posiłku.</p>",
+      "gmdescription": "<p>Stwór oszalały od spaczenia: silny, zmutowany, mocno skażony. Do eksperymentów skavenów i bestii.</p>"
     },
     "Spawn-Flesh (Tier III)": {
       "name": "Ciało pomiotu (Tier III)",
-      "description": "<p>Rany się zamykają, a potem otwierają gdzie indziej, z zębami.</p>"
+      "description": "<p>Rany się zamykają, a potem otwierają gdzie indziej, z zębami.</p>",
+      "gmdescription": "<p>Bezmyślne, regenerujące się ciało. Do pomiotów Chaosu i nieudanych eksperymentów.</p>"
     },
     "Daemon-Possessed (Tier IV)": {
       "name": "Opętany przez demona (Tier IV)",
-      "description": "<p>Oczy należą do kogoś innego i uważają cię za zabawnego.</p>"
+      "description": "<p>Oczy należą do kogoś innego i uważają cię za zabawnego.</p>",
+      "gmdescription": "<p>Nosiciel demona: twardy, przerażający, magiczny. Szczyt wątku kultu; łącz z Bossem.</p>"
     },
     "Tainted (Tier II)": {
       "name": "Spaczony (Tier II)",
-      "description": "<p>Coś jest z nim nie tak, choć trudno powiedzieć co. Konie nie chcą podejść.</p>"
+      "description": "<p>Coś jest z nim nie tak, choć trudno powiedzieć co. Konie nie chcą podejść.</p>",
+      "gmdescription": "<p>Coś niepokojącego, co ludzie wyczuwają. Do ukrytych kultystów i mutantów w mieście.</p>"
     },
     "Blood-Sworn (Tier II)": {
       "name": "Zaprzysiężony krwi (Tier II)",
-      "description": "<p>Prowadzi rachunek czaszek i ma bardzo krótki lont.</p>"
+      "description": "<p>Prowadzi rachunek czaszek i ma bardzo krótki lont.</p>",
+      "gmdescription": "<p>Człowiek oddany Bogu Krwi, jeszcze bez Znamienia. Na mięśnie kultu; łącz z Zelotą kultu.</p>"
     },
     "Plague-Blessed (Tier II)": {
       "name": "Pobłogosławiony zarazą (Tier II)",
-      "description": "<p>Radośnie ropieje i uważa twoją troskę za wzruszającą.</p>"
+      "description": "<p>Radośnie ropieje i uważa twoją troskę za wzruszającą.</p>",
+      "gmdescription": "<p>Pogodny, twardy kultysta zarazy. Do kultów Nurgla; łącz z Kultystą albo Znamieniem Rozkładu.</p>"
     },
     "Depraved Libertine (Tier I)": {
       "name": "Zepsuty rozpustnik (Tier I)",
-      "description": "<p>Próbował wszystkiego raz i szuka czegoś nowego. Nadasz się.</p>"
+      "description": "<p>Próbował wszystkiego raz i szuka czegoś nowego. Nadasz się.</p>",
+      "gmdescription": "<p>Zepsuty poszukiwacz przyjemności do intryg. Do kultów Slaanesha wśród bogatych; łącz z Dworzaninem.</p>"
     },
     "Web-Weaver (Tier I)": {
       "name": "Tkacz intryg (Tier I)",
-      "description": "<p>Każdy plan to tylko część planu, którego jeszcze nie zauważyłeś.</p>"
+      "description": "<p>Każdy plan to tylko część planu, którego jeszcze nie zauważyłeś.</p>",
+      "gmdescription": "<p>Intrygant zza kulis. Do kultów Tzeentcha i politycznych złoczyńców; łącz z Przywódcą kultu.</p>"
     },
     "Vampire's Thrall (Tier I)": {
       "name": "Sługa wampira (Tier I)",
-      "description": "<p>Oddany, blady i czuwający przez cały dzień.</p>"
+      "description": "<p>Oddany, blady i czuwający przez cały dzień.</p>",
+      "gmdescription": "<p>Dzienny sługa wampira. Strzeże krypty; łącz z Nocnym stróżem albo Służącym.</p>"
     },
     "Ratman's Informant (Tier I)": {
       "name": "Donosiciel szczuroludzi (Tier I)",
-      "description": "<p>Bierze zapłatę w dziwnych zielonych monetach i omija kratki ściekowe.</p>"
+      "description": "<p>Bierze zapłatę w dziwnych zielonych monetach i omija kratki ściekowe.</p>",
+      "gmdescription": "<p>Człowiek, który sprzedaje sekrety szczuroludziom. Do wątków w kanałach; łącz z Ulicznikiem albo Skorumpowanym urzędnikiem.</p>"
     },
     "Hedge Witch (Tier II)": {
       "name": "Wiedźma (Tier II)",
-      "description": "<p>Zna stare zaklęcia, za które świątynie paliły ludzi na stosach.</p>"
+      "description": "<p>Zna garść starych zaklęć, za które świątynie paliły ludzi na stosach.</p>",
+      "gmdescription": "<p>Wiejska wiedźma albo znachor z kilkoma czarami. Daj powód, by na nią polowano; łącz z Zielarzem.</p>"
     },
     "Necromancer's Servant (Tier II)": {
       "name": "Sługa nekromanty (Tier II)",
-      "description": "<p>Kopie przy księżycu, dostarcza wozem i o nic nie pyta.</p>"
+      "description": "<p>Kopie przy księżycu, dostarcza wozem i o nic nie pyta.</p>",
+      "gmdescription": "<p>Żywy pomocnik nekromanty. Stawiaj z Nekromantą i Ożywionymi.</p>"
     },
     "Risen (Tier II)": {
       "name": "Ożywiony (Tier II)",
-      "description": "<p>Raz już go pochowano. Nie zgodził się z tym.</p>"
+      "description": "<p>Raz już go pochowano. Nie zgodził się z tym.</p>",
+      "gmdescription": "<p>Zwykły ożywieniec: powolny, nieustraszony, rozpada się. W większej liczbie wokół Nekromanty.</p>"
     },
     "Grave-Chill (Tier II)": {
       "name": "Grobowy chłód (Tier II)",
-      "description": "<p>Jego dotyk zostawia szron na skórze i ciszę w piersi.</p>"
+      "description": "<p>Jego dotyk zostawia szron na skórze i ciszę w piersi.</p>",
+      "gmdescription": "<p>Lodowaty dotyk, który omija pancerz. Do duchów i upiorów.</p>"
     },
     "Blood-Drinker (Tier II)": {
       "name": "Krwiopijca (Tier II)",
-      "description": "<p>Każda zadana rana czyni go odrobinę silniejszym.</p>"
+      "description": "<p>Każda zadana rana czyni go odrobinę silniejszym.</p>",
+      "gmdescription": "<p>Leczy się, pijąc z ran. Do vampirzego pomiotu i krwawych bestii.</p>"
     },
     "Spectral (Tier IV)": {
       "name": "Widmowy (Tier IV)",
-      "description": "<p>Ostrza przez niego przechodzą. Jego dłonie niestety nie.</p>"
+      "description": "<p>Ostrza przez niego przechodzą. Jego dłonie niestety nie.</p>",
+      "gmdescription": "<p>Rani go tylko magia. Upewnij się, że drużyna ma magiczną broń albo maga.</p>"
     },
     "Barrow Lord (Tier IV)": {
       "name": "Pan Kurhanu (Tier IV)",
-      "description": "<p>Wciąż dowodzi armiami pogrzebanymi wokół siebie.</p>"
+      "description": "<p>Wciąż dowodzi armiami pogrzebanymi wokół siebie.</p>",
+      "gmdescription": "<p>Nieumarły dowódca kurhanu. Prowadzi Ożywionych i Widmowych strażników; łącz z Prastarym.</p>"
     },
     "Deathless (Tier V)": {
       "name": "Niezniszczalny truposz (Tier V)",
-      "description": "<p>Powal go, a o zmroku wróci, jeszcze bardziej wściekły.</p>"
+      "description": "<p>Powal go, a o zmroku wróci, jeszcze bardziej wściekły.</p>",
+      "gmdescription": "<p>Nieumarły, który ciągle wstaje. Drużyna potrzebuje ognia, magii albo rytuału, by go dobić.</p>"
     },
     "Dim-Witted (Tier I)": {
       "name": "Głupi (Tier I)",
-      "description": "<p>Czasem zapomina o walce. Bywa, że zapomina o własnych nogach.</p>"
+      "description": "<p>Czasem zapomina o walce. Bywa, że zapomina o własnych nogach.</p>",
+      "gmdescription": "<p>Głupi: może zapomnieć, co robi. Do trolli, olbrzymów i osiłków; daje drużynie przewagę.</p>"
     },
     "Runt (Tier I)": {
       "name": "Chuchro (Tier I)",
-      "description": "<p>Najsłabszy w stadzie i dobrze o tym wie.</p>"
+      "description": "<p>Najsłabszy w stadzie i dobrze o tym wie.</p>",
+      "gmdescription": "<p>Najsłabszy w stadzie, łatwo ucieka. Na kilku członków grupy, żeby ją zróżnicować.</p>"
     },
     "Coward (Tier I)": {
       "name": "Tchórz (Tier I)",
-      "description": "<p>Pierwszy do ucieczki, ostatni, by się przyznać, i zaskakująco trudny do złapania.</p>"
+      "description": "<p>Pierwszy do ucieczki, ostatni, by się przyznać, i zaskakująco trudny do złapania.</p>",
+      "gmdescription": "<p>Ucieka przy pierwszym zagrożeniu, ale trudno go złapać. Do donosicieli i drobnych złoczyńców.</p>"
     },
     "Drunkard (Tier I)": {
       "name": "Pijak (Tier I)",
-      "description": "<p>W pełni sprawny dopiero po czwartym kuflu. Zwykle.</p>"
+      "description": "<p>W pełni sprawny dopiero po czwartym kuflu. Zwykle.</p>",
+      "gmdescription": "<p>Prawie zawsze pijany. Do scen w karczmie i strażników, których da się rozproszyć.</p>"
     },
     "Wounded (Tier I)": {
       "name": "Ranny (Tier I)",
-      "description": "<p>Źle opatrzony, kuleje jeszcze gorzej i łatwo traci cierpliwość.</p>"
+      "description": "<p>Źle opatrzony, kuleje jeszcze gorzej i łatwo traci cierpliwość.</p>",
+      "gmdescription": "<p>Ranny jeszcze przed walką. Do ocalałych z poprzedniego starcia; sumuje się z innymi karami.</p>"
     },
     "Plague-Ridden (Tier I)": {
       "name": "Zadżumiony (Tier I)",
-      "description": "<p>Kaszle w szmatę, której nikt nie powinien oglądać z bliska.</p>"
+      "description": "<p>Kaszle w szmatę, której nikt nie powinien oglądać z bliska.</p>",
+      "gmdescription": "<p>Chory i słaby. Do zadżumionych miast i uchodźców; sumuje się z innymi karami.</p>"
     },
     "One-Eyed (Tier I)": {
       "name": "Jednooki (Tier I)",
-      "description": "<p>Stracił oko przed laty i co wieczór opowiada o tym inaczej.</p>"
+      "description": "<p>Stracił oko przed laty i co wieczór opowiada o tym inaczej.</p>",
+      "gmdescription": "<p>Słabo strzela i wolno reaguje, ale onieśmiela. Do weteranów i piratów.</p>"
     },
     "Starving (Tier I)": {
       "name": "Wygłodzony (Tier I)",
-      "description": "<p>Same żebra i oczy. Za chleb zrobi rzeczy zadziwiające.</p>"
+      "description": "<p>Same żebra i oczy. Za chleb zrobi rzeczy zadziwiające.</p>",
+      "gmdescription": "<p>Osłabiony głodem. Do oblężonych miast, żebraków i zdesperowanych bandytów.</p>"
     },
     "Unhinged (Tier I)": {
       "name": "Obłąkany (Tier I)",
-      "description": "<p>Prowadzi długie rozmowy z kimś, kto stoi tuż za tobą.</p>"
+      "description": "<p>Prowadzi długie rozmowy z kimś, kto stoi tuż za tobą.</p>",
+      "gmdescription": "<p>Nieprzewidywalny szaleniec, trudny do wystraszenia. Do ofiar kultów i dziwnych postaci.</p>"
     },
     "Hunchback (Tier I)": {
       "name": "Garbus (Tier I)",
-      "description": "<p>Pochylony od urodzenia lub od pracy, silniejszy, niż sądzili szydercy.</p>"
+      "description": "<p>Pochylony od urodzenia lub od pracy, silniejszy, niż sądzili szydercy.</p>",
+      "gmdescription": "<p>Silny, ale niezgrabny i unikany. Do służących, robotników i wyrzutków.</p>"
     },
     "Exhausted (Tier I)": {
       "name": "Wycieńczony (Tier I)",
-      "description": "<p>Nie spał porządnie od ostatniej wsi, a może i od przedostatniej.</p>"
+      "description": "<p>Nie spał porządnie od ostatniej wsi, a może i od przedostatniej.</p>",
+      "gmdescription": "<p>Zmęczony marszem albo nieprzespaną nocą. Ułatwia walkę z grupą.</p>"
     },
     "Cursed (Tier I)": {
       "name": "Przeklęty (Tier I)",
-      "description": "<p>Psy szczekają, mleko kwaśnieje, a przed zimą coś upomni się o dług.</p>"
+      "description": "<p>Psy szczekają, mleko kwaśnieje, a przed zimą coś upomni się o dług.</p>",
+      "gmdescription": "<p>Naznaczony pechem albo klątwą. Bardziej zaczepka fabularna niż zmiana w walce.</p>"
     },
     "Horribly Scarred (Tier I)": {
       "name": "Straszliwie okaleczony (Tier I)",
-      "description": "<p>Twarz opowiada historię, której nikt nie chce usłyszeć drugi raz.</p>"
+      "description": "<p>Twarz opowiada historię, której nikt nie chce usłyszeć drugi raz.</p>",
+      "gmdescription": "<p>Oszpecony i budzący lęk, słaby w towarzystwie. Do osiłków i weteranów.</p>"
     },
     "Reiklander (Tier I)": {
       "name": "Reiklandczyk (Tier I)",
-      "description": "<p>Wychowany nad najruchliwszą rzeką Imperium i pewien, że to środek świata.</p>"
+      "description": "<p>Wychowany nad najruchliwszą rzeką Imperium i pewien, że to środek świata.</p>",
+      "gmdescription": "<p>Tło dla Reiklandczyka. Dodaj do dowolnego stopnia dla miejscowego kolorytu.</p>"
     },
     "Middenheimer (Tier I)": {
       "name": "Middenheimczyk (Tier I)",
-      "description": "<p>Urodzony na wielkiej skale, wierny Białemu Wilkowi i nieufny wobec południowców.</p>"
+      "description": "<p>Urodzony na wielkiej skale, wierny Białemu Wilkowi i nieufny wobec południowców.</p>",
+      "gmdescription": "<p>Tło dla Middenheimczyka, krzepkiego i oddanego Ulrykowi. Dodaj do dowolnego stopnia.</p>"
     },
     "Stirlander (Tier I)": {
       "name": "Stirlandczyk (Tier I)",
-      "description": "<p>Biedny, ubłocony i dobrze wie, co wychodzi z cmentarzy.</p>"
+      "description": "<p>Biedny, ubłocony i dobrze wie, co wychodzi z cmentarzy.</p>",
+      "gmdescription": "<p>Tło dla Stirlandczyka, ostrożnego wobec umarłych. Dodaj do dowolnego stopnia.</p>"
     },
     "Nordlander (Tier I)": {
       "name": "Nordlandczyk (Tier I)",
-      "description": "<p>Dorastał z jednym okiem na lesie, a drugim na Morzu Szponów.</p>"
+      "description": "<p>Dorastał z jednym okiem na lesie, a drugim na Morzu Szponów.</p>",
+      "gmdescription": "<p>Tło dla Nordlandczyka z wybrzeża i lasów. Dodaj do dowolnego stopnia.</p>"
     },
     "Hochlander (Tier I)": {
       "name": "Hochlandczyk (Tier I)",
-      "description": "<p>Poluje w głębokich lasach i przysięga, że długa strzelba to rodzinna pamiątka.</p>"
+      "description": "<p>Poluje w głębokich lasach i przysięga, że długa strzelba to rodzinna pamiątka.</p>",
+      "gmdescription": "<p>Tło dla Hochlandczyka, dobrego z długą strzelbą. Dodaj do łowców i żołnierzy.</p>"
     },
     "Kislevite (Tier I)": {
       "name": "Kislevita (Tier I)",
-      "description": "<p>Urodzony w chłodzie stepu, przy tętencie kopyt w ciemności.</p>"
+      "description": "<p>Urodzony w chłodzie stepu, przy tętencie kopyt w ciemności.</p>",
+      "gmdescription": "<p>Tło dla jeźdźca z Kisleva. Dodaj do żołnierzy, kupców albo jeźdźców.</p>"
     },
     "Tilean (Tier I)": {
       "name": "Tileańczyk (Tier I)",
-      "description": "<p>Szybki z ostrzem, jeszcze szybszy z umową i zawsze ktoś jest mu winien pieniądze.</p>"
+      "description": "<p>Szybki z ostrzem, jeszcze szybszy z umową i zawsze ktoś jest mu winien pieniądze.</p>",
+      "gmdescription": "<p>Tło dla Tileańczyka, szybkiego z ostrzem i umową. Dodaj do kupców i najemników.</p>"
     },
     "Bretonnian (Tier I)": {
       "name": "Bretończyk (Tier I)",
-      "description": "<p>Dokładnie wie, kto jakie ma miejsce, i ma zdanie o manierach w Imperium.</p>"
+      "description": "<p>Dokładnie wie, kto jakie ma miejsce, i ma zdanie o manierach w Imperium.</p>",
+      "gmdescription": "<p>Tło dla Bretończyka, czułego na pozycję. Dodaj do szlachty i podróżnych.</p>"
     },
     "Estalian (Tier I)": {
       "name": "Estalijczyk (Tier I)",
-      "description": "<p>Dumny, cięty w mowie i nauczony załatwiać oba problemy rapierem.</p>"
+      "description": "<p>Dumny, cięty w mowie i nauczony załatwiać oba problemy rapierem.</p>",
+      "gmdescription": "<p>Tło dla Estalijczyka, dumnego szermierza. Dodaj do pojedynkowiczów i kupców.</p>"
     },
     "Norscan (Tier II)": {
       "name": "Norsmen (Tier II)",
-      "description": "<p>Przybył zza morza, żeby handlować. Handel nie był pierwszym pomysłem.</p>"
+      "description": "<p>Przybył zza morza, żeby handlować. Handel nie był pierwszym pomysłem.</p>",
+      "gmdescription": "<p>Tło dla norskiego łupieżcy albo kupca. Dodaj do łupieżców i wojowników.</p>"
     },
     "Innkeeper (Tier I)": {
       "name": "Karczmarz (Tier I)",
-      "description": "<p>Pamięta każdą twarz, każdy dług i każdą bójkę, w której pękło krzesło.</p>"
+      "description": "<p>Pamięta każdą twarz, każdy dług i każdą bójkę, w której pękło krzesło.</p>",
+      "gmdescription": "<p>Karczmarz, który wszystko słyszy. Źródło plotek.</p>"
     },
     "Blacksmith (Tier II)": {
       "name": "Kowal (Tier II)",
-      "description": "<p>Ramiona jak korzenie i mało cierpliwości do tych, co poganiają dobrą robotę.</p>"
+      "description": "<p>Ramiona jak korzenie i mało cierpliwości do tych, co poganiają dobrą robotę.</p>",
+      "gmdescription": "<p>Silny kowal. Mieszczanin, który w razie potrzeby stanie do walki.</p>"
     },
     "Farmer (Tier I)": {
       "name": "Chłop (Tier I)",
-      "description": "<p>Wstaje przed świtem, zna się na pogodzie i pogrzebał już zbyt wiele plonów.</p>"
+      "description": "<p>Wstaje przed świtem, zna się na pogodzie i pogrzebał już zbyt wiele plonów.</p>",
+      "gmdescription": "<p>Chłop z pola. Do wsi i rozwścieczonego tłumu.</p>"
     },
     "Scribe (Tier I)": {
       "name": "Skryba (Tier I)",
-      "description": "<p>Upstrzony atramentem, krótkowzroczny i w posiadaniu wszystkich dokumentów.</p>"
+      "description": "<p>Upstrzony atramentem, krótkowzroczny i w posiadaniu wszystkich dokumentów.</p>",
+      "gmdescription": "<p>Pisarz, który czyta i prowadzi rejestry. Do śledztw i biurokracji.</p>"
     },
     "Miner (Tier II)": {
       "name": "Górnik (Tier II)",
-      "description": "<p>Wie, co żyje pod wzgórzem i czemu zasypano trzeci szyb.</p>"
+      "description": "<p>Wie, co żyje pod wzgórzem i czemu zasypano trzeci szyb.</p>",
+      "gmdescription": "<p>Twardy górnik, który wie, co żyje pod ziemią. Do przygód w kopalniach i jaskiniach.</p>"
     },
     "Coachman (Tier I)": {
       "name": "Woźnica (Tier I)",
-      "description": "<p>Jeździł każdą złą drogą, a na najgorsze ma garłacz.</p>"
+      "description": "<p>Jeździł każdą złą drogą, a na najgorsze ma garłacz.</p>",
+      "gmdescription": "<p>Woźnica z garłaczem. Do podróży i napadów na dyliżanse.</p>"
     },
     "Servant (Tier I)": {
       "name": "Służący (Tier I)",
-      "description": "<p>Cichy, niewidzialny i świetnie wie, kto zeszłej nocy odwiedził pana domu.</p>"
+      "description": "<p>Cichy, niewidzialny i świetnie wie, kto zeszłej nocy odwiedził pana domu.</p>",
+      "gmdescription": "<p>Służący, którego nikt nie zauważa. Świadek albo donosiciel.</p>"
     },
     "Beggar (Tier I)": {
       "name": "Żebrak (Tier I)",
-      "description": "<p>Wszyscy odwracają wzrok, więc to najlepsze miejsce na całej ulicy.</p>"
+      "description": "<p>Wszyscy odwracają wzrok, więc to najlepsze miejsce na całej ulicy.</p>",
+      "gmdescription": "<p>Żebrak niewidoczny dla bogatych. Świadek albo uliczny donosiciel.</p>"
     },
     "Entertainer (Tier I)": {
       "name": "Kuglarz (Tier I)",
-      "description": "<p>Żongluje, śpiewa i wyjeżdża z miasta tuż przed nadejściem rachunku.</p>"
+      "description": "<p>Żongluje, śpiewa i wyjeżdża z miasta tuż przed nadejściem rachunku.</p>",
+      "gmdescription": "<p>Kuglarz albo śpiewak. Do jarmarków, odwracania uwagi i plotek.</p>"
     },
     "Butcher (Tier II)": {
       "name": "Rzeźnik (Tier II)",
-      "description": "<p>Sprawnie włada tasakiem i nie rusza go widok tego, co w środku.</p>"
+      "description": "<p>Sprawnie włada tasakiem i nie rusza go widok tego, co w środku.</p>",
+      "gmdescription": "<p>Rzeźnik sprawny z tasakiem. Mieszczanin, którego nie przeraża krew.</p>"
     },
     "Fisher (Tier I)": {
       "name": "Rybak (Tier I)",
-      "description": "<p>Cierpliwy, ogorzały i chętnie opowie o tej, która mu uciekła.</p>"
+      "description": "<p>Cierpliwy, ogorzały i chętnie opowie o tej, która mu uciekła.</p>",
+      "gmdescription": "<p>Rybak znad rzeki albo wybrzeża. Do nadrzecznych wsi i scen na łodziach.</p>"
     },
     "Sigmar's Faithful (Tier I)": {
       "name": "Wierny Sigmara (Tier I)",
-      "description": "<p>Nosi młot na widoku i przygląda się uważnie tym, którzy tego nie robią.</p>"
+      "description": "<p>Nosi młot na widoku i przygląda się uważnie tym, którzy tego nie robią.</p>",
+      "gmdescription": "<p>Gorliwy wyznawca Sigmara. Dodaj do dowolnego stopnia; nieufny wobec obcych.</p>"
     },
     "Ulric's Faithful (Tier I)": {
       "name": "Wierny Ulryka (Tier I)",
-      "description": "<p>Modli się z zaciśniętą pięścią i tylko przy dostatecznie złej pogodzie.</p>"
+      "description": "<p>Modli się z zaciśniętą pięścią i tylko przy dostatecznie złej pogodzie.</p>",
+      "gmdescription": "<p>Wyznawca Ulryka, twardy i bezpośredni. Częsty w Middenheim.</p>"
     },
     "Shallya's Faithful (Tier I)": {
       "name": "Wierny Shallyi (Tier I)",
-      "description": "<p>Opiekuje się umierającymi, nie pytając, po której stronie walczyli.</p>"
+      "description": "<p>Opiekuje się umierającymi, nie pytając, po której stronie walczyli.</p>",
+      "gmdescription": "<p>Wyznawca Shallyi, który pomaga chorym. Dodaj do uzdrowicieli.</p>"
     },
     "Morr's Faithful (Tier I)": {
       "name": "Wierny Morra (Tier I)",
-      "description": "<p>Spokojny przy zmarłych i po cichu niepokojący dla żywych.</p>"
+      "description": "<p>Spokojny przy zmarłych i po cichu niepokojący dla żywych.</p>",
+      "gmdescription": "<p>Wyznawca Morra, spokojny przy umarłych. Dodaj do grabarzy i żałobników.</p>"
     },
     "Ranald's Faithful (Tier I)": {
       "name": "Wierny Ranalda (Tier I)",
-      "description": "<p>Zamiast się modlić, krzyżuje palce, a na wynik i tak się zakłada.</p>"
+      "description": "<p>Zamiast się modlić, krzyżuje palce, a na wynik i tak się zakłada.</p>",
+      "gmdescription": "<p>Wyznawca Ranalda, który ufa szczęściu. Dodaj do złodziei i hazardzistów.</p>"
     },
     "Flagellant (Tier II)": {
       "name": "Biczownik (Tier II)",
-      "description": "<p>Chętnie krwawi w imię końca świata i szuka towarzystwa.</p>"
+      "description": "<p>Chętnie krwawi w imię końca świata i szuka towarzystwa.</p>",
+      "gmdescription": "<p>Rozszalały biczownik czasów ostatecznych. W grupach; łącz z Prorokiem.</p>"
     },
     "Templar's Informer (Tier I)": {
       "name": "Donosiciel templariuszy (Tier I)",
-      "description": "<p>Spisuje nazwiska i przekazuje je panom w szerokich kapeluszach.</p>"
+      "description": "<p>Spisuje nazwiska i przekazuje je panom w szerokich kapeluszach.</p>",
+      "gmdescription": "<p>Donosiciel łowców czarownic. Obserwuje drużynę i składa raporty.</p>"
     },
     "Secret Doubter (Tier I)": {
       "name": "Skryty wątpiący (Tier I)",
-      "description": "<p>Porusza ustami w modlitwie, a po cichu czyta księgi spalone gdzie indziej.</p>"
+      "description": "<p>Porusza ustami w modlitwie, a po cichu czyta księgi spalone gdzie indziej.</p>",
+      "gmdescription": "<p>Cichy wątpiący z zakazanymi księgami. Ukryty sojusznik albo kandydat do kultu.</p>"
     },
     "Wealthy Patron (Tier I)": {
       "name": "Bogaty mecenas (Tier I)",
-      "description": "<p>Większość spraw załatwia sakiewką, a resztę cudzym mieczem.</p>"
+      "description": "<p>Większość spraw załatwia sakiewką, a resztę cudzym mieczem.</p>",
+      "gmdescription": "<p>Bogaty mecenas, który płaci drużynie. Rozwiązuje problemy pieniędzmi.</p>"
     },
     "Local Hero (Tier I)": {
       "name": "Lokalny bohater (Tier I)",
-      "description": "<p>Raz uratował wieś i od tamtej pory pije za darmo.</p>"
+      "description": "<p>Raz uratował wieś i od tamtej pory pije za darmo.</p>",
+      "gmdescription": "<p>Bohater wsi albo miasta, któremu wszyscy ufają. Sojusznik albo trudny cel oskarżeń.</p>"
     },
     "Spy (Tier I)": {
       "name": "Szpieg (Tier I)",
-      "description": "<p>Ma trzy nazwiska, dwóch pracodawców i jedną drogę ucieczki z każdego pokoju.</p>"
+      "description": "<p>Ma trzy nazwiska, dwóch pracodawców i jedną drogę ucieczki z każdego pokoju.</p>",
+      "gmdescription": "<p>Agent z fałszywą tożsamością. Do intryg; łącz z Dworzaninem albo Przemytnikiem.</p>"
     },
     "Disgraced (Tier I)": {
       "name": "Zhańbiony (Tier I)",
-      "description": "<p>Kiedyś ktoś znaczny. Dziś unika herbów pewnych rodów.</p>"
+      "description": "<p>Kiedyś ktoś znaczny. Dziś unika herbów pewnych rodów.</p>",
+      "gmdescription": "<p>Upadły szlachcic albo oficer. Zgorzkniały sojusznik albo źródło sekretów.</p>"
     },
     "Wanted (Tier I)": {
       "name": "Poszukiwany (Tier I)",
-      "description": "<p>Rysunek tej twarzy wisi na bramie. Nie jest pochlebny.</p>"
+      "description": "<p>Rysunek tej twarzy wisi na bramie. Nie jest pochlebny.</p>",
+      "gmdescription": "<p>Ścigany przestępca w ucieczce. Zaczepka dla łowców nagród; łącz z Rabusiem albo Włamywaczem.</p>"
     },
     "Corrupt Official (Tier I)": {
       "name": "Skorumpowany urzędnik (Tier I)",
-      "description": "<p>Każda pieczątka ma swoją cenę, a dziś cena wzrosła.</p>"
+      "description": "<p>Każda pieczątka ma swoją cenę, a dziś cena wzrosła.</p>",
+      "gmdescription": "<p>Urzędnik, który bierze łapówki. Do biurokracji i wątków przemytniczych.</p>"
     }
   }
 }

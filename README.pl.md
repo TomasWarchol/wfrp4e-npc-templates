@@ -47,7 +47,9 @@ Każdy stopień zawiera już niższe, więc nakładaj na aktora jeden stopień.
 
 **Obecne wartości.** Prawa strona Kuźni pokazuje cechy wybranego tokena (z częścią pochodzącą z szablonów), Żywotność, rozwinięcia umiejętności, talenty i cechy stworzeń. Przy kilku celach wybierasz, który pokazać. Przy podglądzie szablonu cechy i umiejętności pokazują też wartość po jego nałożeniu.
 
-**Łączenie szablonów.** Ustawienie **Łączenie szablonów** decyduje, jak łączy się kilka szablonów na jednym aktorze: sumują się (Boss z WW +10 i Legenda z WW +20 dają WW +30) albo liczy się najwyższa wartość (WW +20); tak samo rozwinięcia umiejętności, wykupienia talentów i cechy stworzeń. Najsilniejsza kara ze słabości nadal działa. Umiejętność albo cecha stworzenia, której potrzebują dwa szablony, zostaje do zdjęcia ostatniego z nich.
+**Łączenie szablonów.** Ustawienie **Łączenie szablonów** decyduje, jak łączy się kilka szablonów na jednym aktorze. **Warstwy** (domyślnie): rola, poziom zagrożenia, stopień, każda grupa cech i każde tło się sumują, ale dwa szablony z tej samej warstwy biorą najwyższą wartość. Wódz z WW +10 i Boss z WW +10 dają WW +20, a Boss z WW +10 i Legenda z WW +20 dają WW +20. Kary zawsze się sumują. **Sumowanie**: wszystko się dodaje. **Najwyższa wartość**: liczy się tylko najsilniejsza premia i najsilniejsza kara. Tak samo działają rozwinięcia umiejętności, wykupienia talentów i cechy stworzeń. Umiejętność albo cecha stworzenia, której potrzebują dwa szablony, zostaje do zdjęcia ostatniego z nich.
+
+**Podpowiedzi dla MG.** Każdy szablon ma krótką notkę dla MG: do czego służy i z czym go łączyć. Widać ją w podglądzie Kuźni i w opisie MG szablonu.
 
 Przeciągnij szablon na postać, NPC albo stwora. Szablon zmienia cechy oraz dodaje umiejętności, talenty i wyposażenie. Niektóre stopnie proszą o wybór talentu lub broni, czarodzieje wybierają czary, a część stopni dopisuje do imienia tytuł, np. „Sierżant”.
 

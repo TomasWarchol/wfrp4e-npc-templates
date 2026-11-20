@@ -36,10 +36,10 @@ Nazwy cech stworzeń i talentów są systemowe (angielskie), tak jak w danych mo
 
 | Tier | Liczba | Szablony |
 |---|---:|---|
-| **I** | 72 | Nocny stróż, Rabuś, Adept kultu, Traper, Majtek, Panicz, Domokrążca, Ulicznik, Zielarz, Nowicjusz, Dobosz, Podżegacz, Tropiciel, Znachor, Sabotażysta, Poganiacz bestii, Mięso armatnie, Rogaty, Pełzacz po ścianach, Przebiegły, Spryciarz, Czyhający, Bagienny, Ludojad, Terytorialny, Zepsuty rozpustnik, Tkacz intryg, Sługa wampira, Donosiciel szczuroludzi, Głupi, Chuchro, Tchórz, Pijak, Ranny, Zadżumiony, Jednooki, Wygłodzony, Obłąkany, Garbus, Wycieńczony, Przeklęty, Straszliwie okaleczony, Reiklandczyk, Middenheimczyk, Stirlandczyk, Nordlandczyk, Hochlandczyk, Kislevita, Tileańczyk, Bretończyk, Estalijczyk, Karczmarz, Chłop, Skryba, Woźnica, Służący, Żebrak, Kuglarz, Rybak, Wierny Sigmara, Wierny Ulryka, Wierny Shallyi, Wierny Morra, Wierny Ranalda, Donosiciel templariuszy, Skryty wątpiący, Bogaty mecenas, Lokalny bohater, Szpieg, Zhańbiony, Poszukiwany, Skorumpowany urzędnik |
-| **II** | 59 | Rekrut, Strażnik miejski, Bandyta, Kultysta, Myśliwy, Przemytnik, Dworzanin, Handlarz, Kupiec, Mistrz cechu, Kieszonkowiec, Włamywacz, Cyrulik, Medyk, Doktor medycyny, Uczeń maga, Kapłan, Herszt (Chieftain), Chorąży, Taktyk, Akolita, Prorok, Tarczownik, Ochroniarz, Zabijaka, Harcownik, Zwiadowca, Truciciel, Jeździec, Oprawca, Weteran (Grizzled), Silny, Olbrzymi, Brutalny, Szybki, Zahartowany, Jadowity, Gruboskóry, Biczujący ogon, Skrzydlaty, Fanatyk, Wściekły, Eteryczna osłona, Pożeracz czarów, Naznaczony przez Chaos, Obżarty spaczeniem, Spaczony, Zaprzysiężony krwi, Pobłogosławiony zarazą, Wiedźma, Sługa nekromanty, Ożywiony, Grobowy chłód, Krwiopijca, Norsmen, Kowal, Górnik, Rzeźnik, Biczownik |
-| **III** | 33 | Weteran (Veteran), Sierżant, Sierżant straży, Kapitan straży, Rozbójnik, Zelota kultu, Przywódca kultu, Strażnik dróg, Łupieżca, Szyper, Pojedynkowicz, Wielmoża, Szef gangu, Czeladnik magii, Szaman, Nekromanta, Mroczny kapłan, Osiłek, Berserker, Czempion, Mistrz fechtunku, Strzelec, Zabójca, Elita, Żelaznoskóry, Ziejący ogniem, Ziejący mrozem, Ziejący trucizną, Ziejący burzą, Spojrzenie Kamienia, Znamię Rozkoszy, Znamię Przemiany, Ciało pomiotu |
-| **IV** | 18 | Kapitan, Herszt (Bandit Chief), Pogromca bestii, Czarodziej, Mistrz magii, Kapłan wojownik, Arcykapłan, Wódz, Czarownik, Boss, Szczytowy drapieżnik, Zmora magów, Prastary, Znamię Boga Krwi, Znamię Rozkładu, Opętany przez demona, Widmowy, Pan Kurhanu |
+| **I** | 72 | Nocny stróż, Rabuś, Adept kultu, Traper, Majtek, Panicz, Domokrążca, Ulicznik, Zielarz, Nowicjusz, Dobosz, Podżegacz, Tropiciel, Znachor, Sabotażysta, Poganiacz bestii, Mięso armatnie, Rogaty, Pełzacz po ścianach, Przebiegły, Śliski, Czyhający, Bagienny, Ludojad, Terytorialny, Zepsuty rozpustnik, Tkacz intryg, Sługa wampira, Donosiciel szczuroludzi, Głupi, Chuchro, Tchórz, Pijak, Ranny, Zadżumiony, Jednooki, Wygłodzony, Obłąkany, Garbus, Wycieńczony, Przeklęty, Straszliwie okaleczony, Reiklandczyk, Middenheimczyk, Stirlandczyk, Nordlandczyk, Hochlandczyk, Kislevita, Tileańczyk, Bretończyk, Estalijczyk, Karczmarz, Chłop, Skryba, Woźnica, Służący, Żebrak, Kuglarz, Rybak, Wierny Sigmara, Wierny Ulryka, Wierny Shallyi, Wierny Morra, Wierny Ranalda, Donosiciel templariuszy, Skryty wątpiący, Bogaty mecenas, Lokalny bohater, Szpieg, Zhańbiony, Poszukiwany, Skorumpowany urzędnik |
+| **II** | 59 | Rekrut, Strażnik miejski, Bandyta, Kultysta, Myśliwy, Przemytnik, Dworzanin, Handlarz, Kupiec, Mistrz cechu, Kieszonkowiec, Włamywacz, Cyrulik, Medyk, Doktor medycyny, Uczeń maga, Kapłan, Herszt, Chorąży, Taktyk, Akolita, Prorok, Tarczownik, Ochroniarz, Zabijaka, Harcownik, Zwiadowca, Truciciel, Jeździec, Oprawca, Stary wyga, Silny, Olbrzymi, Brutalny, Szybki, Zahartowany, Jadowity, Gruboskóry, Biczujący ogon, Skrzydlaty, Fanatyk, Wściekły, Eteryczna osłona, Pożeracz czarów, Naznaczony przez Chaos, Obżarty spaczeniem, Spaczony, Zaprzysiężony krwi, Pobłogosławiony zarazą, Wiedźma, Sługa nekromanty, Ożywiony, Grobowy chłód, Krwiopijca, Norsmen, Kowal, Górnik, Rzeźnik, Biczownik |
+| **III** | 33 | Weteran, Sierżant, Sierżant straży, Kapitan straży, Rozbójnik, Zelota kultu, Przywódca kultu, Strażnik dróg, Łupieżca, Szyper, Pojedynkowicz, Wielmoża, Szef gangu, Czeladnik magii, Szaman, Nekromanta, Mroczny kapłan, Osiłek, Berserker, Czempion, Mistrz fechtunku, Strzelec, Zabójca, Elita, Żelaznoskóry, Ziejący ogniem, Ziejący mrozem, Ziejący trucizną, Ziejący burzą, Spojrzenie Kamienia, Znamię Rozkoszy, Znamię Przemiany, Ciało pomiotu |
+| **IV** | 18 | Kapitan, Herszt bandy, Pogromca bestii, Czarodziej, Mistrz magii, Kapłan wojownik, Arcykapłan, Wódz, Czarownik, Boss, Szczytowy drapieżnik, Zmora magów, Prastary, Znamię Boga Krwi, Znamię Rozkładu, Opętany przez demona, Widmowy, Pan Kurhanu |
 | **V** | 6 | Legenda, Nemezis, Nie do zabicia, Plaga prowincji, Wcielona zagłada, Niezniszczalny truposz |
 
 ## Poziom zagrożenia
@@ -47,7 +47,7 @@ Nazwy cech stworzeń i talentów są systemowe (angielskie), tak jak w danych mo
 | Szablon (EN / PL) | Grupa | Tier | Punkty | Uzasadnienie |
 |---|---|:-:|---:|---|
 | Cannon Fodder / Mięso armatnie | Siła | **I** | -4.8 | WW-10, US-10, SW-10 |
-| Grizzled / Weteran | Siła | **II** | 3.5 | WW+5, Zw-5, SW+10 — *korekta: Siła: stopień II* |
+| Grizzled / Stary wyga | Siła | **II** | 3.5 | WW+5, Zw-5, SW+10 — *korekta: Siła: stopień II* |
 | Elite / Elita | Siła | **III** | 11.5 | Elite; Combat Reflexes, Strike Mighty Blow |
 | Boss / Boss | Siła | **IV** | 17.4 | WW+10, SW+10; Tough, Die Hard, Fear 1; Combat Reflexes, Strike Mighty Blow, Iron Will — *korekta: Siła: stopień IV – Die Hard, Tough i Fear 1 robią z niego przeciwnika na całą drużynę* |
 | Legendary / Legenda | Siła | **V** | 55.1 | WW+20, S+15, Wt+20, I+15, SW+20; Champion, Hardy, Die Hard, Immunity to Psychology, Ward 8, Terror 2; Combat Master, Combat Reflexes, Strike Mighty Blow ×2, Strike to Injure, Whirlwind of Death |
@@ -111,7 +111,7 @@ Nazwy cech stworzeń i talentów są systemowe (angielskie), tak jak w danych mo
 | Winged / Skrzydlaty | Ciało | **II** | 3.6 | Zw+5; Flight 8 — *korekta: Flight 8* |
 | Wall-Crawler / Pełzacz po ścianach | Ciało | **I** | 2.5 | Zw+5; Wallcrawler |
 | Sly / Przebiegły | Natura | **I** | 2.5 | Cunning |
-| Cunning / Spryciarz | Natura | **I** | 2.4 | S-5, I+10, Int+10, Ogd+5 |
+| Slippery / Śliski | Natura | **I** | 2.4 | S-5, I+10, Int+10, Ogd+5 |
 | Fanatic / Fanatyk | Natura | **II** | 6.3 | WW+5, Int-5, SW+15, Ogd-10; Frenzy, Implacable |
 | Rabid / Wściekły | Natura | **II** | 4.2 | S+5, SW+5, Int-10; Frenzy, Infected |
 | Lurker / Czyhający | Natura | **I** | 3.3 | I+10; Stealthy |
@@ -177,7 +177,7 @@ Nazwy cech stworzeń i talentów są systemowe (angielskie), tak jak w danych mo
 | Footpad / Rabuś | Banita (stopień 1) | **I** | 2.7 | Zw+5, WW+5 |
 | Bandit / Bandyta | Banita (stopień 2) | **II** | 9.6 | Zw+5, WW+10, US+5, Wt+5 — *korekta: drugi stopień* |
 | Highwayman / Rozbójnik | Banita (stopień 3) | **III** | 15.6 | Zw+10, WW+15, US+5, Wt+5, Ogd+10 |
-| Bandit Chief / Herszt | Banita (stopień 4) | **IV** | 30.7 | Zw+10, WW+25, US+5, Wt+10, Ogd+10, S+5, SW+10; Combat Reflexes, Strike Mighty Blow, Furious Assault (wybór); pancerz: Shield, Mail Shirt |
+| Bandit Chief / Herszt bandy | Banita (stopień 4) | **IV** | 30.7 | Zw+10, WW+25, US+5, Wt+10, Ogd+10, S+5, SW+10; Combat Reflexes, Strike Mighty Blow, Furious Assault (wybór); pancerz: Shield, Mail Shirt |
 | Cult Initiate / Adept kultu | Kultysta (stopień 1) | **I** | 2.1 | SW+5, Ogd+5 |
 | Cultist / Kultysta | Kultysta (stopień 2) | **II** | 6.5 | SW+10, Ogd+5, I+5, WW+5 |
 | Cult Zealot / Zelota kultu | Kultysta (stopień 3) | **III** | 18.2 | SW+20, I+5, WW+15, S+5, Wt+5; Frenzy, Implacable; pancerz: Shield — *korekta: człowiek z Frenzy, bez cech stworzeń* |

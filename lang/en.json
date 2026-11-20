@@ -121,7 +121,8 @@
         "Talents": "Talents",
         "Traits": "Creature traits",
         "ModeSum": "templates add up",
-        "ModeMax": "templates take the highest value"
+        "ModeMax": "templates take the highest value",
+        "ModeLayers": "templates stack by layer"
       }
     },
     "Settings": {
@@ -134,7 +135,8 @@
       },
       "Stacking": {
         "Name": "Stacking templates",
-        "Hint": "How several templates on one actor combine. Add up: Boss with WS +10 and Legendary with WS +20 give WS +30. Highest value: they give WS +20, and the same goes for skill advances, talent ranks and creature traits; the strongest penalty from a weakness still applies. Characteristics change at once; skills and talents follow the mode when templates are added or removed.",
+        "Hint": "How several templates on one actor combine. Layers: a role, a threat level, a rank, each group of traits and each background add up, but two templates from the same layer take the highest value (Boss and Legendary give WS +20, Warlord and Boss give WS +20); penalties always add up. Add up: everything adds. Highest value: only the strongest bonus and the strongest penalty count. Characteristics change at once; skills and talents follow the mode when templates are added or removed.",
+        "Layers": "Layers (recommended)",
         "Sum": "Add up",
         "Max": "Highest value"
       }

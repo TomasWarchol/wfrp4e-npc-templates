@@ -1,49 +1,66 @@
 /**
  * Łączenie kilku szablonów na jednym aktorze (czyste funkcje).
  *
- * Tryby: "sum" – wartości z szablonów się dodają (jak dotąd), "max" – liczy się najwyższa wartość.
+ * Tryby:
+ *   "layers" – warstwy (domyślny): w obrębie jednej warstwy liczy się najwyższa premia, warstwy się sumują.
+ *              Warstwą jest kategoria szablonu: rola, poziom zagrożenia, stopień archetypu, każda grupa cech
+ *              (Ciało, Natura, Moce, Skażenie, Nieumarłość, Słabości) i każda grupa tła. Kary zawsze się sumują.
+ *   "sum"    – wszystko się dodaje.
+ *   "max"    – liczy się najwyższa premia i najsilniejsza kara.
+ *
  * Umiejętność albo cecha stworzenia, którą zmienia szablon, pamięta wartość bazową aktora i wkład każdego
  * szablonu (flaga stack). Wynik zawsze liczy się od nowa z tych danych, więc kolejność nakładania i zdejmowania
  * jest obojętna. Przedmiot utworzony przez jeden szablon, a potrzebny też innemu, moduł przejmuje (adopted)
  * i usuwa dopiero wtedy, gdy nie potrzebuje go żaden szablon.
  */
 
-export const MODES = ["sum", "max"];
+export const MODES = ["layers", "sum", "max"];
 
 const CHARACTERISTICS = ["ws", "bs", "s", "t", "i", "ag", "dex", "int", "wp", "fel"];
 
 /**
- * Modyfikatory cech z kilku szablonów. W trybie "max" liczy się najwyższa premia i najsilniejsza kara
- * (kara nie znika pod premią z innego szablonu).
- * @param {Object<string, number>[]} list – characteristics kolejnych szablonów
+ * Łączy wartości z kilku szablonów według trybu.
+ * @param {{value: number, layer?: string}[]} entries – wartość i warstwa każdego szablonu
  */
-export function combineCharacteristics(list, mode = "sum") {
+export function combineValues(entries, mode = "layers") {
+  const values = entries.map(({ value, layer }) => ({ value: Number(value) || 0, layer })).filter(({ value }) => value);
+  const positives = values.filter(({ value }) => value > 0);
+  const negatives = values.filter(({ value }) => value < 0);
+  const sumOf = (list) => list.reduce((sum, { value }) => sum + value, 0);
+  if (mode === "sum") return sumOf(values);
+  if (mode === "max") return Math.max(0, ...positives.map(({ value }) => value)) + Math.min(0, ...negatives.map(({ value }) => value));
+  const best = new Map();
+  for (const { value, layer } of positives) best.set(layer ?? Symbol("layer"), Math.max(best.get(layer) ?? 0, value));
+  return [...best.values()].reduce((sum, value) => sum + value, 0) + sumOf(negatives);
+}
+
+/**
+ * Modyfikatory cech z kilku szablonów.
+ * @param {Object<string, number>[]} list – characteristics kolejnych szablonów
+ * @param {string[]} [layers] – warstwa każdego szablonu (ta sama kolejność); bez warstwy szablon jest osobną warstwą
+ */
+export function combineCharacteristics(list, mode = "layers", layers = []) {
   const result = {};
   for (const key of CHARACTERISTICS) {
-    const values = list.map((characteristics) => Number(characteristics?.[key]) || 0).filter(Boolean);
-    if (mode === "max") {
-      result[key] = Math.max(0, ...values) + Math.min(0, ...values);
-    } else {
-      result[key] = values.reduce((sum, value) => sum + value, 0);
-    }
+    result[key] = combineValues(list.map((characteristics, index) => ({ value: characteristics?.[key], layer: layers[index] ?? `#${index}` })), mode);
   }
   return result;
 }
 
 /**
  * Wartość z bazy aktora i wkładów szablonów.
- * Umiejętności w trybie "sum" sumują się z bazą, cechy stworzeń biorą najwyższą wartość (poza Pancerzem, który się sumuje).
- * W trybie "max" wszystko bierze najwyższą wartość.
+ * Umiejętności: baza aktora to osobna warstwa, do której dochodzą szablony według trybu ("max": najwyższa z bazy i szablonów).
+ * Cechy stworzeń biorą najwyższą wartość; Pancerz (additive) łączy się jak umiejętności.
  * @param {number} base
  * @param {Object<string, number>} ratings – id szablonu → wkład
- * @param {{mode?: string, kind?: "skill"|"trait", additive?: boolean}} options
+ * @param {{mode?: string, kind?: "skill"|"trait", additive?: boolean, layers?: Object<string, string>}} options – layers: id szablonu → warstwa
  */
-export function stackedValue(base, ratings, { mode = "sum", kind = "skill", additive = false } = {}) {
-  const values = Object.values(ratings ?? {}).map(Number).filter((value) => value > 0);
+export function stackedValue(base, ratings, { mode = "layers", kind = "skill", additive = false, layers = {} } = {}) {
   const start = Number(base) || 0;
-  if (mode === "max") return Math.max(start, ...values);
-  if (kind === "skill" || additive) return values.reduce((sum, value) => sum + value, start);
-  return Math.max(start, ...values);
+  const entries = Object.entries(ratings ?? {}).map(([id, value]) => ({ value: Math.max(0, Number(value) || 0), layer: layers[id] ?? id }));
+  const values = entries.map(({ value }) => value);
+  if (mode === "max" || (kind === "trait" && !additive)) return Math.max(start, ...values);
+  return start + combineValues(entries, mode);
 }
 
 /**
@@ -83,40 +100,57 @@ export function removeRating(stack, templateId) {
 }
 
 /**
- * Talenty, których szablon jeszcze potrzebuje w trybie "max": różnica między liczbą wykupień z szablonu
- * a liczbą, którą aktor już ma.
+ * Ile wykupień każdego talentu wymagają razem szablony, według trybu.
+ * @param {{id: string, needs: Object<string, number>, layer?: string}[]} templates
+ * @returns {Map<string, {count: number, templateId: string}>} – templateId: szablon o największym wymaganiu
+ */
+export function talentRequirements(templates, mode = "layers") {
+  const perName = new Map();
+  for (const { id, needs, layer } of templates) {
+    for (const [name, count] of Object.entries(needs ?? {})) {
+      if (!perName.has(name)) perName.set(name, []);
+      perName.get(name).push({ value: count, layer: layer ?? id, id });
+    }
+  }
+  const result = new Map();
+  for (const [name, entries] of perName) {
+    const owner = entries.reduce((best, entry) => (entry.value > best.value ? entry : best));
+    result.set(name, { count: combineValues(entries, mode), templateId: owner.id });
+  }
+  return result;
+}
+
+/**
+ * Talenty, które szablon jeszcze musi dodać (tryby "max" i "layers"): różnica między wymaganiem
+ * a liczbą wykupień, które aktor już ma. Bez podanych wymagań liczy się samo wymaganie szablonu.
  * @param {{name: string, advances: number, group: number|null}[]} list – talenty szablonu (nazwy już w aktywnym tłumaczeniu)
  * @param {Map<string, number>} owned – nazwa → liczba posiadanych wykupień
+ * @param {Map<string, {count: number}>} [required] – nazwa → łączne wymaganie wszystkich szablonów
  */
-export function missingTalents(list, owned) {
+export function missingTalents(list, owned, required = null) {
   const result = [];
   for (const entry of list) {
     if (entry.group) {
       result.push(entry);
       continue;
     }
-    const missing = entry.advances - (owned.get(entry.name) ?? 0);
+    const need = required?.get(entry.name)?.count ?? entry.advances;
+    const missing = Math.min(entry.advances, need - (owned.get(entry.name) ?? 0));
     if (missing > 0) result.push({ ...entry, advances: missing });
   }
   return result;
 }
 
 /**
- * Talenty do dodania po zdjęciu szablonu w trybie "max": każdy pozostały szablon dostaje z powrotem
- * tyle wykupień, ile wymaga, jeśli aktor ma ich za mało.
- * @param {{id: string, needs: Object<string, number>}[]} templates – pozostałe szablony i ich wymagania
+ * Talenty do dodania po zdjęciu szablonu: pozostałe szablony dostają z powrotem tyle wykupień,
+ * ile razem wymagają, jeśli aktor ma ich za mało.
+ * @param {{id: string, needs: Object<string, number>, layer?: string}[]} templates – pozostałe szablony
  * @param {Map<string, number>} owned – nazwa → liczba posiadanych wykupień
  * @returns {{templateId: string, name: string, count: number}[]}
  */
-export function talentsToRestore(templates, owned) {
-  const required = new Map();
-  for (const { id, needs } of templates) {
-    for (const [name, count] of Object.entries(needs ?? {})) {
-      if (count > (required.get(name)?.count ?? 0)) required.set(name, { templateId: id, count });
-    }
-  }
+export function talentsToRestore(templates, owned, mode = "max") {
   const result = [];
-  for (const [name, { templateId, count }] of required) {
+  for (const [name, { count, templateId }] of talentRequirements(templates, mode)) {
     const missing = count - (owned.get(name) ?? 0);
     if (missing > 0) result.push({ templateId, name, count: missing });
   }
@@ -125,9 +159,13 @@ export function talentsToRestore(templates, owned) {
 
 /**
  * Przewidywana wartość umiejętności po nałożeniu szablonu (do podglądu w Kuźni).
- * W trybie "max" obecna wartość jest już maksimum z bazy i szablonów, więc wystarczy porównać z nowym wkładem.
+ * @param {number|null} current – obecne rozwinięcia (null, gdy aktor nie ma umiejętności)
+ * @param {{stack?: {base: number, ratings: object}|null, layers?: Object<string,string>, layer?: string}} [context]
+ *   – stan łączenia umiejętności i warstwy szablonów; bez niego umiejętność aktora to sama baza
  */
-export function projectSkill(current, advances, mode = "sum") {
+export function projectSkill(current, advances, mode = "layers", { stack = null, layers = {}, layer = "new" } = {}) {
   if (current === null || current === undefined) return advances;
-  return mode === "max" ? Math.max(current, advances) : current + advances;
+  const base = stack ? stack.base : current;
+  const ratings = { ...(stack?.ratings ?? {}), __preview: advances };
+  return stackedValue(base, ratings, { mode, kind: "skill", layers: { ...layers, __preview: layer } });
 }

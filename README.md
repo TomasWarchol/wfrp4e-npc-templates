@@ -47,7 +47,9 @@ Each rank already includes the lower ones, so give an actor one rank.
 
 **Current values.** The right side of the Forge shows the selected token's characteristics (with the part that comes from templates), Wounds, skill advances, talents and creature traits. With several targets, pick which one to show. When you preview a template, characteristics and skills also show the value after applying it.
 
-**Stacking templates.** The **Stacking templates** setting decides how several templates on one actor combine: they add up (Boss WS +10 and Legendary WS +20 give WS +30), or the highest value counts (WS +20), and the same goes for skill advances, talent ranks and creature traits. The strongest penalty from a weakness still applies. A skill or creature trait that two templates need stays until the last of them is removed.
+**Stacking templates.** The **Stacking templates** setting decides how several templates on one actor combine. **Layers** (the default): a role, a threat level, a rank, each group of traits and each background add up, but two templates from the same layer take the highest value. Warlord WS +10 and Boss WS +10 give WS +20, while Boss WS +10 and Legendary WS +20 give WS +20. Penalties always add up. **Add up**: everything adds. **Highest value**: only the strongest bonus and the strongest penalty count. The same goes for skill advances, talent ranks and creature traits. A skill or creature trait that two templates need stays until the last of them is removed.
+
+**GM hints.** Every template has a short GM note on what it is for and what it pairs with. It shows in the Forge preview and in the template's GM description.
 
 Drag a template onto a character, NPC or creature. It changes the characteristics and adds skills, talents and gear. Some ranks ask you to pick a talent or a weapon, wizards choose their spells, and a few ranks add a title such as "Sergeant" to the name.
 

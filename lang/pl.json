@@ -121,7 +121,8 @@
         "Talents": "Talenty",
         "Traits": "Cechy stworzeń",
         "ModeSum": "szablony się sumują",
-        "ModeMax": "szablony biorą najwyższą wartość"
+        "ModeMax": "szablony biorą najwyższą wartość",
+        "ModeLayers": "szablony łączą się warstwami"
       }
     },
     "Settings": {
@@ -134,7 +135,8 @@
       },
       "Stacking": {
         "Name": "Łączenie szablonów",
-        "Hint": "Jak łączy się kilka szablonów na jednym aktorze. Sumowanie: Boss z WW +10 i Legenda z WW +20 dają WW +30. Najwyższa wartość: dają WW +20; tak samo rozwinięcia umiejętności, wykupienia talentów i cechy stworzeń, a najsilniejsza kara ze słabości nadal działa. Cechy zmieniają się od razu, a umiejętności i talenty według trybu przy nakładaniu i zdejmowaniu szablonów.",
+        "Hint": "Jak łączy się kilka szablonów na jednym aktorze. Warstwy: rola, poziom zagrożenia, stopień, każda grupa cech i każde tło się sumują, ale dwa szablony z tej samej warstwy biorą najwyższą wartość (Boss i Legenda dają WW +20, Wódz i Boss dają WW +20); kary zawsze się sumują. Sumowanie: wszystko się dodaje. Najwyższa wartość: liczy się tylko najsilniejsza premia i najsilniejsza kara. Cechy zmieniają się od razu, a umiejętności i talenty według trybu przy nakładaniu i zdejmowaniu szablonów.",
+        "Layers": "Warstwy (zalecane)",
         "Sum": "Sumowanie",
         "Max": "Najwyższa wartość"
       }
